@@ -1,0 +1,39 @@
+{
+  "index": 0,
+  "terms": [
+    {
+      "type": "ref",
+      "value": [
+        {
+          "type": "var",
+          "value": "eq"
+        }
+      ]
+    },
+    {
+      "type": "string",
+      "value": "alice"
+    },
+    {
+      "type": "ref",
+      "value": [
+        {
+          "type": "var",
+          "value": "data"
+        },
+        {
+          "type": "string",
+          "value": "pets"
+        },
+        {
+          "type": "var",
+          "value": "$02"
+        },
+        {
+          "type": "string",
+          "value": "owner"
+        }
+      ]
+    }
+  ]
+}
