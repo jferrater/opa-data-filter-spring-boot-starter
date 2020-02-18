@@ -1,11 +1,4 @@
-data-filter:
-  enabled: true
-  opa:
-    server-url: http://localhost:8181
-spring:
-  datasource:
-    url: jdbc:h2:mem:test;MODE=MYSQL
-    username: sa
-    password: sa
-    driver-class-name: org.h2.Driver
-    platform: h2
+opa:
+  authorization:
+    data-filter-enabled: true
+    url: http://localhost:8181

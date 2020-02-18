@@ -1,4 +1,4 @@
-package com.joffryferrater.opadatafilterspringbootstarter.config;
+package com.joffryferrater.opadatafilterspringbootstarter;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.joffryferrater.opadatafilterspringbootstarter.core.deserializer.QueryDeserializer;

@@ -16,16 +16,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.joffryferrater.opadatafilterspringbootstarter.core.OpaConstants.*;
+
 public class QueryDeserializer extends JsonDeserializer<Query> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryDeserializer.class);
-    private static final String TYPE = "type";
-    private static final String VALUE = "value";
-    private static final String NUMBER = "number";
-    private static final String TERMS = "terms";
-    private static final String STRING = "string";
-    private static final String VAR = "var";
-    private static final String INDEX = "index";
 
     @Override
     public Query deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
@@ -39,11 +34,7 @@ public class QueryDeserializer extends JsonDeserializer<Query> {
             term.setType(type);
             JsonNode valueNodes = termNode.get(VALUE);
             if (valueNodes.isArray()) {
-                List<Value> valueList = new ArrayList<>();
-                for (JsonNode valueNode : valueNodes) {
-                    Value value = getValue(valueNode);
-                    valueList.add(value);
-                }
+                List<Value> valueList = addValuesToList(valueNodes);
                 term.setValue(valueList);
             } else {
                 setValueForTerm(valueNodes, term);
@@ -53,19 +44,30 @@ public class QueryDeserializer extends JsonDeserializer<Query> {
         return buildQuery(jsonNode, terms);
     }
 
+    private List<Value> addValuesToList(JsonNode valueNodes) {
+        List<Value> valueList = new ArrayList<>();
+        for (JsonNode valueNode : valueNodes) {
+            Value value = getValue(valueNode);
+            valueList.add(value);
+        }
+        return valueList;
+    }
+
     private Value getValue(JsonNode valueNode) {
         Value value = new Value();
         String valueType = valueNode.get(TYPE).asText();
         value.setType(valueType);
         JsonNode nodeValue = valueNode.get(VALUE);
-        if (NUMBER.equals(valueType)) {
-            value.setValues(nodeValue.asInt());
-        } else if (STRING.equals(valueType)) {
-            value.setValues(nodeValue.asText());
-        } else if (VAR.equals(valueType)) {
-            value.setValues(nodeValue.asText());
-        } else {
-            LOGGER.warn("Value type '{}' is not yet supported", valueNode.toPrettyString());
+        switch (valueType) {
+            case NUMBER:
+                value.setValues(nodeValue.asInt());
+                break;
+            case STRING:
+            case VAR:
+                value.setValues(nodeValue.asText());
+                break;
+            default:
+                LOGGER.warn("Value type '{}' is not yet supported", valueNode.toPrettyString());
         }
         return value;
     }
