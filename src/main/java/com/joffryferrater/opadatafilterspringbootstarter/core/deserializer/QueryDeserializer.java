@@ -19,43 +19,70 @@ import java.util.List;
 public class QueryDeserializer extends JsonDeserializer<Query> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryDeserializer.class);
+    private static final String TYPE = "type";
+    private static final String VALUE = "value";
+    private static final String NUMBER = "number";
+    private static final String TERMS = "terms";
+    private static final String STRING = "string";
+    private static final String VAR = "var";
+    private static final String INDEX = "index";
 
     @Override
     public Query deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         ObjectCodec objectCodec = jsonParser.getCodec();
         JsonNode jsonNode = objectCodec.readTree(jsonParser);
-        JsonNode termsNode = jsonNode.get("terms");
+        JsonNode termsNode = jsonNode.get(TERMS);
         List<Term> terms = new ArrayList<>();
         for (JsonNode termNode : termsNode) {
             Term term = new Term();
-            String type = termNode.get("type").asText();
+            String type = termNode.get(TYPE).asText();
             term.setType(type);
-            JsonNode valueNodes = termNode.get("value");
+            JsonNode valueNodes = termNode.get(VALUE);
             if (valueNodes.isArray()) {
                 List<Value> valueList = new ArrayList<>();
                 for (JsonNode valueNode : valueNodes) {
-                    Value value = new Value();
-                    String valueType = valueNode.get("type").asText();
-                    value.setType(valueType);
-                    if ("number".equals(valueType)) {
-                        value.setValues(valueNode.get("value").asInt());
-                    } else if ("string".equals(valueType)) {
-                        value.setValues(valueNode.get("value").asText());
-                    }
+                    Value value = getValue(valueNode);
                     valueList.add(value);
                 }
                 term.setValue(valueList);
-            } else if (valueNodes.isInt()) {
-                term.setValue(valueNodes.asInt());
-            } else if (valueNodes.isTextual()) {
-                term.setValue(valueNodes.asText());
             } else {
-                LOGGER.warn("Query type '{}' is not yet supported", valueNodes.toPrettyString());
+                setValueForTerm(valueNodes, term);
             }
             terms.add(term);
         }
+        return buildQuery(jsonNode, terms);
+    }
+
+    private Value getValue(JsonNode valueNode) {
+        Value value = new Value();
+        String valueType = valueNode.get(TYPE).asText();
+        value.setType(valueType);
+        JsonNode nodeValue = valueNode.get(VALUE);
+        if (NUMBER.equals(valueType)) {
+            value.setValues(nodeValue.asInt());
+        } else if (STRING.equals(valueType)) {
+            value.setValues(nodeValue.asText());
+        } else if (VAR.equals(valueType)) {
+            value.setValues(nodeValue.asText());
+        } else {
+            LOGGER.warn("Value type '{}' is not yet supported", valueNode.toPrettyString());
+        }
+        return value;
+    }
+
+    private void setValueForTerm(JsonNode jsonNode, Term term) {
+        if (jsonNode.isInt()) {
+            term.setValue(jsonNode.asInt());
+        } else if (jsonNode.isTextual()) {
+            term.setValue(jsonNode.asText());
+        } else {
+            LOGGER.warn("Query type '{}' is not yet supported", jsonNode.toPrettyString());
+        }
+    }
+
+    private Query buildQuery(JsonNode jsonNode, List<Term> terms) {
         Query query = new Query();
-        JsonNode indexNode = jsonNode.get("index");
+        JsonNode indexNode = jsonNode.get(INDEX);
         query.setIndex(indexNode.asInt());
         query.setTerms(terms);
         return query;
