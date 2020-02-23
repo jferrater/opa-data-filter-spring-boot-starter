@@ -15,7 +15,7 @@ import java.util.List;
         "terms"
 })
 @JsonDeserialize(using = QueryDeserializer.class)
-public class Query {
+public class Predicate {
 
     @JsonProperty("index")
     private int index;

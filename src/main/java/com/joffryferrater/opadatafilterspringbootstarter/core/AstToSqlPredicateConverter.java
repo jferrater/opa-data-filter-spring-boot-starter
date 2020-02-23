@@ -1,6 +1,7 @@
 package com.joffryferrater.opadatafilterspringbootstarter.core;
 
-import com.joffryferrater.opadatafilterspringbootstarter.model.response.Query;
+import com.joffryferrater.opadatafilterspringbootstarter.core.elements.SqlPredicate;
+import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicate;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Term;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Value;
 import org.slf4j.Logger;
@@ -10,24 +11,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Converts Open Policy Agent Abstract Syntax Tree predicate into SQL predicate.
  */
-public class AstToSqlQueryConverter {
+public class AstToSqlPredicateConverter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AstToSqlQueryConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AstToSqlPredicateConverter.class);
 
-    public String astQueryToSqlQuery(Query query) {
-        List<Term> terms = query.getTerms();
-        Term operator = terms.get(0);
-        Term leftExpression = terms.get(1);
-        Term rightExpression = terms.get(2);
-        String left = getExpression(leftExpression);
-        String right = getExpression(rightExpression);
-        return left + getOperator(operator) + right;
+    private Predicate predicate;
+
+    public AstToSqlPredicateConverter(Predicate predicate) {
+        this.predicate = predicate;
     }
 
-    private String getExpression(Term term) {
-        Object termValue = term.getValue();
+    public SqlPredicate astToSqlPredicate() {
+        SqlPredicate sqlPredicate = new SqlPredicate();
+        List<Term> terms = predicate.getTerms();
+        Term operator = terms.get(0);
+        String operatorString = getOperator(operator);
+        sqlPredicate.setOperator(operatorString);
+        Object termValue1 = terms.get(1).getValue();
+        Object termValue2 = terms.get(2).getValue();
+        if(termValue1 instanceof ArrayList) {
+            String left = getExpression(termValue1);
+            sqlPredicate.setLeftExpression(left);
+            String right = getExpression(termValue2);
+            sqlPredicate.setRightExpression(right);
+        } else {
+            String left = getExpression(termValue2);
+            sqlPredicate.setLeftExpression(left);
+            String right = getExpression(termValue1);
+            sqlPredicate.setRightExpression(right);
+        }
+        LOGGER.info("SQL predicate: {}", sqlPredicate.toString());
+        return sqlPredicate;
+    }
+
+    private String getExpression(Object termValue) {
         String expression = "";
         if (termValue instanceof ArrayList) {
             List<Value> valueList = (List<Value>) termValue;
@@ -39,7 +58,7 @@ public class AstToSqlQueryConverter {
         } else if (termValue instanceof Integer) {
             expression = String.valueOf(termValue);
         } else {
-            LOGGER.warn("Unknown value type '{}'", term.getType());
+            LOGGER.warn("Unknown value type");
         }
         return expression;
     }

@@ -10,13 +10,13 @@ import java.util.List;
 public class Result {
 
     @JsonProperty("queries")
-    private List<List<Query>> queries = new ArrayList<>();
+    private List<List<Predicate>> queries = new ArrayList<>();
 
-    public List<List<Query>> getQueries() {
+    public List<List<Predicate>> getQueries() {
         return queries;
     }
 
-    public void setQueries(List<List<Query>> queries) {
+    public void setQueries(List<List<Predicate>> queries) {
         this.queries = queries;
     }
 }

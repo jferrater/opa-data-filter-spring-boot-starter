@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.joffryferrater.opadatafilterspringbootstarter.model.response.Query;
+import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicate;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Term;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Value;
 import org.slf4j.Logger;
@@ -18,12 +18,12 @@ import java.util.List;
 
 import static com.joffryferrater.opadatafilterspringbootstarter.core.OpaConstants.*;
 
-public class QueryDeserializer extends JsonDeserializer<Query> {
+public class QueryDeserializer extends JsonDeserializer<Predicate> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryDeserializer.class);
 
     @Override
-    public Query deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public Predicate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         ObjectCodec objectCodec = jsonParser.getCodec();
         JsonNode jsonNode = objectCodec.readTree(jsonParser);
         JsonNode termsNode = jsonNode.get(TERMS);
@@ -82,11 +82,11 @@ public class QueryDeserializer extends JsonDeserializer<Query> {
         }
     }
 
-    private Query buildQuery(JsonNode jsonNode, List<Term> terms) {
-        Query query = new Query();
+    private Predicate buildQuery(JsonNode jsonNode, List<Term> terms) {
+        Predicate predicate = new Predicate();
         JsonNode indexNode = jsonNode.get(INDEX);
-        query.setIndex(indexNode.asInt());
-        query.setTerms(terms);
-        return query;
+        predicate.setIndex(indexNode.asInt());
+        predicate.setTerms(terms);
+        return predicate;
     }
 }

@@ -2,7 +2,7 @@ package com.joffryferrater.opadatafilterspringbootstarter.core.deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.OpaCompilerResponse;
-import com.joffryferrater.opadatafilterspringbootstarter.model.response.Query;
+import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicate;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Term;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Value;
 import org.junit.jupiter.api.Test;
@@ -26,14 +26,14 @@ public class OpaOpaCompilerResponseDeserializationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         OpaCompilerResponse opaCompilerResponse = objectMapper.readValue(opaCompilerResponse(), OpaCompilerResponse.class);
 
-        List<List<Query>> queries = opaCompilerResponse.getResult().getQueries();
+        List<List<Predicate>> queries = opaCompilerResponse.getResult().getQueries();
         assertThat(queries.size(), is(2));
 
-        List<Query> queryList1 = queries.get(0);
-        assertThat(queryList1.size(), is(2));
+        List<Predicate> predicateList1 = queries.get(0);
+        assertThat(predicateList1.size(), is(2));
 
-        Query query1 = queryList1.get(0);
-        List<Term> terms = query1.getTerms();
+        Predicate predicate1 = predicateList1.get(0);
+        List<Term> terms = predicate1.getTerms();
         Term term1 = terms.get(0);
         assertThat(term1.getType(), is("ref"));
         Object term1Value = term1.getValue();
@@ -48,8 +48,8 @@ public class OpaOpaCompilerResponseDeserializationTest {
         assertThat(term2.getValue() instanceof String, is(true));
         assertThat(term2.getValue(), is("alice"));
 
-        List<Query> queryList2 = queries.get(1);
-        assertThat(queryList2.size(), is(3));
+        List<Predicate> predicateList2 = queries.get(1);
+        assertThat(predicateList2.size(), is(3));
     }
 
     private String opaCompilerResponse() throws IOException {
