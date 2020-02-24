@@ -13,13 +13,13 @@ import java.util.List;
 /**
  * Converts Open Policy Agent Abstract Syntax Tree predicate into SQL predicate.
  */
-public class AstToSqlPredicateConverter {
+public class PredicateConverter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AstToSqlPredicateConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PredicateConverter.class);
 
     private Predicate predicate;
 
-    public AstToSqlPredicateConverter(Predicate predicate) {
+    public PredicateConverter(Predicate predicate) {
         this.predicate = predicate;
     }
 

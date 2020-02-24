@@ -14,7 +14,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class AstToSqlPredicateConverterTest {
+class PredicateConverterTest {
 
     /*
      * Deserialize sample compiler response file from OPA (test classpath: opa-compiler-response.json)
@@ -27,7 +27,7 @@ class AstToSqlPredicateConverterTest {
         List<List<Predicate>> queries = opaCompilerResponse.getResult().getQueries();
         Predicate predicate = queries.iterator().next().get(0);
 
-        AstToSqlPredicateConverter target = new AstToSqlPredicateConverter(predicate);
+        PredicateConverter target = new PredicateConverter(predicate);
         SqlPredicate result = target.astToSqlPredicate();
 
         assertThat(result.getOperator(), is("="));
