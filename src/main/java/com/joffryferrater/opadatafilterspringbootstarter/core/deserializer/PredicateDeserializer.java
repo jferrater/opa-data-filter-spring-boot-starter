@@ -18,9 +18,9 @@ import java.util.List;
 
 import static com.joffryferrater.opadatafilterspringbootstarter.core.OpaConstants.*;
 
-public class QueryDeserializer extends JsonDeserializer<Predicate> {
+public class PredicateDeserializer extends JsonDeserializer<Predicate> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(QueryDeserializer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PredicateDeserializer.class);
 
     @Override
     public Predicate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
@@ -41,7 +41,7 @@ public class QueryDeserializer extends JsonDeserializer<Predicate> {
             }
             terms.add(term);
         }
-        return buildQuery(jsonNode, terms);
+        return buildPredicate(jsonNode, terms);
     }
 
     private List<Value> addValuesToList(JsonNode valueNodes) {
@@ -82,7 +82,7 @@ public class QueryDeserializer extends JsonDeserializer<Predicate> {
         }
     }
 
-    private Predicate buildQuery(JsonNode jsonNode, List<Term> terms) {
+    private Predicate buildPredicate(JsonNode jsonNode, List<Term> terms) {
         Predicate predicate = new Predicate();
         JsonNode indexNode = jsonNode.get(INDEX);
         predicate.setIndex(indexNode.asInt());

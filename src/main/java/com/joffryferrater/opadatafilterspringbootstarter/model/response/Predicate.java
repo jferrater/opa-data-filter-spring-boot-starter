@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.joffryferrater.opadatafilterspringbootstarter.core.deserializer.QueryDeserializer;
+import com.joffryferrater.opadatafilterspringbootstarter.core.deserializer.PredicateDeserializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
         "index",
         "terms"
 })
-@JsonDeserialize(using = QueryDeserializer.class)
+@JsonDeserialize(using = PredicateDeserializer.class)
 public class Predicate {
 
     @JsonProperty("index")
