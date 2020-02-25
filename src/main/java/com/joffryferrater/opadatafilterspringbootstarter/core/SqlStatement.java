@@ -12,7 +12,7 @@ public class SqlStatement {
 
     private List<String> columns;
     private List<String> tables;
-    private List<String> predicates;
+    private String predicatesInString;
 
     public List<String> getColumns() {
         return columns;
@@ -30,21 +30,23 @@ public class SqlStatement {
         this.tables = tables;
     }
 
-    public List<String> getPredicates() {
-        return predicates;
+    public String getPredicatesInString() {
+        return predicatesInString;
     }
 
-    public void setPredicates(List<String> predicates) {
-        this.predicates = predicates;
+    public void setPredicatesInString(String predicatesInString) {
+        this.predicatesInString = predicatesInString;
     }
-
 
     public String getExecutableSqlStatements() {
         String selectStatement = selectQuery();
         String fromClause = fromClause();
+        String predicates = whereClause();
         return selectStatement +
                 " " +
                 fromClause +
+                " " +
+                predicates +
                 ";";
     }
 
@@ -60,10 +62,15 @@ public class SqlStatement {
         return from.replace("{TABLES}", tablesConcat == null ? "*" : tablesConcat);
     }
 
+    private String whereClause() {
+        return String.format(QueryType.WHERE, predicatesInString);
+    }
+
     public static class Builder {
 
         private List<String> columns;
         private List<String> tables;
+        private String predicatesInString;
 
         public Builder select(List<String> columns){
             this.columns = new ArrayList<>(columns);
@@ -79,11 +86,17 @@ public class SqlStatement {
             SqlStatement sqlStatement = new SqlStatement();
             sqlStatement.columns = columns;
             sqlStatement.tables = tables;
+            sqlStatement.predicatesInString = predicatesInString;
             return sqlStatement;
         }
 
         public Builder from(List<String> tables) {
             this.tables = new ArrayList<>(tables);
+            return this;
+        }
+
+        public Builder where(String predicatesInString) {
+            this.predicatesInString = predicatesInString;
             return this;
         }
     }

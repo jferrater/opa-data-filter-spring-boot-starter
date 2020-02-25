@@ -13,11 +13,13 @@ class SqlStatementTest {
     void shouldBuildSqlStatement() {
         List<String> columns = List.of("name", "address");
         List<String> tables = List.of("employees");
+        String predicatesInString = "(employees.name = 'Joffer' AND employees.address = 'Stockholm')";
         SqlStatement target = new SqlStatement.Builder()
                 .select(columns)
                 .from(tables)
+                .where(predicatesInString)
                 .build();
-        assertThat(target.getExecutableSqlStatements(), is("SELECT name, address FROM employees;"));
+        assertThat(target.getExecutableSqlStatements(), is("SELECT name, address FROM employees WHERE (employees.name = 'Joffer' AND employees.address = 'Stockholm');"));
     }
 
 }
