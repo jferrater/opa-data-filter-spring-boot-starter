@@ -52,13 +52,13 @@ public class SqlStatement {
 
     private String selectQuery() {
         String select = QueryType.SELECT;
-        String columnsConcat = SqlUtil.concat(columns);
+        String columnsConcat = SqlUtil.concatByComma(columns);
         return select.replace("{COLUMNS}", columnsConcat == null ? "*" : columnsConcat);
     }
 
     private String fromClause() {
         String from = QueryType.FROM;
-        String tablesConcat = SqlUtil.concat(tables);
+        String tablesConcat = SqlUtil.concatByComma(tables);
         return from.replace("{TABLES}", tablesConcat == null ? "*" : tablesConcat);
     }
 
