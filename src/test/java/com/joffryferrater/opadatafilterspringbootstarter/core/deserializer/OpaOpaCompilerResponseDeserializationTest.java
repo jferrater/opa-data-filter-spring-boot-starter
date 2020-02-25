@@ -1,6 +1,6 @@
 package com.joffryferrater.opadatafilterspringbootstarter.core.deserializer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joffryferrater.opadatafilterspringbootstarter.core.TestBase;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.OpaCompilerResponse;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicate;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Term;
@@ -8,23 +8,20 @@ import com.joffryferrater.opadatafilterspringbootstarter.model.response.Value;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class OpaOpaCompilerResponseDeserializationTest {
+public class OpaOpaCompilerResponseDeserializationTest extends TestBase {
 
     /*
      * Deserialize sample compiler response file from OPA (test classpath: opa-compiler-response.json)
      */
     @Test
     void shouldDeserializeOpaResponse() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        OpaCompilerResponse opaCompilerResponse = objectMapper.readValue(opaCompilerResponse(), OpaCompilerResponse.class);
+        OpaCompilerResponse opaCompilerResponse = opaCompilerResponse();
 
         List<List<Predicate>> queries = opaCompilerResponse.getResult().getQueries();
         assertThat(queries.size(), is(2));
@@ -50,10 +47,6 @@ public class OpaOpaCompilerResponseDeserializationTest {
 
         List<Predicate> predicateList2 = queries.get(1);
         assertThat(predicateList2.size(), is(3));
-    }
-
-    private String opaCompilerResponse() throws IOException {
-        return Files.readString(Paths.get("src/test/resources/opa-compiler-response.json"));
     }
 
 }

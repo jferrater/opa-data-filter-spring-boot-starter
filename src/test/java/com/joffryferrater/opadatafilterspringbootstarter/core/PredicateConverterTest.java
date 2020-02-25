@@ -7,14 +7,12 @@ import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicat
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class PredicateConverterTest {
+class PredicateConverterTest extends TestBase {
 
     /*
      * Deserialize sample compiler response file from OPA (test classpath: opa-compiler-response.json)
@@ -22,8 +20,7 @@ class PredicateConverterTest {
      */
     @Test
     void shouldConvertTermToSqlQuery() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        OpaCompilerResponse opaCompilerResponse = objectMapper.readValue(response(), OpaCompilerResponse.class);
+        OpaCompilerResponse opaCompilerResponse = opaCompilerResponse();
         List<List<Predicate>> queries = opaCompilerResponse.getResult().getQueries();
         Predicate predicate = queries.iterator().next().get(0);
 
@@ -33,10 +30,6 @@ class PredicateConverterTest {
         assertThat(result.getOperator(), is("="));
         assertThat(result.getLeftExpression(), is("pets.owner"));
         assertThat(result.getRightExpression(), is("alice"));
-    }
-
-    private String response() throws IOException {
-        return Files.readString(Paths.get("src/test/resources/opa-compiler-response.json"));
     }
 
 }
