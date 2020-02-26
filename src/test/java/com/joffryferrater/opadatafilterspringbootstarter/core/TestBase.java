@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 public class TestBase {
 
 
-    public OpaCompilerResponse opaCompilerResponse() throws IOException {
+    public static OpaCompilerResponse opaCompilerResponse() throws IOException {
         String opaCompilerResponseInString = Files.readString(Paths.get("src/test/resources/opa-compiler-response.json"));
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(opaCompilerResponseInString, OpaCompilerResponse.class);

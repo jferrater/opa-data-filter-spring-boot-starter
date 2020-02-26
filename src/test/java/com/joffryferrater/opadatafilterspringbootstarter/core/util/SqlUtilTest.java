@@ -19,14 +19,8 @@ class SqlUtilTest {
 
     @Test
     void shouldConcatenateAndConstraints() {
-        SqlPredicate sqlPredicate1 = new SqlPredicate();
-        sqlPredicate1.setOperator("=");
-        sqlPredicate1.setLeftExpression("pets.owner");
-        sqlPredicate1.setRightExpression("alice");
-        SqlPredicate sqlPredicate2 = new SqlPredicate();
-        sqlPredicate2.setOperator("=");
-        sqlPredicate2.setLeftExpression("pets.name");
-        sqlPredicate2.setRightExpression("fluffy");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "=", "alice");
+        SqlPredicate sqlPredicate2 = new SqlPredicate("pets.name", "=", "fluffy");
         List<SqlPredicate> predicates = List.of(sqlPredicate1, sqlPredicate2);
 
         String result = SqlUtil.concatByAndOperation(predicates);

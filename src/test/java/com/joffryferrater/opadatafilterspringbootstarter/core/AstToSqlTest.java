@@ -2,7 +2,9 @@ package com.joffryferrater.opadatafilterspringbootstarter.core;
 
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.OpaCompilerResponse;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicate;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -14,19 +16,31 @@ import static org.hamcrest.MatcherAssert.assertThat;
 class AstToSqlTest extends TestBase {
 
     private AstToSql target;
+    private static OpaCompilerResponse opaCompilerResponse;
+
+    @DisplayName("Given a sample Open Policy Agent compiler API response")
+    @BeforeAll
+    static void init() throws IOException {
+        opaCompilerResponse = opaCompilerResponse();
+    }
 
     @BeforeEach
     void setUp() {
-        target = new AstToSql();
+        target = new AstToSql(opaCompilerResponse);
     }
 
     @Test
-    void shouldGetConstraintsFromPredicates() throws IOException {
-        OpaCompilerResponse opaCompilerResponse = opaCompilerResponse();
+    void shouldGetConstraintsFromPredicates() {
         List<Predicate> predicates = opaCompilerResponse.getResult().getQueries().get(0);
 
         String result = target.andConstraints(predicates);
 
         assertThat(result, is("(pets.owner = 'alice' AND pets.name = 'fluffy')"));
+    }
+
+    @Test
+    void shouldGetSqlQueryStatements() {
+        String result = target.getSqlQueryStatements();
+        assertThat(result, is("SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy')"));
     }
 }

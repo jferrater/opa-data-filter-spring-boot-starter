@@ -3,8 +3,18 @@ package com.joffryferrater.opadatafilterspringbootstarter.core.elements;
 public class SqlPredicate {
 
     private String leftExpression;
-    private String rightExpression;
     private String operator;
+    private String rightExpression;
+
+    public SqlPredicate() {
+    }
+
+    public SqlPredicate(String leftExpression, String operator, String rightExpression) {
+        this();
+        this.leftExpression = leftExpression;
+        this.operator = operator;
+        this.rightExpression = rightExpression;
+    }
 
     public String getLeftExpression() {
         return leftExpression;
