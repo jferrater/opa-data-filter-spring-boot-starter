@@ -13,7 +13,7 @@ class SqlUtilTest {
     @Test
     void shouldConcatenateSetOfStrings() {
         List<String> strings = List.of("name", "address");
-        String result = SqlUtil.concatByComma(strings);
+        String result = SqlUtil.concat(strings, ", ");
         assertThat(result, is("name, address"));
     }
 

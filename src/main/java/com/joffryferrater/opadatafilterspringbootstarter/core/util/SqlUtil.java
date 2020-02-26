@@ -10,14 +10,14 @@ public class SqlUtil {
     private SqlUtil() {
     }
 
-    public static String concatByComma(List<String> strings) {
+    public static String concat(List<String> strings, String separator) {
         if (strings.isEmpty()) return null;
         int size = strings.size();
         int i = 0;
         StringBuilder stringBuilder = new StringBuilder();
         for (String s : strings) {
             stringBuilder.append(s);
-            if (i != size - 1) stringBuilder.append(", ");
+            if (i != size - 1) stringBuilder.append(separator);
             i++;
         }
         return stringBuilder.toString();
@@ -38,7 +38,7 @@ public class SqlUtil {
             stringBuilder.append(predicate.getRightExpression());
             stringBuilder.append("'");
             if (i != size - 1) {
-                stringBuilder.append(" " + LogicalOperation.AND.name() + " ");
+                stringBuilder.append(" ").append(LogicalOperation.AND.name()).append(" ");
             }
             i++;
         }
