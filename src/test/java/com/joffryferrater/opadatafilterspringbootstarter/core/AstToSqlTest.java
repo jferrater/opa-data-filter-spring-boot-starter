@@ -1,5 +1,6 @@
 package com.joffryferrater.opadatafilterspringbootstarter.core;
 
+import com.joffryferrater.opadatafilterspringbootstarter.model.request.PartialRequest;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.OpaCompilerResponse;
 import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicate;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,14 +28,16 @@ class AstToSqlTest extends TestBase {
 
     @BeforeEach
     void setUp() {
-        target = new AstToSql(opaCompilerResponse);
+        PartialRequest partialRequest = new PartialRequest();
+        partialRequest.setUnknowns(Set.of("data.pets"));
+        target = new AstToSql(partialRequest, opaCompilerResponse);
     }
 
     @Test
     void shouldGetConstraintsFromPredicates() {
         List<Predicate> predicates = opaCompilerResponse.getResult().getQueries().get(0);
 
-        String result = target.andConstraints(predicates);
+        String result = target.andOperationConstraints(predicates);
 
         assertThat(result, is("(pets.owner = 'alice' AND pets.name = 'fluffy')"));
     }
@@ -41,6 +45,6 @@ class AstToSqlTest extends TestBase {
     @Test
     void shouldGetSqlQueryStatements() {
         String result = target.getSqlQueryStatements();
-        assertThat(result, is("SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy')"));
+        assertThat(result, is("SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy');"));
     }
 }

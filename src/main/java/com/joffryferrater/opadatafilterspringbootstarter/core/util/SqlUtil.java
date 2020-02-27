@@ -17,10 +17,17 @@ public class SqlUtil {
         StringBuilder stringBuilder = new StringBuilder();
         for (String s : strings) {
             stringBuilder.append(s);
-            if (i != size - 1) stringBuilder.append(separator);
+            if (i != size - 1) {
+                stringBuilder.append(separator);
+            }
             i++;
         }
         return stringBuilder.toString();
+    }
+
+    public static String getTableName(String opaUnknownPropertyValue) {
+        String[] strings = opaUnknownPropertyValue.split("\\.");
+        return strings[1];
     }
 
     public static String concatByAndOperation(List<SqlPredicate> predicates) {

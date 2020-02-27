@@ -52,6 +52,9 @@ public class SqlStatement {
 
     private String selectQuery() {
         String select = QueryType.SELECT;
+        if(columns.contains("*")) {
+            return select.replace("{COLUMNS}", "*");
+        }
         String columnsConcat = SqlUtil.concat(columns, ", ");
         return select.replace("{COLUMNS}", columnsConcat == null ? "*" : columnsConcat);
     }
@@ -68,8 +71,8 @@ public class SqlStatement {
 
     public static class Builder {
 
-        private List<String> columns;
-        private List<String> tables;
+        private List<String> columns = new ArrayList<>();
+        private List<String> tables = new ArrayList<>();
         private String predicatesInString;
 
         public Builder select(List<String> columns){

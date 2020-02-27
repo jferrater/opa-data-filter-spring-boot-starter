@@ -27,4 +27,10 @@ class SqlUtilTest {
 
         assertThat(result, is("(pets.owner = 'alice' AND pets.name = 'fluffy')"));
     }
+
+    @Test
+    void shouldGetTheTableName() {
+        String opaUnknownPropertyValue = "data.pets";
+        assertThat(SqlUtil.getTableName(opaUnknownPropertyValue), is("pets"));
+    }
 }
