@@ -19,6 +19,7 @@ class AstToSqlTest extends TestBase {
 
     private AstToSql target;
     private static OpaCompilerResponse opaCompilerResponse;
+    private PartialRequest partialRequest;
 
     @DisplayName("Given a sample Open Policy Agent compiler API response")
     @BeforeAll
@@ -28,9 +29,9 @@ class AstToSqlTest extends TestBase {
 
     @BeforeEach
     void setUp() {
-        PartialRequest partialRequest = new PartialRequest();
+        partialRequest = new PartialRequest();
         partialRequest.setUnknowns(Set.of("data.pets"));
-        target = new AstToSql(partialRequest, opaCompilerResponse);
+        target = new AstToSql(opaCompilerResponse);
     }
 
     @Test
@@ -43,8 +44,14 @@ class AstToSqlTest extends TestBase {
     }
 
     @Test
-    void shouldGetSqlQueryStatements() {
-        String result = target.getSqlQueryStatements();
+    void shouldGetSqlQueryStatementsFromPartialRequests() {
+        String result = target.getSqlQueryStatements(partialRequest);
+        assertThat(result, is("SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy');"));
+    }
+
+    @Test
+    void shouldGetSqlQueryStatementsFromUnknowns() {
+        String result = target.getSqlQueryStatements(Set.of("data.pets"));
         assertThat(result, is("SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy');"));
     }
 }

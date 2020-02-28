@@ -9,21 +9,29 @@ import com.joffryferrater.opadatafilterspringbootstarter.model.response.Predicat
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
 public class AstToSql {
 
     private OpaCompilerResponse opaCompilerResponse;
-    private PartialRequest partialRequest;
 
-    public AstToSql(PartialRequest partialRequest, OpaCompilerResponse opaCompilerResponse) {
+    public AstToSql(OpaCompilerResponse opaCompilerResponse) {
         this.opaCompilerResponse = opaCompilerResponse;
-        this.partialRequest = partialRequest;
     }
 
-    public String getSqlQueryStatements() {
+    public String getSqlQueryStatements(PartialRequest partialRequest) {
         List<String> unknowns = new ArrayList<>(partialRequest.getUnknowns());
+        return sqlQueries(unknowns);
+    }
+
+    public String getSqlQueryStatements(Set<String> opaPartialRequestUnknownProperty) {
+        List<String> unknowns = new ArrayList<>(opaPartialRequestUnknownProperty);
+        return sqlQueries(unknowns);
+    }
+
+    private String sqlQueries(List<String> unknowns) {
         SqlStatement sqlStatement = new SqlStatement.Builder()
                 .select("*")
                 .from(unknowns.stream().map(SqlUtil::getTableName).collect(toList()))
