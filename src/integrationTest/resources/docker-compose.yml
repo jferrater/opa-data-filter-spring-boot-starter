@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  maria-database:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MangaonTaNiny0!
+      MYSQL_DATABASE: integrationTest
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: MangaonTaNiny0!
+    ports:
+    - "3306:3306"
+
+  opa-server:
+    build:
+      context: ./
+      dockerfile: Dockerfile_OPA
+    depends_on:
+      - maria-database
+    ports:
+    - "8181:8181"
