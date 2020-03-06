@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.joffer.opa.ast.to.sql.query.config.OpaConfig
+        com.joffer.opa.ast.to.sql.query.config.OpaConfig,\
+        com.joffer.opa.ast.to.sql.query.AppConfig
