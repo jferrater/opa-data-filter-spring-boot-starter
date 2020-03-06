@@ -70,7 +70,7 @@ publishing {
 				}
 			}
 			groupId = 'com.joffer'
-			artifactId = 'opa-ast-to-sql-query'
+			artifactId = 'opa-ast-to-sql-query-java'
 			version = '0.1'
 			from components.java
 		}
