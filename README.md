@@ -11,14 +11,18 @@ opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Bo
 ```console    
 ./gradlew clean build
 ```
-
 ### Publishing to Maven local
 ```console
 ./gradlew publishToMavenLocal
 ```
-
+### Running the Integration Test
+1. Install docker-compose
+2. Run gradle command:
+```console
+./gradlew integrationTest
+```
 ### Usage
-1. Add the dependency to the Spring Boot project.  
+1. Add the dependency to the Spring Boot project. Make sure to add mavenLocal() as a repository
 ```groovy
 implementation group:'com.joffer', name: 'opa-ast-to-sql-query-java', version: '0.1'
 ````  
