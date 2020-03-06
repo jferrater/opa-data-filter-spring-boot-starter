@@ -7,7 +7,7 @@ plugins {
 	id 'org.unbroken-dome.test-sets' version '2.2.1'
 }
 
-group = 'com.joffer'
+group = 'com.github.jferrater'
 version = '0.1'
 sourceCompatibility = '1.11'
 targetCompatibility = '1.11'
@@ -69,7 +69,7 @@ publishing {
 					fromResolutionResult()
 				}
 			}
-			groupId = 'com.joffer'
+			groupId = 'com.github.jferrater'
 			artifactId = 'opa-ast-to-sql-query-java'
 			version = '0.1'
 			from components.java

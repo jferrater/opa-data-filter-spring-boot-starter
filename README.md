@@ -24,7 +24,7 @@ opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Bo
 ### Usage
 1. Add the dependency to the Spring Boot project. Make sure to add mavenLocal() as a repository
 ```groovy
-implementation group:'com.joffer', name: 'opa-ast-to-sql-query-java', version: '0.1'
+implementation group:'com.github.jferrater', name: 'opa-ast-to-sql-query-java', version: '0.1'
 ````  
 2. Add the Open Policy Agent compile API endpoint to the application.yml or application.properties
 ````yaml
@@ -39,8 +39,8 @@ package com.example.opadatafilterdemo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joffer.opa.ast.to.sql.query.model.request.PartialRequest;
-import com.joffer.opa.ast.to.sql.query.service.OpaClientService;
+import PartialRequest;
+import OpaClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
