@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.joffryferrater.opadatafilterspringbootstarter.AppConfig
+com.joffer.opa.ast.to.sql.query.config.OpaConfig
