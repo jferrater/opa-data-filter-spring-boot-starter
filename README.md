@@ -1,2 +1,2 @@
-# opa-data-filter-spring-boot-starter
+# opa-ast-to-sql-query
 
