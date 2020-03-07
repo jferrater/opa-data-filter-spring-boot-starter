@@ -93,7 +93,7 @@ publishing {
 
 modifyPom {
 	project {
-		name 'teachUpload'
+		name 'opa-ast-to-sql-query-java'
 		description 'Spring Boot library for translating Open Policy Agent compiler API response to SQL query/statements.'
 		url 'https://github.com/jferrater/opa-ast-to-sql-query-java'
 		inceptionYear '2020'
