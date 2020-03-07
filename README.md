@@ -1,32 +1,25 @@
 # opa-ast-to-sql-query-java
+opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Boot application to translate OPA AST to a simple SQL statements in string format.
 
 Open Policy Agent (OPA) supports partial evaluation through its [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api).
 The compile API response is a set of queries which is an Abstract Syntax Tree (AST).
 See this blog post, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4)
 for more info. The integration test of this project is based on the blog mentioned.
 
-opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Boot application to translate OPA AST to a simple SQL statements in string format.
-
-### Building the project
-```console    
-./gradlew clean build
-```
-### Publishing to Maven local
-```console
-./gradlew publishToMavenLocal
-```
-### Running the Integration Test
-1. Install docker-compose
-2. Run gradle command:
-```console
-./gradlew integrationTest
-```
 ### Usage
-1. Add the dependency to the Spring Boot project. Make sure to add mavenLocal() as a repository
+1. Add dependency from Maven Central. For gradle project:
 ```groovy
-implementation group:'com.github.jferrater', name: 'opa-ast-to-sql-query-java', version: '0.1'
+implementation group:'com.github.jferrater', name: 'opa-ast-to-sql-query-java', version: '0.1.1'
 ````  
-2. Add the Open Policy Agent compile API endpoint to the application.yml or application.properties
+or for maven project:
+````xml
+<dependency>
+    <groupId>com.github.jferrater</groupId>
+    <artifactId>opa-ast-to-sql-query-java</artifactId>
+    <version>0.1.1</version>
+</dependency>
+````
+2. Add the Open Policy Agent compile API endpoint to the application.yml or application.properties of the Spring Boot project.
 ````yaml
 opa:
   authorization:
@@ -39,8 +32,8 @@ package com.example.opadatafilterdemo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import PartialRequest;
-import OpaClientService;
+import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
+import com.github.jferrater.opa.ast.to.sql.query.service.OpaClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +64,14 @@ public class MyService {
                 "  }";
     }
 }
+```
+
+### Running the Integration Test
+The integration test has a sample use case from the blog, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4)
+1. Install docker-compose
+2. Run gradle command:
+```console
+./gradlew integrationTest
 ```
 
 ### To be added
