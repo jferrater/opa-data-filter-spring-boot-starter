@@ -21,7 +21,7 @@ apply plugin: 'com.bmuschko.nexus'
 
 group = 'com.github.jferrater'
 archivesBaseName = 'opa-ast-to-sql-query-java'
-version = '0.1.1'
+version = '0.1.2-SNAPSHOT'
 
 sourceCompatibility = '1.11'
 targetCompatibility = '1.11'
@@ -85,7 +85,7 @@ publishing {
 			}
 			groupId = 'com.github.jferrater'
 			artifactId = 'opa-ast-to-sql-query-java'
-			version = '0.1'
+			version = '0.1.2-SNAPSHOT'
 			from components.java
 		}
 	}

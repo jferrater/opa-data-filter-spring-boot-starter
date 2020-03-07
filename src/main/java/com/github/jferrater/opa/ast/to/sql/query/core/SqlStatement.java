@@ -8,7 +8,8 @@ import java.util.List;
 
 public class SqlStatement {
 
-    private SqlStatement(){}
+    private SqlStatement() {
+    }
 
     private List<String> columns;
     private List<String> tables;
@@ -52,7 +53,7 @@ public class SqlStatement {
 
     private String selectQuery() {
         String select = QueryType.SELECT;
-        if(columns.contains("*")) {
+        if (columns.contains("*")) {
             return select.replace("{COLUMNS}", "*");
         }
         String columnsConcat = SqlUtil.concat(columns, ", ");
@@ -66,7 +67,7 @@ public class SqlStatement {
     }
 
     private String whereClause() {
-        return String.format(QueryType.WHERE, predicatesInString);
+        return predicatesInString.isBlank() ? "" : String.format(QueryType.WHERE, predicatesInString);
     }
 
     public static class Builder {
@@ -75,12 +76,12 @@ public class SqlStatement {
         private List<String> tables = new ArrayList<>();
         private String predicatesInString;
 
-        public Builder select(List<String> columns){
+        public Builder select(List<String> columns) {
             this.columns = new ArrayList<>(columns);
             return this;
         }
 
-        public Builder select(String column){
+        public Builder select(String column) {
             this.columns.add(column);
             return this;
         }
