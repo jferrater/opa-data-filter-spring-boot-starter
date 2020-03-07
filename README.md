@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java.svg?branch=master)](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java)
+
 # opa-ast-to-sql-query-java
 opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Boot application to translate OPA AST to a simple SQL statements in string format.
 
