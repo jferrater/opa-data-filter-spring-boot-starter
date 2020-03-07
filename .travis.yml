@@ -31,6 +31,7 @@ jobs:
 #        - chmod +x docker-compose
 #        - sudo mv docker-compose /usr/local/bin
         - docker-compose --version
+        - docker network prune --filter "until=24h"
         - docker ps -a
       script: ./gradlew integrationTest
       after_script:
