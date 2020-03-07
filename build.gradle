@@ -1,3 +1,12 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
@@ -5,10 +14,15 @@ plugins {
 	id 'maven'
 	id 'maven-publish'
 	id 'org.unbroken-dome.test-sets' version '2.2.1'
+	id 'io.codearte.nexus-staging' version '0.11.0'
 }
 
+apply plugin: 'com.bmuschko.nexus'
+
 group = 'com.github.jferrater'
-version = '0.1'
+archivesBaseName = 'opa-ast-to-sql-query-java'
+version = '0.1.1'
+
 sourceCompatibility = '1.11'
 targetCompatibility = '1.11'
 
@@ -75,4 +89,47 @@ publishing {
 			from components.java
 		}
 	}
+}
+
+modifyPom {
+	project {
+		name 'teachUpload'
+		description 'Spring Boot library for translating Open Policy Agent compiler API response to SQL query/statements.'
+		url 'https://github.com/jferrater/opa-ast-to-sql-query-java'
+		inceptionYear '2020'
+
+		scm {
+			url 'https://github.com/jferrater/opa-ast-to-sql-query-java'
+			connection 'scm:https://github.com/jferrater/opa-ast-to-sql-query-java.git'
+			developerConnection 'scm:https://github.com/jferrater/opa-ast-to-sql-query-java.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+			developer {
+				id 'jferrater'
+				name 'Joffry Ferrater'
+				email 'joffry.ferrater@gmail.com'
+			}
+		}
+	}
+}
+
+extraArchive {
+	sources = true
+	tests = true
+	javadoc = true
+}
+
+nexus {
+	sign = true
+	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 }
