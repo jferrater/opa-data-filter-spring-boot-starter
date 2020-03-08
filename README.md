@@ -77,5 +77,6 @@ The integration test has a sample use case from the blog, [Write Policy in OPA. 
 ./gradlew integrationTest
 ```
 
-### To be added
+### On going:
+- support for SQL dialect
 - support for OPA AST data types

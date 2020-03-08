@@ -9,4 +9,5 @@ public class OpaConstants {
     public static final String STRING = "string";
     public static final String VAR = "var";
     public static final String INDEX = "index";
+    public static final String BOOLEAN = "boolean";
 }

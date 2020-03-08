@@ -18,7 +18,7 @@ import java.util.List;
 
 import static com.github.jferrater.opa.ast.to.sql.query.core.OpaConstants.*;
 
-public class PredicateDeserializer extends JsonDeserializer<Predicate> {
+public class    PredicateDeserializer extends JsonDeserializer<Predicate> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PredicateDeserializer.class);
 
@@ -61,6 +61,9 @@ public class PredicateDeserializer extends JsonDeserializer<Predicate> {
         switch (valueType) {
             case NUMBER:
                 value.setValues(nodeValue.asInt());
+                break;
+            case BOOLEAN:
+                value.setValues(nodeValue.asBoolean());
                 break;
             case STRING:
             case VAR:
