@@ -13,12 +13,13 @@ plugins {
 	id 'java'
 	id 'maven'
 	id 'maven-publish'
+	id 'jacoco'
+	id "org.sonarqube" version "2.7"
 	id 'org.unbroken-dome.test-sets' version '2.2.1'
 	id 'io.codearte.nexus-staging' version '0.11.0'
 }
 
 apply plugin: 'com.bmuschko.nexus'
-apply plugin: 'jacoco'
 
 group = 'com.github.jferrater'
 archivesBaseName = 'opa-ast-to-sql-query-java'
@@ -78,6 +79,25 @@ integrationTest {
 
 	testLogging {
 		events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+	}
+}
+
+sonarqube {
+	properties {
+		property 'sonar.projectName', 'Open Policy Agent AST to SQL Query Spring Boot Library'
+		property 'sonar.github.repository', 'jferrater/opa-ast-to-sql-query-java'
+		property 'sonar.projectKey', 'jferrater_opa-ast-to-sql-query-java'
+		property 'sonar.organization', 'jferrater'
+		property 'sonar.host.url', 'https://sonarcloud.io'
+		property 'sonar.projectVersion', version
+		property 'sonar.login', System.getenv('SONAR_TOKEN')
+		property 'sonar.java.coveragePlugin', 'jacoco'
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
 	}
 }
 
