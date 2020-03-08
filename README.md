@@ -1,3 +1,4 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-ast-to-sql-query-java/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-ast-to-sql-query-java/0.1.1/jar)
 [![Build Status](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java.svg?branch=master)](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java)
 
 # opa-ast-to-sql-query-java
