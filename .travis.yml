@@ -12,14 +12,7 @@ addons:
   apt:
     packages:
       - docker-ce
-  sonarcloud:
-    organization: "jferrater" # the key of the org you chose at step #3
-    token:
-      secure: ${SONAR_TOKEN}
-git:
-  depth: false
-script:
-  - sonar-scanner
+services: docker
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -45,3 +38,13 @@ jobs:
       script: ./gradlew clean build integrationTest
       after_script:
         - docker ps -a
+    - stage: Run Sonar analysis...
+      addons:
+        sonarcloud:
+          organization: "jferrater"
+          token:
+            secure: ${SONAR_TOKEN}
+      git:
+        depth: false
+      script:
+        - sonar-scanner
