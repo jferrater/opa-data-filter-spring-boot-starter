@@ -1,13 +1,10 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-ast-to-sql-query-java/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-ast-to-sql-query-java/0.1.1/jar)
-[![Build Status](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java.svg?branch=master)](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java)
+# opa-ast-to-sql-query-java [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-ast-to-sql-query-java/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-ast-to-sql-query-java/0.1.1/jar)
+[![Build Status](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java.svg?branch=master)](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java)[![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-ast-to-sql-query-java&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-ast-to-sql-query-java)
 
-# opa-ast-to-sql-query-java
-opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Boot application to translate OPA AST to a simple SQL statements in string format.
+opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Boot application to translate Open Policy Agent (OPA) Abstract Syntax Tree (AST) to a simple SQL statements in string format.
 
-Open Policy Agent (OPA) supports partial evaluation through its [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api).
-The compile API response is a set of queries which is an Abstract Syntax Tree (AST).
-See this blog post, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4)
-for more info. The integration test of this project is based on the blog mentioned.
+OPA supports partial evaluation through its [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api). The compile API response is a set of queries which is an AST.
+See this blog post for more info, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4). The integration test of this project is based on the blog mentioned.
 
 ### Usage
 1. Add dependency from Maven Central. For gradle project:
