@@ -8,23 +8,22 @@ notifications:
 
 jdk:
   - openjdk11
-addons:
-  apt:
-    packages:
-      - docker-ce
-services: docker
-
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
 
 jobs:
   include:
     - stage: Build and run unit and integration tests...
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+      addons:
+        apt:
+          packages:
+            - docker-ce
+      services: docker
       before_install:
         - sudo apt-get update
         - docker-compose --version
