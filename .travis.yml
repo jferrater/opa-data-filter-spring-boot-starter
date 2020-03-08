@@ -11,40 +11,38 @@ jdk:
 
 jobs:
   include:
-#    - stage: Build and run unit and integration tests...
-#      before_cache:
-#        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-#        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-#      cache:
-#        directories:
-#          - $HOME/.gradle/caches/
-#          - $HOME/.gradle/wrapper/
-#      addons:
-#        apt:
-#          packages:
-#            - docker-ce
-#      services: docker
-#      before_install:
-#        - sudo apt-get update
-#        - docker-compose --version
-#        - sudo rm /usr/local/bin/docker-compose
-#        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-#        - chmod +x docker-compose
-#        - sudo mv docker-compose /usr/local/bin
-#        - docker-compose --version
-#        - docker --version
-#        - docker ps -a
-#      script: ./gradlew clean build integrationTest
-#      after_script:
-#        - docker ps -a
-    - stage: Run Sonar analysis...
+    - stage: Build and run unit and integration tests...
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+      cache:
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
       addons:
+        apt:
+          packages:
+            - docker-ce
         sonarcloud:
           organization: "jferrater"
           token: ${SONAR_TOKEN}
+      services: docker
       git:
         depth: false
+      before_install:
+        - sudo apt-get update
+        - docker-compose --version
+        - sudo rm /usr/local/bin/docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
+        - docker-compose --version
+        - docker --version
+        - docker ps -a
       script:
-        #- sonar-scanner
-        - ./gradlew build jacocoTestReport sonarqube -Dsonar.verbose=true
+        - ./gradlew clean build
+        - ./gradlew integrationTest
+        - ./gradlew jacocoTestReport sonarqube -Dsonar.verbose=true
+      after_script:
+        - docker ps -a
 
