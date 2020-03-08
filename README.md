@@ -1,4 +1,5 @@
-# opa-ast-to-sql-query-java [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-ast-to-sql-query-java/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-ast-to-sql-query-java/0.1.1/jar)
+# opa-ast-to-sql-query-java 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-ast-to-sql-query-java/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-ast-to-sql-query-java/0.1.1/jar)
 [![Build Status](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java.svg?branch=master)](https://travis-ci.com/jferrater/opa-ast-to-sql-query-java)[![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-ast-to-sql-query-java&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-ast-to-sql-query-java)
 
 opa-ast-to-sql-query-java is a Spring Boot library that can be used in Spring Boot application to translate Open Policy Agent (OPA) Abstract Syntax Tree (AST) to a simple SQL statements in string format.
