@@ -8,8 +8,10 @@ services:
       MYSQL_DATABASE: integrationTest
       MYSQL_USER: admin
       MYSQL_PASSWORD: MangaonTaNiny0!
+    volumes:
+      - "./sql/:/docker-entrypoint-initdb.d/"
     ports:
-    - "3306:3306"
+      - "3306:3306"
 
   opa-server:
     build:
@@ -18,4 +20,4 @@ services:
     depends_on:
       - maria-database
     ports:
-    - "8181:8181"
+      - "8181:8181"
