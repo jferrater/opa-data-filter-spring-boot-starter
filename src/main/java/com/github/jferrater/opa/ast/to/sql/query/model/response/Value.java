@@ -14,7 +14,7 @@ public class Value {
     @JsonProperty("type")
     private String type;
     @JsonProperty("value")
-    private Object value;
+    private Object object;
 
     public String getType() {
         return type;
@@ -25,10 +25,10 @@ public class Value {
     }
 
     public Object getValues() {
-        return value;
+        return object;
     }
 
     public void setValues(Object values) {
-        this.value = values;
+        this.object = values;
     }
 }

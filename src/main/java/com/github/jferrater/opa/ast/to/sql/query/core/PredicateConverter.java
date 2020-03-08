@@ -42,7 +42,8 @@ public class PredicateConverter {
             String right = getExpression(termValue1);
             sqlPredicate.setRightExpression(right);
         }
-        LOGGER.info("SQL predicate: {}", sqlPredicate.toString());
+        String toString = sqlPredicate.toString();
+        LOGGER.info("SQL predicate: {}", toString);
         return sqlPredicate;
     }
 

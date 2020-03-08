@@ -1,14 +1,13 @@
 package com.github.jferrater.opa.ast.to.sql.query.core.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.github.jferrater.opa.ast.to.sql.query.model.response.Value;
 import com.github.jferrater.opa.ast.to.sql.query.model.response.Predicate;
 import com.github.jferrater.opa.ast.to.sql.query.model.response.Term;
+import com.github.jferrater.opa.ast.to.sql.query.model.response.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +22,7 @@ public class    PredicateDeserializer extends JsonDeserializer<Predicate> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PredicateDeserializer.class);
 
     @Override
-    public Predicate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public Predicate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         ObjectCodec objectCodec = jsonParser.getCodec();
         JsonNode jsonNode = objectCodec.readTree(jsonParser);
         JsonNode termsNode = jsonNode.get(TERMS);
@@ -70,7 +69,8 @@ public class    PredicateDeserializer extends JsonDeserializer<Predicate> {
                 value.setValues(nodeValue.asText());
                 break;
             default:
-                LOGGER.warn("Value type '{}' is not yet supported", valueNode.toPrettyString());
+                String toPrettyString = valueNode.toPrettyString();
+                LOGGER.warn("Value type '{}' is not yet supported", toPrettyString);
         }
         return value;
     }
@@ -81,7 +81,8 @@ public class    PredicateDeserializer extends JsonDeserializer<Predicate> {
         } else if (jsonNode.isTextual()) {
             term.setValue(jsonNode.asText());
         } else {
-            LOGGER.warn("Query type '{}' is not yet supported", jsonNode.toPrettyString());
+            String toPrettyString = jsonNode.toPrettyString();
+            LOGGER.warn("Query type '{}' is not yet supported", toPrettyString);
         }
     }
 
