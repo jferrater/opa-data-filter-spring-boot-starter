@@ -1,14 +1,16 @@
 package com.github.jferrater.opa.ast.to.sql.query.service;
 
-import com.github.jferrater.opa.ast.to.sql.query.core.AstToSql;
-import com.github.jferrater.opa.ast.to.sql.query.exception.ApiError;
-import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.to.sql.query.config.OpaConfig;
+import com.github.jferrater.opa.ast.to.sql.query.core.AstToSql;
 import com.github.jferrater.opa.ast.to.sql.query.exception.OpaClientException;
+import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.to.sql.query.model.response.OpaCompilerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -39,10 +41,9 @@ public class OpaClientService {
         LOGGER.info("Sending partial request to Open Policy Agent server");
         ResponseEntity<OpaCompilerResponse> responseResponseEntity = opaClient.postForEntity(opaConfig.getUrl(), httpEntity, OpaCompilerResponse.class);
         if(200 != responseResponseEntity.getStatusCodeValue()) {
-            HttpStatus statusCode = responseResponseEntity.getStatusCode();
-            String message = String.format("Open Policy Agent server returns an error: %d", statusCode.value());
-            ApiError apiError = new ApiError(message, statusCode);
-            throw new OpaClientException(apiError);
+            int statusCode = responseResponseEntity.getStatusCodeValue();
+            String message = String.format("Open Policy Agent server returns an error: %d", statusCode);
+            throw new OpaClientException(message);
         }
         AstToSql astToSql = new AstToSql(responseResponseEntity.getBody());
         String sqlQueryStatements = astToSql.getSqlQueryStatements(partialRequest);
