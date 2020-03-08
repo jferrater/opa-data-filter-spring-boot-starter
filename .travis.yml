@@ -46,5 +46,5 @@ jobs:
         depth: false
       script:
         #- sonar-scanner
-        - ./gradlew build sonarqube -Dsonar.verbose=true
+        - ./gradlew build jacocoTestReport sonarqube -Dsonar.verbose=true
 
