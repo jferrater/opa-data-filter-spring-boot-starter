@@ -75,6 +75,10 @@ The integration test has a sample use case from the blog, [Write Policy in OPA. 
 ./gradlew integrationTest
 ```
 
+### Tested on Databases (refer to the integration tests):
+- MariaDB
+- Postgresql
+
 ### On going:
 - support for SQL dialect
 - support for OPA AST data types

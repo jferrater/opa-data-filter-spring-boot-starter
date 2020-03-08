@@ -13,6 +13,18 @@ services:
     ports:
       - "3306:3306"
 
+  postgresql-database:
+    image: postgres:12.1
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: MangaonTaNiny0!
+      POSTGRES_DB: integrationTest
+    volumes:
+      - "./sql/:/docker-entrypoint-initdb.d/"
+    ports:
+      - "5432:5432"
+
   opa-server:
     build:
       context: ./
