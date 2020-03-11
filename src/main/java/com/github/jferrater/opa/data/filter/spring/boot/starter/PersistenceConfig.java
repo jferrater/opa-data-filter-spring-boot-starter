@@ -1,6 +1,7 @@
 package com.github.jferrater.opa.data.filter.spring.boot.starter;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -28,12 +29,13 @@ public class PersistenceConfig {
     public LocalSessionFactoryBean sessionFactory() {
         final LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[] { "com.github.jferrater.opa.data.filter.spring.boot.starter" });
+        sessionFactory.setPackagesToScan("com.github.jferrater.opa.data.filter.spring.boot.starter");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public DataSource dataSource() {
         final HikariDataSource dataSource = new HikariDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
@@ -52,9 +54,7 @@ public class PersistenceConfig {
 
     private final Properties hibernateProperties() {
         final Properties hibernateProperties = new Properties();
-        //hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
         hibernateProperties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
-
         return hibernateProperties;
     }
 }
