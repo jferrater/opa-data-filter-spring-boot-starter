@@ -2,11 +2,13 @@ package com.github.jferrater.opa.data.filter.spring.boot.starter;
 
 import com.github.jferrater.opa.ast.to.sql.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.to.sql.query.service.OpaClientService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +22,12 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         classes = {
-                TestConfiguration.class,
                 PersistenceConfig.class,
                 OpaGenericDataFilterDao.class,
                 MyRepository.class
         }
 )
+@ActiveProfiles("test")
 class OpaGenericDataFilterDaoTest {
 
     private static final String QUERY = "SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy');";
@@ -35,6 +37,9 @@ class OpaGenericDataFilterDaoTest {
     @MockBean
     private OpaClientService opaClientService;
 
+    @DisplayName(
+            "Given a classpath:application-test.yml profile"
+    )
     @Test
     @Transactional
     void shouldFilterData() {
@@ -44,6 +49,11 @@ class OpaGenericDataFilterDaoTest {
         List<Pet> results = target.filterData(partialRequest);
 
         assertThat(results.size(), is(1));
+        Pet pet = results.get(0);
+        assertThat(pet.getName(), is("fluffy"));
+        assertThat(pet.getOwner(), is("alice"));
+        assertThat(pet.getVeterinarian(), is("alice"));
+        assertThat(pet.getClinic(), is("SOMA"));
     }
 
 }

@@ -69,7 +69,7 @@ public class MyService {
 
 ### Running the Integration Test
 The integration test has a sample use case from the blog, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4)
-1. Install docker-compose
+1. Install docker-compose version 1.25.4 or later. (Note: some docker-compose version may not be compatible with the TestContainer framework used in the test.)
 2. Run gradle command:
 ```console
 ./gradlew integrationTest
