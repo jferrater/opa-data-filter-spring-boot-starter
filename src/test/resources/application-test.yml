@@ -11,3 +11,5 @@ opa:
       hibernate:
         dialect: "org.hibernate.dialect.H2Dialect"
         show_sql: true
+        entities:
+          package-name: "com.github.jferrater.opa.data.filter.spring.boot.starter"

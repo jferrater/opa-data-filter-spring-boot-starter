@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
         com.github.jferrater.opa.ast.to.sql.query.config.OpaConfig,\
-        com.github.jferrater.opa.ast.to.sql.query.AppConfig
+        com.github.jferrater.opa.ast.to.sql.query.AppConfig, \
+        com.github.jferrater.opa.data.filter.spring.boot.starter.PersistenceConfig

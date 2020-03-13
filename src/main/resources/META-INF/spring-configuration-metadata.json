@@ -49,10 +49,28 @@
       "defaultValue": true
     },
     {
-      "name": "opa.authorization.hibernate.cache.region.factory_class",
+      "name": "opa.authorization.datasource.hibernate.cache.region.factory_class",
       "type": "java.lang.String",
       "description": "The Hibernate cache region factory class to use for caching",
       "defaultValue": "org.hibernate.cache.ehcache.EhCacheRegionFactory"
+    },
+    {
+      "name": "opa.authorization.datasource.hibernate.entities.package-name",
+      "type": "java.lang.String",
+      "description": "The package name of the entity classes"
+    }
+  ],
+  "hints": [
+    {
+      "name": "spring.jmx.server",
+      "providers": [
+        {
+          "name": "spring-bean-reference",
+          "parameters": {
+            "target": "javax.management.MBeanServer"
+          }
+        }
+      ]
     }
   ]
 }

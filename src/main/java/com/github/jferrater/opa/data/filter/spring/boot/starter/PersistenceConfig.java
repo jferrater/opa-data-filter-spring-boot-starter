@@ -29,7 +29,8 @@ public class PersistenceConfig {
     public LocalSessionFactoryBean sessionFactory() {
         final LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.github.jferrater.opa.data.filter.spring.boot.starter");
+        String packageNameProperty = environment.getRequiredProperty("opa.authorization.datasource.hibernate.entities.package-name");
+        sessionFactory.setPackagesToScan("com.github.jferrater.opa.data.filter.spring.boot.starter", packageNameProperty);
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
