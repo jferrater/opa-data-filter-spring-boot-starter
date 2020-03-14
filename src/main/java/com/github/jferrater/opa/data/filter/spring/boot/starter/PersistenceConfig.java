@@ -66,6 +66,7 @@ public class PersistenceConfig {
         hibernateProperties.setProperty("hibernate.cache.use_second_level_cache", levelCacheProperty == null ? "true" : levelCacheProperty);
         String useQueryProperty = environment.getProperty("opa.authorization.datasource.hibernate.cache.use_query_cache");
         hibernateProperties.setProperty("hibernate.cache.use_query_cache", useQueryProperty == null ? "true" : useQueryProperty);
+        hibernateProperties.setProperty("hibernate.cache.ehcache.missing_cache_strategy", "create");
         return hibernateProperties;
     }
 }
