@@ -26,8 +26,6 @@ or maven:
 ### Usage
 1. Add the following minimum configuration to the application.yml or application.properties of the Spring Boot project. Replace the value as necessary
 ````yaml
-server:
-  port: 8081
 opa:
   authorization:
     data-filter-enabled: true
