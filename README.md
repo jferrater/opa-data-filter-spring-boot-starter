@@ -28,7 +28,6 @@ or maven:
 ````yaml
 opa:
   authorization:
-    data-filter-enabled: true
     url: "http://localhost:8181/v1/compile"
     datasource:
       jdbc:
@@ -82,7 +81,8 @@ public class PetEntity {
 }
 ````
 
-A sample project will be created soon.
+### Example Spring Boot Application
+See example Spring Boot project that uses this library --> [opa-data-filter-demo](https://github.com/jferrater/opa-data-filter-demo)
 
 
 ### Building the project
