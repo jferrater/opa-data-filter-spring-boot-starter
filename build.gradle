@@ -89,9 +89,9 @@ integrationTest {
 
 sonarqube {
 	properties {
-		property 'sonar.projectName', 'Open Policy Agent AST to SQL Query Spring Boot Library'
-		property 'sonar.github.repository', 'jferrater/opa-ast-to-sql-query-java'
-		property 'sonar.projectKey', 'jferrater_opa-ast-to-sql-query-java'
+		property 'sonar.projectName', 'opa-data-filter-spring-boot-starter'
+		property 'sonar.github.repository', 'jferrater/opa-data-filter-spring-boot-starter'
+		property 'sonar.projectKey', 'jferrater_opa-data-filter-spring-boot-starter'
 		property 'sonar.organization', 'jferrater'
 		property 'sonar.host.url', 'https://sonarcloud.io'
 		property 'sonar.projectVersion', version

@@ -1,6 +1,6 @@
 # opa-data-filter-spring-boot-starter 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-data-filter-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-data-filter-spring-boot-starter/0.2.1/jar)
-[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-ast-to-sql-query-java&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-ast-to-sql-query-java)
+[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-data-filter-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-data-filter-spring-boot-starter)
 
 opa-data-filter-spring-boot-starter is a Spring Boot starter project that can be used in Spring Boot application to integrate Open Policy Agent (OPA) partial evaluation feature. The library sends partial request to the OPA compile API.
 OPA evaluates the partial request against a policy and return a response which is an Abstract Syntax Tree (AST). This starter project translates the AST into an executable SQL query. The SQL query is used in the Hibernate DAO layer 
