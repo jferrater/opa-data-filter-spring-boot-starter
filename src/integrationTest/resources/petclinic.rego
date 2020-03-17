@@ -9,6 +9,12 @@ allow {
   pet.name = name
 }
 
+allow {
+  input.method = "GET"
+  input.path = ["pets"]
+  allowed[pet]
+}
+
 allowed[pet] {
   pet = data.pets[_]
   pet.owner = input.subject.user

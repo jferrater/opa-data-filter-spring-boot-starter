@@ -1,0 +1,15 @@
+opa:
+  authorization:
+    data-filter-enabled: true
+    url: "http://localhost:8181/v1/compile"
+    datasource:
+      jdbc:
+        driverClassName: "org.h2.Driver"
+        username: "sa"
+        password: ""
+        url: "jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init.sql'"
+      hibernate:
+        dialect: "org.hibernate.dialect.H2Dialect"
+        show_sql: true
+        entities:
+          package-name: "com.github.jferrater.opa.data.filter.spring.boot.starter"

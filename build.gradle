@@ -22,8 +22,8 @@ plugins {
 apply plugin: 'com.bmuschko.nexus'
 
 group = 'com.github.jferrater'
-archivesBaseName = 'opa-ast-to-sql-query-java'
-version = '0.1.2-SNAPSHOT'
+archivesBaseName = ARTIFACT_NAME
+version = ARTIFACT_VERSION
 
 java {
 	sourceCompatibility(JavaVersion.VERSION_11)
@@ -50,6 +50,10 @@ jar {
 
 dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation group: 'org.hibernate', name: 'hibernate-core'
+	implementation group: 'org.hibernate', name: 'hibernate-entitymanager'
+	implementation group: 'org.hibernate', name: 'hibernate-ehcache'
 	runtimeOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
 	annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
@@ -115,8 +119,8 @@ publishing {
 				}
 			}
 			groupId = 'com.github.jferrater'
-			artifactId = 'opa-ast-to-sql-query-java'
-			version = '0.1.2-SNAPSHOT'
+			artifactId = ARTIFACT_NAME
+			version = ARTIFACT_VERSION
 			from components.java
 		}
 	}
@@ -124,7 +128,7 @@ publishing {
 
 modifyPom {
 	project {
-		name 'opa-ast-to-sql-query-java'
+		name ARTIFACT_NAME
 		description 'Spring Boot library for translating Open Policy Agent compiler API response to SQL query/statements.'
 		url 'https://github.com/jferrater/opa-ast-to-sql-query-java'
 		inceptionYear '2020'

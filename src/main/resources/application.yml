@@ -1,4 +1,4 @@
 opa:
   authorization:
     data-filter-enabled: true
-    url: http://localhost:8181
+    url: http://localhost:8181/v1/compile
