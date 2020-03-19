@@ -6,6 +6,8 @@ opa-data-filter-spring-boot-starter is a Spring Boot starter project that can be
 OPA evaluates the partial request against a policy and return a response which is an Abstract Syntax Tree (AST). This starter project translates the AST into an executable SQL query. The SQL query is used in the Hibernate DAO layer 
 which will be send to the database.
 
+![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
+
 OPA supports partial evaluation through its [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api). The compile API response is a set of queries which is an AST.
 See this blog post for more info, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4). The integration test of this project is based on the blog mentioned.
 
