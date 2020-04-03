@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   maria-database:
-    image: mariadb
+    image: mariadb:10-bionic
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: MangaonTaNiny0!
