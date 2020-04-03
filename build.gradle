@@ -54,7 +54,6 @@ dependencies {
 	implementation group: 'org.hibernate', name: 'hibernate-core'
 	implementation group: 'org.hibernate', name: 'hibernate-entitymanager'
 	implementation group: 'org.hibernate', name: 'hibernate-ehcache'
-	runtimeOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
 	annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
