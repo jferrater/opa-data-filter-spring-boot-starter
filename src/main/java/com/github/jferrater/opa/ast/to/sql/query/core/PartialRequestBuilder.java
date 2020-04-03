@@ -13,30 +13,6 @@ public class PartialRequestBuilder {
     private Map<String, Object> input = new HashMap<>();
     private Set<String> unknowns = new HashSet<>();
 
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    public Map<String, Object> getInput() {
-        return input;
-    }
-
-    public void setInput(Map<String, Object> input) {
-        this.input = input;
-    }
-
-    public Set<String> getUnknowns() {
-        return unknowns;
-    }
-
-    public void setUnknowns(Set<String> unknowns) {
-        this.unknowns = unknowns;
-    }
-
     public static PartialRequestBuilder getInstance() {
         return new PartialRequestBuilder();
     }
