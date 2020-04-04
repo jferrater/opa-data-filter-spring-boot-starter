@@ -54,7 +54,6 @@ dependencies {
 	implementation group: 'org.hibernate', name: 'hibernate-core'
 	implementation group: 'org.hibernate', name: 'hibernate-entitymanager'
 	implementation group: 'org.hibernate', name: 'hibernate-ehcache'
-	runtimeOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
 	annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -97,7 +96,7 @@ sonarqube {
 		property 'sonar.projectVersion', version
 		property 'sonar.login', System.getenv('SONAR_TOKEN')
 		property 'sonar.java.coveragePlugin', 'jacoco'
-		property 'sonar.exclusions', '**/integrationTest/**'
+		property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/*Config.java'
 	}
 }
 
