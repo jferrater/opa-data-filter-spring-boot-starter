@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author joffryferrater
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "query",
@@ -17,10 +21,11 @@ import java.util.Set;
 })
 public class PartialRequest {
 
+    @NotNull
     @JsonProperty("query")
     private String query;
     @JsonProperty("input")
-    Map<String, Object> input = new HashMap<>();
+    private Map<String, Object> input = new HashMap<>();
     @JsonProperty("unknowns")
     private Set<String> unknowns = new HashSet<>();
 
