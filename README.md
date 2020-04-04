@@ -15,7 +15,7 @@ See this blog post for more info, [Write Policy in OPA. Enforce Policy in SQL](h
 Add library to the Spring Boot project. For gradle project:
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.1'
+implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.2'
 ```
 or maven:
 ````xml
@@ -26,7 +26,7 @@ or maven:
 <dependency>
     <groupId>com.github.jferrater</groupId>
     <artifactId>opa-data-filter-spring-boot-starter</artifactId>
-    <version>0.2.1</version>
+    <version>0.2.2</version>
 </dependency>
 ````
 
