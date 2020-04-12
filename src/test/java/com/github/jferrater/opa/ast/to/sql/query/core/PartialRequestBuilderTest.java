@@ -17,12 +17,12 @@ class PartialRequestBuilderTest {
 
     @Test
     void shouldBuildPartialRequest() {
-        PartialRequest result = PartialRequestBuilder.getInstance()
+        PartialRequest result = PartialRequest.builder()
                 .query("data.petclinic.authz.allow = true")
                 .httpMethod("GET")
                 .httpPath(List.of("pets", "fluffy"))
-                .withInput("subject", new UserInfo("alice", "SOMA"))
-                .withUnknowns(Set.of("data.pets"))
+                .input("subject", new UserInfo("alice", "SOMA"))
+                .unknowns(Set.of("data.pets"))
                 .build();
 
         assertThat(result, is(notNullValue()));
