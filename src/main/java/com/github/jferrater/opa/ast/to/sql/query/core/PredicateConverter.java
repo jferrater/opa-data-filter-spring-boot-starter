@@ -1,9 +1,9 @@
 package com.github.jferrater.opa.ast.to.sql.query.core;
 
-import com.github.jferrater.opa.ast.to.sql.query.model.response.Value;
 import com.github.jferrater.opa.ast.to.sql.query.core.elements.SqlPredicate;
 import com.github.jferrater.opa.ast.to.sql.query.model.response.Predicate;
 import com.github.jferrater.opa.ast.to.sql.query.model.response.Term;
+import com.github.jferrater.opa.ast.to.sql.query.model.response.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
