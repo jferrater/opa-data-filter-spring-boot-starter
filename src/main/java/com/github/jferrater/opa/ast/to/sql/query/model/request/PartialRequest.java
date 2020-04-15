@@ -7,11 +7,11 @@ import java.util.List;
 
 import java.util.Map;
 import java.util.Set;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+
+import lombok.*;
 
 /**
+ * @author Reihmon Estremos
  * @author joffryferrater
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,9 +20,10 @@ import lombok.Singular;
     "input",
     "unknowns"
 })
-
 @Builder
 @Data
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
 public class PartialRequest {
 
     private static final String METHOD = "method";
@@ -53,7 +54,7 @@ public class PartialRequest {
          * Add the list of HTTP path the current user want to access as input of
          * the Partial Request
          *
-         * @param paths
+         * @param paths The list of http path or endpoint the user want to access
          * @return {@link PartialRequestBuilder}
          */
         public PartialRequestBuilder httpPath(List<String> paths) {
