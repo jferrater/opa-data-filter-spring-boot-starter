@@ -3,53 +3,62 @@ package com.github.jferrater.opa.ast.to.sql.query.model.request;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.*;
+
 /**
+ * @author Reihmon Estremos
  * @author joffryferrater
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "query",
-        "input",
-        "unknowns"
+    "query",
+    "input",
+    "unknowns"
 })
+@Builder
+@Data
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
 public class PartialRequest {
 
-    @NotNull
+    private static final String METHOD = "method";
+    private static final String PATH = "path";
+
     @JsonProperty("query")
     private String query;
     @JsonProperty("input")
-    private Map<String, Object> input = new HashMap<>();
+    @Singular("input")
+    private final Map<String, Object> input;
     @JsonProperty("unknowns")
-    private Set<String> unknowns = new HashSet<>();
+    @Singular
+    private final Set<String> unknowns;
 
-    public String getQuery() {
-        return query;
-    }
+    public static class PartialRequestBuilder {
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
+        /**
+         * Set the query for OPA to partially evaluate and compile
+         *
+         * @param method http methods
+         * @return {@link PartialRequestBuilder}
+         */
+        public PartialRequestBuilder httpMethod(String method) {
+            return this.input(METHOD, method);
+        }
 
-    public Map<String, Object> getInput() {
-        return input;
-    }
-
-    public void setInput(Map<String, Object> input) {
-        this.input = input;
-    }
-
-    public Set<String> getUnknowns() {
-        return unknowns;
-    }
-
-    public void setUnknowns(Set<String> unknowns) {
-        this.unknowns = unknowns;
+        /**
+         * Add the list of HTTP path the current user want to access as input of
+         * the Partial Request
+         *
+         * @param paths The list of http path or endpoint the user want to access
+         * @return {@link PartialRequestBuilder}
+         */
+        public PartialRequestBuilder httpPath(List<String> paths) {
+            return this.input(PATH, paths);
+        }
     }
 }

@@ -29,8 +29,8 @@ class AstToSqlTest extends TestBase {
 
     @BeforeEach
     void setUp() {
-        partialRequest = new PartialRequest();
-        partialRequest.setUnknowns(Set.of("data.pets"));
+        partialRequest = PartialRequest.builder()
+                .unknowns(Set.of("data.pets")).build();
         target = new AstToSql(opaCompilerResponse);
     }
 
