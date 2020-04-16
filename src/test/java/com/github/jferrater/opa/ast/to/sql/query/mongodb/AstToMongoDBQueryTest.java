@@ -8,17 +8,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.io.IOException;
 import java.util.List;
 
 import static com.github.jferrater.opa.ast.to.sql.query.core.TestBase.opaCompilerResponse;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class MongoDbQueryBuilderTest {
+class AstToMongoDBQueryTest {
 
-    private MongoDbQueryBuilder target;
+    private AstToMongoDBQuery target;
 
     private static OpaCompilerResponse opaCompilerResponse;
 
@@ -30,7 +32,7 @@ class MongoDbQueryBuilderTest {
 
     @BeforeEach
     void setUp() {
-        target = new MongoDbQueryBuilder(opaCompilerResponse);
+        target = new AstToMongoDBQuery(opaCompilerResponse);
     }
 
     @Test
@@ -64,12 +66,22 @@ class MongoDbQueryBuilderTest {
     }
 
     @Test
-    void shouldBuildAndOperationCriteria() {
+    void shouldChainCriteriaByAndOperationCriteria() {
         List<Predicate> predicates = opaCompilerResponse.getResult().getQueries().get(0);
 
-        Criteria result = target.chainCriterias(predicates);
+        Criteria result = target.chainCriteriaByAndOperator(predicates);
         String resultInString = result.getCriteriaObject().toJson();
 
         assertThat(resultInString, is("{\"pets.owner\": \"alice\", \"pets.name\": \"fluffy\"}"));
+    }
+
+    @Test
+    void shouldCreateMongoDBQuery() {
+        Query query = target.createQuery();
+
+        assertThat(query, is(notNullValue()));
+
+        String result = query.getQueryObject().toJson();
+        assertThat(result, is("{\"$or\": [{\"pets.owner\": \"alice\", \"pets.name\": \"fluffy\"}, {\"pets.veterinarian\": \"alice\", \"pets.clinic\": \"SOMA\", \"pets.name\": \"fluffy\"}]}"));
     }
 }

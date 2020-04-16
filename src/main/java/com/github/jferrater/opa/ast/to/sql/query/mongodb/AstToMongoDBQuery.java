@@ -15,35 +15,35 @@ import static java.util.stream.Collectors.toList;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-public class MongoDbQueryBuilder {
+public class AstToMongoDBQuery {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MongoDbQueryBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AstToMongoDBQuery.class);
 
     private OpaCompilerResponse opaCompilerResponse;
 
-    public MongoDbQueryBuilder(OpaCompilerResponse opaCompilerResponse) {
+    public AstToMongoDBQuery(OpaCompilerResponse opaCompilerResponse) {
         this.opaCompilerResponse = opaCompilerResponse;
     }
 
     public Query createQuery() {
         List<List<Predicate>> predicates = opaCompilerResponse.getResult().getQueries();
         List<Criteria> criteriaList = predicates.stream()
-                .map(this::chainCriterias)
+                .map(this::chainCriteriaByAndOperator)
                 .collect(toList());
-        Criteria criteria = orOperator(criteriaList);
-        return query(criteria);
+        Criteria chainedCriterias = chainCriteriaByOrOperator(criteriaList);
+        return query(chainedCriterias);
     }
 
-    private Criteria orOperator(List<Criteria> criteriaList) {
+    private Criteria chainCriteriaByOrOperator(List<Criteria> criteriaList) {
         Criteria[] criteriaArray = criteriaList.toArray(Criteria[]::new);
         Criteria criteria = new Criteria();
         criteria.orOperator(criteriaArray);
         String toJson = criteria.getCriteriaObject().toJson();
-        LOGGER.info("Criteria in json format \n {}", toJson);
+        LOGGER.info("Query document in json format:\n{}", toJson);
         return criteria;
     }
 
-    Criteria chainCriterias(List<Predicate> predicates) {
+    Criteria chainCriteriaByAndOperator(List<Predicate> predicates) {
         List<SqlPredicate> sqlPredicates = predicates.stream()
                 .map(predicate -> new PredicateConverter(predicate).astToSqlPredicate())
                 .collect(toList());
