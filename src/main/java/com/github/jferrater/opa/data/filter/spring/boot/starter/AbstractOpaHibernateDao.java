@@ -22,8 +22,30 @@ public abstract class AbstractOpaHibernateDao<T> {
         this.clazz = clazz;
     }
 
+    /**
+     * Send query to the database. Use this method for customizing the {@link PartialRequest}
+     *
+     * @param partialRequest {@link PartialRequest}
+     * @return {@link List} The filtered collection
+     */
     public List<T> filterData(PartialRequest partialRequest) {
         String sqlStatements = opaClientService.getExecutableSqlStatements(partialRequest);
+        return getList(sqlStatements);
+    }
+
+    /**
+     * Send query to the database using the default {@link PartialRequest} created by {@link com.github.jferrater.opa.ast.db.query.service.DefaultPartialRequest}
+     * Use this method if you have a {@link com.github.jferrater.opa.ast.db.query.config.PartialRequestConfig} configured in the application.yml or application.properties
+     * of your Spring Boot project
+     *
+     * @return {@link List} The filtered collection
+     */
+    public List<T> filterData() {
+        String sqlStatements = opaClientService.getExecutableSqlStatements();
+        return getList(sqlStatements);
+    }
+
+    private List<T> getList(String sqlStatements) {
         NativeQuery<T> nativeQuery = getCurrentSession().createNativeQuery(sqlStatements, clazz);
         return nativeQuery.list();
     }

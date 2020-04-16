@@ -56,4 +56,21 @@ class OpaGenericDataFilterDaoTest {
         assertThat(pet.getClinic(), is("SOMA"));
     }
 
+    @DisplayName(
+            "Given a classpath:application-test.yml profile"
+    )
+    @Test
+    @Transactional
+    void shouldFilterDataUsingDefaultPartialRequest() {
+        when(opaClientService.getExecutableSqlStatements()).thenReturn(QUERY);
+
+        List<Pet> results = target.filterData();
+
+        assertThat(results.size(), is(1));
+        Pet pet = results.get(0);
+        assertThat(pet.getName(), is("fluffy"));
+        assertThat(pet.getOwner(), is("alice"));
+        assertThat(pet.getVeterinarian(), is("alice"));
+        assertThat(pet.getClinic(), is("SOMA"));
+    }
 }
