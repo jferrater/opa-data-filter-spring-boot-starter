@@ -2,17 +2,25 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-data-filter-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-data-filter-spring-boot-starter/0.2.2/jar)
 [![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-data-filter-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-data-filter-spring-boot-starter)
 
-opa-data-filter-spring-boot-starter is a Spring Boot starter project that can be used in Spring Boot application to integrate Open Policy Agent (OPA) partial evaluation feature. The library sends partial request to the OPA compile API.
-OPA evaluates the partial request against a policy and return a response which is an Abstract Syntax Tree (AST). This starter project translates the AST into an executable SQL query. The SQL query is used in the Hibernate DAO layer 
-which will be send to the database.
+### Pre-requisites
+The blog posts below explain enough the WHY!
+- Read about Open Policy Agent Partial (OPA) Evaluation blog post [here](https://blog.openpolicyagent.org/partial-evaluation-162750eaf422)
+- Read the sample use case, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4)
+- The [OPA Compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api)
+<br>
+
+### The Library
+opa-data-filter-spring-boot-starter is a Spring Boot library which can be used together with Spring Data Hibernate/JPA and Spring Data MongoDB to secure data using OPA Partial Evaluation feature.
+When a user wants to access a protected collection of resources, the library creates a partial request object which contains about the user and the operation a user wants to perform. The partial request object is
+sent to the OPA[compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api).
+OPA evaluates the partial request and returns a new and simplified policy that can be evaluated more efficiently than the original policy. This library converts
+the new policy into SQL or MongoDB queries. A collection of data is returned to the user which a user is allowed to see.
 
 ![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
 
-OPA supports partial evaluation through its [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api). The compile API response is a set of queries which is an AST.
-See this blog post for more info, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4). The integration test of this project is based on the blog mentioned.
-
 ### Installation
-Add library to the Spring Boot project. For gradle project:
+For Spring Data JPA/Hibernate, <br>
+gradle project:
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.2'
@@ -91,6 +99,7 @@ public class PetEntity {
 ### Example Spring Boot Application
 See example Spring Boot project that uses this library --> [opa-data-filter-demo](https://github.com/jferrater/opa-data-filter-demo)
 
+ Integration with MongoDB instructions and sample project will be added soon!
 
 ### Building the project
 ``./gradlew clean build``
@@ -102,9 +111,7 @@ See example Spring Boot project that uses this library --> [opa-data-filter-demo
 ### Tested on databases (refer to the integration tests):
 - MariaDB
 - Postgresql
-
-### Ongoing development:
-- Investigate and add mappings of OPA AST data types
+- MongoDB
 
 ### Contributors
 - [Joffry Ferrater](https://github.com/jferrater)
