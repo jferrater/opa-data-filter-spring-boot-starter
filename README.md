@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-data-filter-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-data-filter-spring-boot-starter)
 
 ### Pre-requisites
-The blog posts below explain enough the WHY!
+The blog posts below explain enough of the What and Why!
 - Read about Open Policy Agent Partial (OPA) Evaluation blog post [here](https://blog.openpolicyagent.org/partial-evaluation-162750eaf422)
 - Read the sample use case, [Write Policy in OPA. Enforce Policy in SQL](https://blog.openpolicyagent.org/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4)
 - The [OPA Compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api)
