@@ -28,7 +28,8 @@ public class DefaultPartialRequest {
     /**
      * Creates a default {@link PartialRequest} from the http servlet request and {@link PartialRequestConfig}. Added by default the http method and path
      *  as 'method' and 'path' properties in the Partial Request input.
-     * @return
+     *
+     * @return {@link PartialRequest} The default partial request
      */
     public PartialRequest getDefaultPartialRequest() {
         PartialRequest partialRequest = new PartialRequest();
