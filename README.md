@@ -18,12 +18,12 @@ the new policy into SQL or MongoDB queries. A collection of data is returned to 
 
 ![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
 
-### Installation
+## Installation
 For Spring Data JPA/Hibernate, <br>
 gradle project:
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.2.2'
+implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.3.1'
 ```
 or maven:
 ````xml
@@ -34,11 +34,11 @@ or maven:
 <dependency>
     <groupId>com.github.jferrater</groupId>
     <artifactId>opa-data-filter-spring-boot-starter</artifactId>
-    <version>0.2.2</version>
+    <version>0.3.1</version>
 </dependency>
 ````
 
-### Usage
+## Usage
 1. Add the following minimum configuration to the application.yml or application.properties of the Spring Boot project. Replace the value as necessary
 ````yaml
 opa:
@@ -61,7 +61,7 @@ opa:
 package com.example.opadatafilterdemo;
 
 import com.example.opadatafilterdemo.entity.PetEntity;
-import com.github.jferrater.opa.data.filter.spring.boot.starter.OpaGenericDataFilterDao;
+import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate.OpaGenericDataFilterDao;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -96,11 +96,17 @@ public class PetEntity {
 }
 ````
 
-### Example Spring Boot Application
+## Configurations
+| Properties                              | Description                           | Default Value                       |
+| --------------------------------------- | ------------------------------------- | ----------------------------------- |
+| `opa.authorization.url`                 | The OPA compile API endpoint          | `http://localhost:8181/v1/compile`            |
+
+## Example Spring Boot Application
 See example Spring Boot project that uses this library --> [opa-data-filter-demo](https://github.com/jferrater/opa-data-filter-demo)
 
  Integration with MongoDB instructions and sample project will be added soon!
 
+## Development
 ### Building the project
 ``./gradlew clean build``
 

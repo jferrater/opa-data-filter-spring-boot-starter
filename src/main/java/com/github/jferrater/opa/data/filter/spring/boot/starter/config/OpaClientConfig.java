@@ -1,4 +1,4 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.client.RestTemplateBuilder;
