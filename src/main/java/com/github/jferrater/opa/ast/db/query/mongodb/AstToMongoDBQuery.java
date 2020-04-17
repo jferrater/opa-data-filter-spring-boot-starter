@@ -2,6 +2,7 @@ package com.github.jferrater.opa.ast.db.query.mongodb;
 
 import com.github.jferrater.opa.ast.db.query.core.PredicateConverter;
 import com.github.jferrater.opa.ast.db.query.core.elements.SqlPredicate;
+import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.response.OpaCompilerResponse;
 import com.github.jferrater.opa.ast.db.query.model.response.Predicate;
 import org.slf4j.Logger;
@@ -27,6 +28,9 @@ public class AstToMongoDBQuery {
 
     public Query createQuery() {
         List<List<Predicate>> predicates = opaCompilerResponse.getResult().getQueries();
+        if(predicates.isEmpty()) {
+            throw new PartialEvauationException("OPA partial evaluation result queries is empty");
+        }
         List<Criteria> criteriaList = predicates.stream()
                 .map(this::chainCriteriaByAndOperator)
                 .collect(toList());
