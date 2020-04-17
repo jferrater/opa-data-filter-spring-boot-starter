@@ -1,6 +1,7 @@
 package com.github.jferrater.opa.ast.db.query.config;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 @Configuration
 @ConfigurationProperties(prefix = "opa.partial-request")
 @Data
+@NoArgsConstructor
 public class PartialRequestConfig {
 
     /**
