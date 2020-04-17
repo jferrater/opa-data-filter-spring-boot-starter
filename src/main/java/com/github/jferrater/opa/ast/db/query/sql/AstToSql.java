@@ -4,7 +4,6 @@ import com.github.jferrater.opa.ast.db.query.core.PredicateConverter;
 import com.github.jferrater.opa.ast.db.query.core.elements.LogicalOperation;
 import com.github.jferrater.opa.ast.db.query.core.elements.SqlPredicate;
 import com.github.jferrater.opa.ast.db.query.core.util.SqlUtil;
-import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.model.response.OpaCompilerResponse;
 import com.github.jferrater.opa.ast.db.query.model.response.Predicate;
@@ -44,9 +43,6 @@ public class AstToSql {
 
     private String whereClauseConstraints() {
         List<List<Predicate>> queries = opaCompilerResponse.getResult().getQueries();
-        if(queries.isEmpty()) {
-            throw new PartialEvauationException("OPA partial evaluation result queries is empty");
-        }
         List<String> predicatesInString = queries.stream().map(this::andOperationConstraints).collect(toList());
         String concatByOrOperation = SqlUtil.concat(predicatesInString, " " + LogicalOperation.OR.name() + " ");
         return concatByOrOperation == null ? "" : concatByOrOperation;

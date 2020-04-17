@@ -4,7 +4,6 @@ import com.github.jferrater.opa.ast.db.query.core.TestBase;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.model.response.OpaCompilerResponse;
 import com.github.jferrater.opa.ast.db.query.model.response.Predicate;
-import com.github.jferrater.opa.ast.db.query.sql.AstToSql;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
