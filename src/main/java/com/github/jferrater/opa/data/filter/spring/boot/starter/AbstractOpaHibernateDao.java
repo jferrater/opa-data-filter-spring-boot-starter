@@ -1,5 +1,6 @@
 package com.github.jferrater.opa.data.filter.spring.boot.starter;
 
+import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import org.hibernate.Session;
@@ -30,6 +31,7 @@ public abstract class AbstractOpaHibernateDao<T> {
      */
     public List<T> filterData(PartialRequest partialRequest) {
         String sqlStatements = opaClientService.getExecutableSqlStatements(partialRequest);
+        checkForCriterias(sqlStatements);
         return getList(sqlStatements);
     }
 
@@ -42,7 +44,14 @@ public abstract class AbstractOpaHibernateDao<T> {
      */
     public List<T> filterData() {
         String sqlStatements = opaClientService.getExecutableSqlStatements();
+        checkForCriterias(sqlStatements);
         return getList(sqlStatements);
+    }
+
+    private void checkForCriterias(String sqlStatements) {
+        if(!sqlStatements.contains("WHERE")) {
+            throw new PartialEvauationException("OPA Partial Evaluation response returns an empty criterias");
+        }
     }
 
     private List<T> getList(String sqlStatements) {

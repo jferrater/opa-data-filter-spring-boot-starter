@@ -1,5 +1,6 @@
 package com.github.jferrater.opa.data.filter.spring.boot.starter;
 
+import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -72,5 +74,28 @@ class OpaGenericDataFilterDaoTest {
         assertThat(pet.getOwner(), is("alice"));
         assertThat(pet.getVeterinarian(), is("alice"));
         assertThat(pet.getClinic(), is("SOMA"));
+    }
+
+    @DisplayName(
+            "Given a classpath:application-test.yml profile"
+    )
+    @Test
+    @Transactional
+    void shouldThrowPartialEvaluationExceptionDefaultPartialRequest() {
+        when(opaClientService.getExecutableSqlStatements()).thenReturn("SELECT * FROM pets;");
+
+        assertThrows(PartialEvauationException.class, () -> target.filterData());
+    }
+
+    @DisplayName(
+            "Given a classpath:application-test.yml profile"
+    )
+    @Test
+    @Transactional
+    void shouldThrowPartialEvaluationException() {
+        PartialRequest partialRequest = mock(PartialRequest.class);
+        when(opaClientService.getExecutableSqlStatements(partialRequest)).thenReturn("SELECT * FROM pets;");
+
+        assertThrows(PartialEvauationException.class, () -> target.filterData(partialRequest));
     }
 }
