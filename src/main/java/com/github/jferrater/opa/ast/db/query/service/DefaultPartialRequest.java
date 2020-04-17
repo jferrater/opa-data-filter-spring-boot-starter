@@ -5,9 +5,7 @@ import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DefaultPartialRequest {
 
@@ -32,27 +30,33 @@ public class DefaultPartialRequest {
      * @return {@link PartialRequest} The default partial request
      */
     public PartialRequest getDefaultPartialRequest() {
-        PartialRequest partialRequest = new PartialRequest();
-        Map<String, Object> input = new HashMap<>();
-        final String httpPath = httpServletRequest.getServletPath();
-        final String httpMethod = httpServletRequest.getMethod();
-        input.put("method", httpMethod);
-        //TO DO: put path into a collection
-        input.put("path", httpPath);
         String query = partialRequestConfig.getQuery();
         if(query == null) {
             return null;
         }
+        PartialRequest partialRequest = new PartialRequest();
         partialRequest.setQuery(query);
         Set<String> unknowns = partialRequestConfig.getUnknowns();
         if(unknowns != null) {
             partialRequest.setUnknowns(unknowns);
         }
+        Map<String, Object> input = new HashMap<>();
+        final String httpMethod = httpServletRequest.getMethod();
+        input.put("method", httpMethod);
+        List<String> paths = getHttpPaths();
+        input.put("path", paths);
         Map<String, Object> inputFromConfig = partialRequestConfig.getInput();
         if(inputFromConfig != null) {
             input.putAll(inputFromConfig);
         }
         partialRequest.setInput(input);
         return partialRequest;
+    }
+
+    private List<String> getHttpPaths() {
+        final String httpPath = httpServletRequest.getServletPath();
+        List<String> paths = new ArrayList<>(Arrays.asList(httpPath.split("/")));
+        paths.removeAll(Collections.singletonList(""));
+        return paths;
     }
 }
