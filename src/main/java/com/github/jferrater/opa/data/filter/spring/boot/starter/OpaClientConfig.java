@@ -13,10 +13,16 @@ public class OpaClientConfig {
 
     @Bean
     @Qualifier("opaClient")
-    public RestTemplate opaClient(RestTemplateBuilder restTemplateBuilder) {
-        return restTemplateBuilder
+    public RestTemplate opaClient(RestTemplateBuilder opaRestTemplateBuilder) {
+        return opaRestTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(5_000))
                 .setReadTimeout(Duration.ofSeconds(5_000))
                 .build();
+    }
+
+    @Bean
+    @Qualifier("opaRestTemplateBuilder")
+    public RestTemplateBuilder opaRestTemplateBuilder() {
+        return new RestTemplateBuilder();
     }
 }

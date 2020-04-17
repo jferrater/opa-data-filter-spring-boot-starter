@@ -33,10 +33,10 @@ public class PartialRequest {
     private String query;
     @JsonProperty("input")
     @Singular("input")
-    private final Map<String, Object> input;
+    private Map<String, Object> input;
     @JsonProperty("unknowns")
     @Singular
-    private final Set<String> unknowns;
+    private Set<String> unknowns;
 
     public static class PartialRequestBuilder {
 

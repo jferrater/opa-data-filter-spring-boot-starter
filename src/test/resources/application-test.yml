@@ -13,3 +13,9 @@ opa:
         show_sql: true
         entities:
           package-name: "com.github.jferrater.opa.data.filter.spring.boot.starter"
+  partial-request:
+    query: "data.petclinic.authz.allow = true"
+    unknowns:
+      - "data.pets"
+    input:
+      username: "alice"
