@@ -1,4 +1,4 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,7 +30,7 @@ public class PersistenceConfig {
         final LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         String packageNameProperty = environment.getRequiredProperty("opa.authorization.datasource.hibernate.entities.package-name");
-        sessionFactory.setPackagesToScan("com.github.jferrater.opa.data.filter.spring.boot.starter", packageNameProperty);
+        sessionFactory.setPackagesToScan("com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate", packageNameProperty);
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

@@ -61,7 +61,7 @@ opa:
 package com.example.opadatafilterdemo;
 
 import com.example.opadatafilterdemo.entity.PetEntity;
-import com.github.jferrater.opa.data.filter.spring.boot.starter.OpaGenericDataFilterDao;
+import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate.OpaGenericDataFilterDao;
 import org.springframework.stereotype.Repository;
 
 @Repository
