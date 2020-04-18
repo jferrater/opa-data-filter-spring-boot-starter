@@ -7,40 +7,42 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
+@NoRepositoryBean
 public class OpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements OpaRepository<T, ID> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpaRepositoryImpl.class);
 
-    @Resource(name = "defaultPartialRequest")
-    private OpaClientService opaClientService;
+    private final OpaClientService opaClientService;
     private final EntityManager entityManager;
 
-    public OpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+    public OpaRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager, OpaClientService opaClientService) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
+        this.opaClientService = opaClientService;
     }
 
-    public OpaRepositoryImpl(Class<T> domainClass, EntityManager em) {
-        this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em);
+    public OpaRepositoryImpl(Class<T> domainClass, EntityManager em, OpaClientService opaClientService) {
+        this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em, opaClientService);
         LOGGER.info("here second constructor");
     }
 
     @Override
-    public List<T> filteredResults() {
-        LOGGER.info("Entering findAll()");
+    public List<T> findAll() {
+        LOGGER.trace("Entering findAll()");
+        LOGGER.trace("OpaClientService bean: {}", opaClientService);
         String sqlStatements = opaClientService.getExecutableSqlStatements();
-        LOGGER.info("SQL statements: {}", sqlStatements);
+        LOGGER.trace("SQL statements: {}", sqlStatements);
         checkForCriterias(sqlStatements);
-        LOGGER.info("Returning query");
-        return getQuery(sqlStatements).getResultList();
+        LOGGER.trace("ClassName: {}", this.getDomainClass().getName());
+        List<T> resultList = getQuery(sqlStatements).getResultList();
+        LOGGER.trace("Result list size: {}", resultList.size());
+        return resultList;
     }
 
 
