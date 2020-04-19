@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 public class OpaRepositoryFactoryBean<R extends JpaRepository<T, ID>, T, ID> extends JpaRepositoryFactoryBean<R, T, ID> {
 
     @Autowired
-    private OpaClientService opaClientService;
+    private OpaClientService<T> opaClientService;
 
     /**
      * Creates a new {@link JpaRepositoryFactoryBean} for the given repository interface.

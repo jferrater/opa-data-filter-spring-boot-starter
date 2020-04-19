@@ -23,7 +23,7 @@ public class AppConfig {
     @Bean
     @RequestScope
     @Qualifier("opaClientService")
-    public OpaClientService opaClientService(OpaConfig opaConfig) {
-        return new OpaClientService(opaConfig);
+    public <T>OpaClientService<T> opaClientService(OpaConfig opaConfig) {
+        return new OpaClientService<>(opaConfig);
     }
 }

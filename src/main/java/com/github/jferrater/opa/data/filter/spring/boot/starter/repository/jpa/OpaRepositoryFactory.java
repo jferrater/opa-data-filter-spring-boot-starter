@@ -12,7 +12,7 @@ public class OpaRepositoryFactory<T, ID> extends JpaRepositoryFactory {
 
 
     private final EntityManager entityManager;
-    private final OpaClientService opaClientService;
+    private final OpaClientService<T> opaClientService;
 
     /**
      * Creates a new {@link JpaRepositoryFactory}.
@@ -20,15 +20,15 @@ public class OpaRepositoryFactory<T, ID> extends JpaRepositoryFactory {
      * @param entityManager must not be {@literal null}
      * @param opaClientService {@link OpaClientService}
      */
-    public OpaRepositoryFactory(EntityManager entityManager, OpaClientService opaClientService) {
+    public OpaRepositoryFactory(EntityManager entityManager, OpaClientService<T> opaClientService) {
         super(entityManager);
         this.entityManager = entityManager;
         this.opaClientService = opaClientService;
     }
 
     @Override
-    protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
-        return new OpaRepositoryImpl<>(getEntityInformation(information.getDomainType()), this.entityManager, opaClientService);
+    protected JpaRepositoryImplementation<T, ?> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
+        return new OpaRepositoryImpl(getEntityInformation(information.getDomainType()), this.entityManager, opaClientService);
     }
 
     @Override

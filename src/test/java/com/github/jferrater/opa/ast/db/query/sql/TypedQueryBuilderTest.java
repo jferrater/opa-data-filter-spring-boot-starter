@@ -40,7 +40,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @ActiveProfiles("test")
 class TypedQueryBuilderTest {
 
-    private TypedQueryBuilder target;
+    private TypedQueryBuilder<PetEntity> target;
 
     @Autowired
     EntityManager entityManager;
