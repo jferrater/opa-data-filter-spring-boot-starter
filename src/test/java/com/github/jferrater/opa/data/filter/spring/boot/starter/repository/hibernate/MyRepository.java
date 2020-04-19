@@ -1,6 +1,5 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate;
 
-import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate.OpaGenericDataFilterDao;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,10 +1,9 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate;
 
 import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.config.PersistenceConfig;
-import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate.OpaGenericDataFilterDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

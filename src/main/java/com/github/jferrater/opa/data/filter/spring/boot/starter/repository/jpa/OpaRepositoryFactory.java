@@ -18,6 +18,7 @@ public class OpaRepositoryFactory<T, ID> extends JpaRepositoryFactory {
      * Creates a new {@link JpaRepositoryFactory}.
      *
      * @param entityManager must not be {@literal null}
+     * @param opaClientService {@link OpaClientService}
      */
     public OpaRepositoryFactory(EntityManager entityManager, OpaClientService opaClientService) {
         super(entityManager);

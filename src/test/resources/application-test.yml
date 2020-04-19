@@ -19,3 +19,10 @@ opa:
       - "data.pets"
     input:
       username: "alice"
+
+spring:
+  datasource:
+    driver-class-name: "org.h2.Driver"
+    url: "jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init.sql'"
+    username: "sa"
+    password: ""
