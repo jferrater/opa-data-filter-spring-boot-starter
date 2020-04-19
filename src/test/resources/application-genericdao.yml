@@ -7,7 +7,7 @@ opa:
         driverClassName: "org.h2.Driver"
         username: "sa"
         password: ""
-        url: "jdbc:h2:mem:tesr;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init.sql'"
+        url: "jdbc:h2:mem:db2;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init.sql'"
       hibernate:
         dialect: "org.hibernate.dialect.H2Dialect"
         show_sql: true
@@ -23,6 +23,6 @@ opa:
 spring:
   datasource:
     driver-class-name: "org.h2.Driver"
-    url: "jdbc:h2:mem:repository;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init.sql'"
+    url: "jdbc:h2:mem:db2;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'classpath:sql/init.sql'"
     username: "sa"
     password: ""

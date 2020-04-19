@@ -6,10 +6,12 @@ import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.model.response.OpaCompilerResponse;
 import com.github.jferrater.opa.ast.db.query.mongodb.AstToMongoDBQuery;
 import com.github.jferrater.opa.ast.db.query.sql.AstToSql;
+import com.github.jferrater.opa.ast.db.query.sql.TypedQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,9 +21,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 @Service
-public class OpaClientService {
+public class OpaClientService<T> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpaClientService.class);
 
@@ -91,6 +95,14 @@ public class OpaClientService {
         checkResponse(responseResponseEntity);
         AstToMongoDBQuery astToMongoDBQuery = new AstToMongoDBQuery(responseResponseEntity.getBody());
         return astToMongoDBQuery.createQuery();
+    }
+
+    public <S extends T> TypedQuery<S> getTypedQuery(Class<S> domainClass, Sort sort, EntityManager entityManager){
+        ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(defaultPartialRequest.getDefaultPartialRequest());
+        checkResponse(responseResponseEntity);
+        OpaCompilerResponse opaCompilerResponse = responseResponseEntity.getBody();
+        TypedQueryBuilder<S> typedQueryBuilder = new TypedQueryBuilder<>(opaCompilerResponse, entityManager);
+        return typedQueryBuilder.getTypedQuery(domainClass, sort);
     }
 
     private ResponseEntity<OpaCompilerResponse> getOpaCompilerResponse(PartialRequest partialRequest) {

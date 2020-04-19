@@ -1,13 +1,12 @@
 package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate;
 
+import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.entity.PetEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
-class MyRepository extends OpaGenericDataFilterDao<Pet> {
+class MyRepository extends OpaGenericDataFilterDao<PetEntity> {
 
     public MyRepository() {
-        setClazz(Pet.class);
+        setClazz(PetEntity.class);
     }
 }

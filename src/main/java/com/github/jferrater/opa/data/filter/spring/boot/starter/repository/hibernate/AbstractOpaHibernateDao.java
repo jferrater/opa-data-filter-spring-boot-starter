@@ -13,10 +13,10 @@ import java.util.List;
 
 public abstract class AbstractOpaHibernateDao<T> {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "entityManagerFactory")
     EntityManager entityManager;
     @Autowired
-    OpaClientService opaClientService;
+    OpaClientService<T> opaClientService;
 
     private Class<T> clazz;
 

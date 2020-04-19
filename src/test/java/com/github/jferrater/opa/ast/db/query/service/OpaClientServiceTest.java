@@ -5,6 +5,7 @@ import com.github.jferrater.opa.ast.db.query.exception.OpaClientException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.model.response.OpaCompilerResponse;
 import com.github.jferrater.opa.ast.db.query.core.TestBase;
+import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.entity.PetEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.mongodb.core.query.Query;
@@ -28,7 +29,7 @@ class OpaClientServiceTest extends TestBase {
 
     private RestTemplate restTemplate;
     private OpaCompilerResponse opaCompilerResponse;
-    private OpaClientService target;
+    private OpaClientService<PetEntity> target;
 
     @BeforeEach
     void setUp() throws IOException {

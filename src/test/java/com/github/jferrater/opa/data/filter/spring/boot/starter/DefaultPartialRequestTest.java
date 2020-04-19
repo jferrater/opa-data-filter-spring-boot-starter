@@ -18,12 +18,12 @@ import static org.mockito.Mockito.when;
 
 class DefaultPartialRequestTest {
 
-    public static final String QUERY = "data.allow==true";
-    public static final String DATA_PETS = "data.pets";
-    public static final String USERNAME_KEY = "username";
-    public static final String USERNAME_VALUE = "alice";
-    public static final String GET = "GET";
-    public static final String PATH = "/pets";
+    private static final String QUERY = "data.allow==true";
+    private static final String DATA_PETS = "data.pets";
+    private static final String USERNAME_KEY = "username";
+    private static final String USERNAME_VALUE = "alice";
+    private static final String GET = "GET";
+    private static final String PATH = "/pets";
 
     @Test
     void shouldCreateDefaultPartialRequest() throws JsonProcessingException {
