@@ -2,6 +2,7 @@ package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa;
 
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.entity.PetEntity;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.when;
         }
 )
 @ActiveProfiles("test")
+@Disabled
 public class OpaRepositoryTest {
 
     private static final String QUERY = "SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy');";
