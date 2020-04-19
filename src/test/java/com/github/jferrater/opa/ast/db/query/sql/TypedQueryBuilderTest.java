@@ -55,7 +55,7 @@ class TypedQueryBuilderTest {
 
     @BeforeEach
     void setUp() {
-        target = new TypedQueryBuilder<PetEntity>(opaCompilerResponse, entityManager);
+        target = new TypedQueryBuilder<>(opaCompilerResponse, entityManager);
     }
 
     @Test

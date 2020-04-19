@@ -8,7 +8,7 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 
 import javax.persistence.EntityManager;
 
-public class OpaRepositoryFactory<T, ID> extends JpaRepositoryFactory {
+public class OpaRepositoryFactory<T> extends JpaRepositoryFactory {
 
 
     private final EntityManager entityManager;
@@ -27,7 +27,7 @@ public class OpaRepositoryFactory<T, ID> extends JpaRepositoryFactory {
     }
 
     @Override
-    protected JpaRepositoryImplementation<T, ?> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
+    protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
         return new OpaRepositoryImpl(getEntityInformation(information.getDomainType()), this.entityManager, opaClientService);
     }
 
