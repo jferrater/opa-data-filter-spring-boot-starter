@@ -1,4 +1,4 @@
-package com.github.jferrater.opa.ast.db.query;
+package com.github.jferrater.opa.ast.db.query.config;
 
 import com.github.jferrater.opa.ast.db.query.config.OpaConfig;
 import com.github.jferrater.opa.ast.db.query.service.DefaultPartialRequest;
@@ -21,7 +21,9 @@ public class AppConfig {
     }
 
     @Bean
-    public OpaClientService opaClientService(OpaConfig opaConfig) {
-        return new OpaClientService(opaConfig);
+    @RequestScope
+    @Qualifier("opaClientService")
+    public <T>OpaClientService<T> opaClientService(OpaConfig opaConfig) {
+        return new OpaClientService<>(opaConfig);
     }
 }

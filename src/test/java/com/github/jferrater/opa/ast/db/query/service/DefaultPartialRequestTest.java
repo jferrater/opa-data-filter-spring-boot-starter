@@ -1,10 +1,8 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter;
+package com.github.jferrater.opa.ast.db.query.service;
 
 import com.github.jferrater.opa.ast.db.query.config.PartialRequestConfig;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
-import com.github.jferrater.opa.ast.db.query.service.DefaultPartialRequest;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -18,16 +16,20 @@ import static org.mockito.Mockito.when;
 
 class DefaultPartialRequestTest {
 
-    public static final String QUERY = "data.allow==true";
-    public static final String DATA_PETS = "data.pets";
-    public static final String USERNAME_KEY = "username";
-    public static final String USERNAME_VALUE = "alice";
-    public static final String GET = "GET";
-    public static final String PATH = "/pets";
+    private static final String X_ORG_HEADER = "X-ORG";
+    private static final String AUTH_BASIC_HEADER = "Basic YWxpY2U6cGFzc3dvcmQ="; // base64 of alice:password
+    private static final String QUERY = "data.allow==true";
+    private static final String DATA_PETS = "data.pets";
+    private static final String USERNAME_KEY = "username";
+    private static final String USERNAME_VALUE = "alice";
+    private static final String GET = "GET";
+    private static final String PATH = "/pets";
 
     @Test
-    void shouldCreateDefaultPartialRequest() throws JsonProcessingException {
+    void shouldCreateDefaultPartialRequest() {
         final HttpServletRequest mockHttpServletRequest = mock(HttpServletRequest.class);
+        when(mockHttpServletRequest.getHeader(X_ORG_HEADER)).thenReturn("SOMA");
+        when(mockHttpServletRequest.getHeader("Authorization")).thenReturn(AUTH_BASIC_HEADER);
         when(mockHttpServletRequest.getMethod()).thenReturn(GET);
         when(mockHttpServletRequest.getServletPath()).thenReturn(PATH);
         PartialRequestConfig partialRequestConfig = createConfig();
@@ -39,7 +41,7 @@ class DefaultPartialRequestTest {
         assertThat(result.getQuery(), is(QUERY));
         assertThat(result.getUnknowns(), hasItem(DATA_PETS));
         Map<String, Object> inputResult = result.getInput();
-        assertThat(inputResult.get(USERNAME_KEY), is(USERNAME_VALUE));
+        assertThat(inputResult.get("subject"), is(notNullValue()));
         assertThat(inputResult.get("method"), is(GET));
         assertThat(inputResult.get("path"), is(notNullValue()));
     }
@@ -58,11 +60,12 @@ class DefaultPartialRequestTest {
 
     private PartialRequestConfig createConfig() {
         PartialRequestConfig partialRequestConfig = new PartialRequestConfig();
+        partialRequestConfig.setLogPartialRequest(true);
         partialRequestConfig.setQuery(QUERY);
         partialRequestConfig.setUnknowns(Set.of(DATA_PETS));
-        Map<String, Object> configInput = new HashMap<>();
-        configInput.put(USERNAME_KEY, USERNAME_VALUE);
-        partialRequestConfig.setInput(configInput);
+        Map<String, String> userAttributes = new HashMap<>();
+        userAttributes.put("clinic_location", "X-ORG");
+        partialRequestConfig.setUserAttributeToHttpHeaderMap(userAttributes);
         return partialRequestConfig;
     }
 }

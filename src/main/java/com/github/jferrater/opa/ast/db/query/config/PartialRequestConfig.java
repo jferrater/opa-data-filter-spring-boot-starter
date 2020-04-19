@@ -19,11 +19,16 @@ public class PartialRequestConfig {
      */
     private String query;
     /**
-     * The input document to use during partial evaluation
+     * The mapping of user attribute to Http Header. These mappings will be added as subject properties in the input
+     * of the partial request
      */
-    private Map<String, Object> input;
+    private Map<String, String> userAttributeToHttpHeaderMap;
     /**
      * The terms to treat as unknown during partial evaluation(default: ["input"]
      */
     private Set<String> unknowns;
+    /**
+     * Log the partial request on std out for debugging
+     */
+    private boolean logPartialRequest = false;
 }

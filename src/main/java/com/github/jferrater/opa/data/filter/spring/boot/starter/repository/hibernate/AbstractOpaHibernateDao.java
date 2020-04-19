@@ -4,18 +4,19 @@ import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public abstract class AbstractOpaHibernateDao<T> {
 
+    @PersistenceContext(unitName = "entityManagerFactory")
+    EntityManager entityManager;
     @Autowired
-    SessionFactory sessionFactory;
-    @Autowired
-    OpaClientService opaClientService;
+    OpaClientService<T> opaClientService;
 
     private Class<T> clazz;
 
@@ -60,6 +61,6 @@ public abstract class AbstractOpaHibernateDao<T> {
     }
 
     protected Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
+        return entityManager.unwrap(Session.class);
     }
 }

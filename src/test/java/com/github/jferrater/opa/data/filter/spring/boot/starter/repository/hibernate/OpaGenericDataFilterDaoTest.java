@@ -1,10 +1,10 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate;
 
 import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.config.PersistenceConfig;
-import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate.OpaGenericDataFilterDao;
+import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.entity.PetEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
                 MyRepository.class
         }
 )
-@ActiveProfiles("test")
+@ActiveProfiles("genericdao")
 class OpaGenericDataFilterDaoTest {
 
     private static final String QUERY = "SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy');";
@@ -39,7 +39,7 @@ class OpaGenericDataFilterDaoTest {
     @Autowired
     private MyRepository target;
     @MockBean
-    private OpaClientService opaClientService;
+    private OpaClientService<PetEntity> opaClientService;
 
     @DisplayName(
             "Given a classpath:application-test.yml profile"
@@ -50,10 +50,10 @@ class OpaGenericDataFilterDaoTest {
         PartialRequest partialRequest = mock(PartialRequest.class);
         when(opaClientService.getExecutableSqlStatements(partialRequest)).thenReturn(QUERY);
 
-        List<Pet> results = target.filterData(partialRequest);
+        List<PetEntity> results = target.filterData(partialRequest);
 
         assertThat(results.size(), is(1));
-        Pet pet = results.get(0);
+        PetEntity pet = results.get(0);
         assertThat(pet.getName(), is("fluffy"));
         assertThat(pet.getOwner(), is("alice"));
         assertThat(pet.getVeterinarian(), is("alice"));
@@ -68,10 +68,10 @@ class OpaGenericDataFilterDaoTest {
     void shouldFilterDataUsingDefaultPartialRequest() {
         when(opaClientService.getExecutableSqlStatements()).thenReturn(QUERY);
 
-        List<Pet> results = target.filterData();
+        List<PetEntity> results = target.filterData();
 
         assertThat(results.size(), is(1));
-        Pet pet = results.get(0);
+        PetEntity pet = results.get(0);
         assertThat(pet.getName(), is("fluffy"));
         assertThat(pet.getOwner(), is("alice"));
         assertThat(pet.getVeterinarian(), is("alice"));
