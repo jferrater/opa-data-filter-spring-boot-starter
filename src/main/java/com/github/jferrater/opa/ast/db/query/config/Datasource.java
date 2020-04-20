@@ -5,27 +5,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import javax.validation.constraints.NotNull;
+
 @Configuration
-@ConfigurationProperties(prefix = "opa.authorization.datasource.jdbc")
+@ConfigurationProperties(prefix = "opa.datasource")
 @Data
 @NoArgsConstructor
 public class Datasource {
-
-    // Default values set for H2 Database
     /**
-     * The datasource JDBC url
+     * The package name of the entities to scan for the EntityManagerFactoryBean
      */
-    private String url = "jdbc:h2:mem:db;DB_CLOSE_DELAY=-1";
-    /**
-     * The datasource username
-     */
-    private String username = "sa";
-    /**
-     * The datasource password
-     */
-    private String password = "";
-    /**
-     * The datasource JDBC driver class name
-     */
-    private String driverClassName = "org.h2.Driver";
+    @NotNull
+    private String entitiesPackageName;
 }

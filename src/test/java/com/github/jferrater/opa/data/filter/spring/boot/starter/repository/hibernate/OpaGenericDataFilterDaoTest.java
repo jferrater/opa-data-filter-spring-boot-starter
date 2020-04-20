@@ -4,6 +4,7 @@ import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.config.PersistenceConfig;
+import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.TestApplication;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.entity.PetEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,8 @@ import static org.mockito.Mockito.when;
         classes = {
                 PersistenceConfig.class,
                 OpaGenericDataFilterDao.class,
-                MyRepository.class
+                MyRepository.class,
+                TestApplication.class
         }
 )
 @ActiveProfiles("genericdao")
