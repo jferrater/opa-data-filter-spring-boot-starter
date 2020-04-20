@@ -51,9 +51,6 @@ opa:
     query: "data.petclinic.authz.allow = true"
     unknowns:
       - "data.pets"
-    log-partial-request: true
-    user-attribute-to-http-header-map:
-      clinic_location: X-ORG-HEADER
 
 # Spring Data JPA specific configurations
 spring:
@@ -128,7 +125,55 @@ See example Spring Boot project that uses this library --> [opa-data-filter-demo
 
 ## The Partial Request
 ### Default Partial Request
- To do!!!!
+ When the `findAll` method is invoked from `OpaDataFilterRepository` interface, a partial request object is sent
+ to the [OPA compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api) endpoint. The default partial request is the following:
+ ````json
+{
+	"query": "data.petclinic.authz.allow = true",
+	"input": {
+		"path": ["pets"],
+		"method": "GET",
+		"subject": {
+			"user": "alice",
+			"jwt": ""
+		}
+	},
+	"unknowns": ["data.pets"]
+}
+````
+where: <br>
+- `query` - is the value of `opa.partial-request.query` from the configuration property
+- `input` - by default http servlet path and method are added as `path` and `method` respectively. The `subject` (the current user) by default has `user` property
+which is derived from Authorization Basic header if it exists and `jwt` property from the Authorization Bearer header if it exists.
+- `unknowns` - the value of `opa.partial-request.unknowns` from the configuration property if configured. This is optional.
+### Adding Attributes to the Default Partial Request
+It is possible to add attributes to the `subject` property of the default partial request. This can be done by mapping the attribute to the Http header using
+a configuration `opa.partial-request.user-attribute-to-http-header-map`. For example:
+````yaml
+opa:
+  partial-request:
+    log-partial-request: true
+    user-attribute-to-http-header-map:
+      organization: X-ORG-HEADER
+````
+The `organization` is key of the attribute and the value of the `X-ORG-HEADER` http header is the value of the key. The partial request will
+look like the following:
+````json
+{
+	"query": "data.petclinic.authz.allow = true",
+	"input": {
+		"path": ["pets"],
+		"method": "GET",
+		"subject": {
+			"user": "alice",
+			"attributes": {
+				"organization": "SOMA"
+			}
+		}
+	},
+	"unknowns": ["data.pets"]
+}
+````
 ## Development
 ### Building the project
 ``./gradlew clean build``
