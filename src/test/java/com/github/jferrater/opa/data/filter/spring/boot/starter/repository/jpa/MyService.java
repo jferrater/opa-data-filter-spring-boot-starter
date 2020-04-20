@@ -9,10 +9,10 @@ import java.util.List;
 @Service
 public class MyService {
 
-    private MyOpaRepository myOpaRepository;
+    private MyOpaDataFilterRepository myOpaRepository;
 
     @Autowired
-    public MyService(MyOpaRepository myOpaRepository) {
+    public MyService(MyOpaDataFilterRepository myOpaRepository) {
         this.myOpaRepository = myOpaRepository;
     }
 

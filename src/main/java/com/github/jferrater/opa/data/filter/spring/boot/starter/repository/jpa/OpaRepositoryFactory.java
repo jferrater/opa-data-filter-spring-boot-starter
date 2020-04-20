@@ -8,7 +8,12 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 
 import javax.persistence.EntityManager;
 
-public class OpaRepositoryFactory<T> extends JpaRepositoryFactory {
+/**
+ * The custom repository factory
+ *
+ * @param <T> The managed entity
+ */
+public class OpaRepositoryFactory<T, ID> extends JpaRepositoryFactory {
 
 
     private final EntityManager entityManager;
@@ -28,11 +33,11 @@ public class OpaRepositoryFactory<T> extends JpaRepositoryFactory {
 
     @Override
     protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
-        return new OpaRepositoryImpl(getEntityInformation(information.getDomainType()), this.entityManager, opaClientService);
+        return new OpaDataFilterRepositoryImpl<T,ID>((Class<T>)information.getDomainType(), this.entityManager, opaClientService);
     }
 
     @Override
     protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-        return OpaRepositoryImpl.class;
+        return OpaDataFilterRepository.class;
     }
 }

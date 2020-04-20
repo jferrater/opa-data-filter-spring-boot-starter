@@ -17,6 +17,4 @@ public class OpaConfig {
      * The OPA compile API endpoint. Set default for localhost suitable for sidecar pattern deployment
      */
     private String url = "http://localhost:8181/v1/compile";
-    private Datasource datasource;
-
 }

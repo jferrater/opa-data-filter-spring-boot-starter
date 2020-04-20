@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,7 +35,7 @@ import static org.mockito.Mockito.when;
         }
 )
 @ActiveProfiles("test")
-public class OpaRepositoryTest extends TestBase {
+public class OpaDataFilterRepositoryTest extends TestBase {
 
 
     @Autowired
@@ -56,7 +55,6 @@ public class OpaRepositoryTest extends TestBase {
     }
 
     @Test
-    @Transactional
     void shouldListFilteredData() throws IOException {
         when(opaClient.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
                 .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.OK));

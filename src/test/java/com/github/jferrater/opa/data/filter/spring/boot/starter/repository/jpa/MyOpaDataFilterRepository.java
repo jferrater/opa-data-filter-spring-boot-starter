@@ -4,6 +4,6 @@ import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.e
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MyOpaRepository extends OpaRepository<PetEntity, Long> {
+public interface MyOpaDataFilterRepository extends OpaDataFilterRepository<PetEntity, Long> {
 
 }

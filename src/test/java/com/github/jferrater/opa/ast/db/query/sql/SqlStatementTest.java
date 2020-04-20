@@ -1,6 +1,5 @@
 package com.github.jferrater.opa.ast.db.query.sql;
 
-import com.github.jferrater.opa.ast.db.query.sql.SqlStatement;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
