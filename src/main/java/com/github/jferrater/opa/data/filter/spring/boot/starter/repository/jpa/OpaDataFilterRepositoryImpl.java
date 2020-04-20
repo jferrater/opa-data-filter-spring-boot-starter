@@ -13,6 +13,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * @author joffryferrater
+ *
+ * Overrides the {{@link #findAll()}} method of the {@link SimpleJpaRepository} to enforce authorization
+ * with the Partial Evaluation of the Open Policy Agent
+ *
+ * @param <T> The managed entity
+ * @param <ID> The id of the managed entity
+ */
 @NoRepositoryBean
 public class OpaDataFilterRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements OpaDataFilterRepository<T, ID> {
 

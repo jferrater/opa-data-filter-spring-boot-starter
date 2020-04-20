@@ -8,6 +8,11 @@ import org.springframework.data.repository.core.RepositoryMetadata;
 
 import javax.persistence.EntityManager;
 
+/**
+ * The custom repository factory
+ *
+ * @param <T> The managed entity
+ */
 public class OpaRepositoryFactory<T> extends JpaRepositoryFactory {
 
 

@@ -1,17 +1,20 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa;
 
 import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
-import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
-public abstract class AbstractOpaHibernateDao<T> {
+/**
+ * @author joffryferrater
+ * @param <T> The entity
+ */
+public abstract class AbstractOpaJpaDao<T> {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     EntityManager entityManager;
@@ -56,11 +59,8 @@ public abstract class AbstractOpaHibernateDao<T> {
     }
 
     private List<T> getList(String sqlStatements) {
-        NativeQuery<T> nativeQuery = getCurrentSession().createNativeQuery(sqlStatements, clazz);
-        return nativeQuery.list();
+        Query nativeQuery = entityManager.createNativeQuery(sqlStatements, clazz);
+        return nativeQuery.getResultList();
     }
 
-    protected Session getCurrentSession() {
-        return entityManager.unwrap(Session.class);
-    }
 }

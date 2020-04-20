@@ -1,10 +1,9 @@
-package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.hibernate;
+package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa;
 
 import com.github.jferrater.opa.ast.db.query.exception.PartialEvauationException;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.config.PersistenceConfig;
-import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.TestApplication;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.entity.PetEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,7 +45,6 @@ class OpaGenericDataFilterDaoTest {
             "Given a classpath:application-test.yml profile"
     )
     @Test
-    @Transactional
     void shouldFilterData() {
         PartialRequest partialRequest = mock(PartialRequest.class);
         when(opaClientService.getExecutableSqlStatements(partialRequest)).thenReturn(QUERY);
@@ -66,7 +63,6 @@ class OpaGenericDataFilterDaoTest {
             "Given a classpath:application-test.yml profile"
     )
     @Test
-    @Transactional
     void shouldFilterDataUsingDefaultPartialRequest() {
         when(opaClientService.getExecutableSqlStatements()).thenReturn(QUERY);
 
@@ -84,7 +80,6 @@ class OpaGenericDataFilterDaoTest {
             "Given a classpath:application-test.yml profile"
     )
     @Test
-    @Transactional
     void shouldThrowPartialEvaluationExceptionDefaultPartialRequest() {
         when(opaClientService.getExecutableSqlStatements()).thenReturn("SELECT * FROM pets;");
 
@@ -95,7 +90,6 @@ class OpaGenericDataFilterDaoTest {
             "Given a classpath:application-test.yml profile"
     )
     @Test
-    @Transactional
     void shouldThrowPartialEvaluationException() {
         PartialRequest partialRequest = mock(PartialRequest.class);
         when(opaClientService.getExecutableSqlStatements(partialRequest)).thenReturn("SELECT * FROM pets;");

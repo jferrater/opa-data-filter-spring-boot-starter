@@ -1,7 +1,7 @@
 package com.github.jferrater.opa.data.filter.spring.boot.starter.config;
 
-import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.OpaRepositoryFactoryBean;
 import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.OpaDataFilterRepositoryImpl;
+import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.OpaRepositoryFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -11,13 +11,11 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableTransactionManagement
 @EnableJpaRepositories(repositoryBaseClass = OpaDataFilterRepositoryImpl.class, repositoryFactoryBeanClass = OpaRepositoryFactoryBean.class)
 public class PersistenceConfig {
 

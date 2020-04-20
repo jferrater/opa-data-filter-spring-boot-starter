@@ -12,7 +12,7 @@ The blog posts below explain enough of the What and Why!
 ### The Library
 opa-data-filter-spring-boot-starter is a Spring Boot library which can be used together with Spring Data JPA and Spring Data MongoDB to secure data by filtering using OPA Partial Evaluation feature.
 When a user wants to access a protected collection of resources, the library creates a partial request object which contains about the user and the operation a user wants to perform. The partial request object is
-sent to the OPA[compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api).
+sent to the OPA [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api).
 OPA evaluates the partial request and returns a new and simplified policy that can be evaluated more efficiently than the original policy. This library converts
 the new policy, the OPA compile API response, into SQL or MongoDB queries. A filtered collection of data is returned to the user which a user is allowed to see.
 
@@ -77,8 +77,6 @@ import org.springframework.stereotype.Repository;
 public interface PetRepository extends OpaRepository<PetProfileEntity, Long> {
 
 }
-
-
 ```
 #### The managed entity class
 ````java
@@ -128,6 +126,9 @@ See example Spring Boot project that uses this library --> [opa-data-filter-demo
 
  Integration with MongoDB instructions and sample project will be added soon!
 
+## The Partial Request
+### Default Partial Request
+ To do!!!!
 ## Development
 ### Building the project
 ``./gradlew clean build``
