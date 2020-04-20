@@ -55,6 +55,7 @@ opa:
     user-attribute-to-http-header-map:
       clinic_location: X-ORG-HEADER
 
+# Spring Data JPA specific configurations
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -62,7 +63,7 @@ spring:
     username: admin
     password: MangaonTaNiny0!
 ````
-2. Create a sub interface `OpaDataFilterRepository`. This repository is a custom Spring Data JPA repository which overrides the `findAll()`
+2. Create a sub interface of `OpaDataFilterRepository`. This repository is a custom Spring Data JPA repository which overrides the `findAll()`
 method to enforce authorization. The method sends a partial request to the OPA server. The response from OPA is converted into TypedQuery
 which will be used by Spring Data JPA to filter results. The filtered results are the data the user is allowed to see.
 
