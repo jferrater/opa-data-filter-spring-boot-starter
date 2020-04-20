@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @NoRepositoryBean
@@ -35,7 +36,8 @@ public class OpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> impleme
     public List<T> findAll() {
         LOGGER.trace("Entering findAll()");
         LOGGER.trace("ClassName: {}", this.getDomainClass().getName());
-        List<T> resultList = opaClientService.getTypedQuery(this.getDomainClass(), Sort.unsorted(), entityManager).getResultList();
+        TypedQuery<T> typedQuery = opaClientService.getTypedQuery(this.getDomainClass(), Sort.unsorted(), entityManager);
+        List<T> resultList = typedQuery.getResultList();
         LOGGER.trace("Result list size: {}", resultList.size());
         return resultList;
     }

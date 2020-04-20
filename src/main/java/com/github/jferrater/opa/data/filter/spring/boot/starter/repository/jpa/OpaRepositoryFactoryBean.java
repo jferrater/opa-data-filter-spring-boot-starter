@@ -1,16 +1,16 @@
 package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa;
 
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 
 public class OpaRepositoryFactoryBean<R extends JpaRepository<T, ID>, T, ID> extends JpaRepositoryFactoryBean<R, T, ID> {
 
-    @Autowired
+    @Resource(name = "opaClientService")
     private OpaClientService<T> opaClientService;
 
     /**

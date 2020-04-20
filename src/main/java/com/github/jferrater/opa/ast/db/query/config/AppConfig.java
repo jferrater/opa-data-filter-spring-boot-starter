@@ -1,6 +1,5 @@
 package com.github.jferrater.opa.ast.db.query.config;
 
-import com.github.jferrater.opa.ast.db.query.config.OpaConfig;
 import com.github.jferrater.opa.ast.db.query.service.DefaultPartialRequest;
 import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
 import org.springframework.beans.factory.annotation.Qualifier;
