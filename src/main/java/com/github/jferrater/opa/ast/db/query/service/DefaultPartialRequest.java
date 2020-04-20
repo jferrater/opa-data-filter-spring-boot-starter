@@ -119,7 +119,12 @@ public class DefaultPartialRequest {
     private Map<String, String> getUseAttributes() {
         Map<String, String> userAttributeToHttpHeaderMap = Objects.requireNonNullElse(partialRequestConfig.getUserAttributeToHttpHeaderMap(), new HashMap<>());
         Map<String, String> userAttributes = new HashMap<>();
-        userAttributeToHttpHeaderMap.forEach((k, v) -> userAttributes.put(k, getHeader(v)));
+        userAttributeToHttpHeaderMap.forEach((k, v) -> {
+            String header = getHeader(v);
+            if(header != null) {
+                userAttributes.put(k, header);
+            }
+        });
         return userAttributes;
     }
 
