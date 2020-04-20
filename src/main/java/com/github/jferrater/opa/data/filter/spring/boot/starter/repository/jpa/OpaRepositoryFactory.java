@@ -28,11 +28,11 @@ public class OpaRepositoryFactory<T> extends JpaRepositoryFactory {
 
     @Override
     protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information, EntityManager entityManager) {
-        return new OpaRepositoryImpl(getEntityInformation(information.getDomainType()), this.entityManager, opaClientService);
+        return new OpaDataFilterRepositoryImpl(getEntityInformation(information.getDomainType()), this.entityManager, opaClientService);
     }
 
     @Override
     protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-        return OpaRepositoryImpl.class;
+        return OpaDataFilterRepository.class;
     }
 }

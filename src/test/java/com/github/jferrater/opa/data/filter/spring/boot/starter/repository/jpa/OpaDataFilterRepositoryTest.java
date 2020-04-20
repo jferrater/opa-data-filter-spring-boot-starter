@@ -36,7 +36,7 @@ import static org.mockito.Mockito.when;
         }
 )
 @ActiveProfiles("test")
-public class OpaRepositoryTest extends TestBase {
+public class OpaDataFilterRepositoryTest extends TestBase {
 
 
     @Autowired
