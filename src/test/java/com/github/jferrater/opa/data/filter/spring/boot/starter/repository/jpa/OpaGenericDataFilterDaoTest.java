@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(
         classes = {
                 PersistenceConfig.class,
+                MyJpaConfig.class,
                 OpaGenericDataFilterDao.class,
                 MyRepository.class,
                 TestApplication.class

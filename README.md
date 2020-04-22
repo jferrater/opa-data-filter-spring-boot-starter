@@ -44,9 +44,6 @@ or maven:
 opa:
   authorization:
     url: "http://localhost:8181/v1/compile"
-  datasource:
-    entities-package-name: "com.example.opadatafilterdemo.repository"
-
   partial-request:
     query: "data.petclinic.authz.allow = true"
     unknowns:
@@ -113,7 +110,6 @@ public class JpaEnvConfig {
 |-------------------------------------------------------|---------------------|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
 | opa.authorization.url                                 | String              | http://localhost:8181/v1/compile | The OPA compile API endpoint.                                                                                                                                                                                                                                | Yes      |
 | opa.authorization.data-filter-enabled                 | Boolean             | true                             | Enable OPA data filter authorization                                                                                                                                                                                                                         | No       |
-| opa.datasource.entities-package-name                  | String              |                                  | The package name of the managed entities for the EntityManagerFactoryBean to set                                                                                                                                                                             | Yes      |
 | opa.partial-request.log-partial-request               | Boolean             | false                            | Log the partial request json which was sent to OPA on std out for debugging                                                                                                                                                                                  | No       |
 | opa.partial-request.query                             | String              |                                  | The query to partially evaluate and compile                                                                                                                                                                                                                  | Yes      |
 | opa.partial-request.unknowns                          | Set<String>         |                                  | The terms to treat as unknown during partial evaluation                                                                                                                                                                                                      | No       |
