@@ -139,7 +139,7 @@ publishing {
 modifyPom {
 	project {
 		name ARTIFACT_NAME
-		description 'Spring Boot library for enforcing authorization on Spring Data using the Open Policy Agent (OPA) partial evaluation feature through its compile API'
+		description 'Spring Boot library for enforcing authorization on Spring Data repository using the Open Policy Agent (OPA) partial evaluation feature through its compile API'
 		url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
 		inceptionYear '2020'
 
