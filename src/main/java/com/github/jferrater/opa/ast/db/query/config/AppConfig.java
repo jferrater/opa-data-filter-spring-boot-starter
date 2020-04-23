@@ -13,7 +13,10 @@ import org.springframework.web.context.annotation.RequestScope;
 import java.time.Duration;
 
 @Configuration
-@Import(value = OpaConfig.class)
+@Import(value = {
+        OpaConfig.class,
+        PartialRequestConfig.class
+})
 public class AppConfig {
 
     @Bean

@@ -9,6 +9,9 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 
 /**
+ *
+ * @author joffryferrater
+ *
  * The repository factory bean
  *
  * @param <R> The JpaRepository implementation

@@ -69,7 +69,6 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 	testImplementation 'org.mariadb.jdbc:mariadb-java-client:2.3.0'
 	testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
 	testImplementation group: 'org.testcontainers', name: 'mysql', version: '1.12.5'

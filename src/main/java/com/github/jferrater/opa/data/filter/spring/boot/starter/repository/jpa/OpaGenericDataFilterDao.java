@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 /**
+ *
+ * @author joffryferrater
+ *
  * The generic dao class for filtering data using OPA
  *
  * @param <T> The managed entity
