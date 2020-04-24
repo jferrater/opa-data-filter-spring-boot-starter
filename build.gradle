@@ -37,13 +37,10 @@ jacoco {
 
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
-
-ext {
-	gradleLombokVersion = '1.18.4'
-}
 
 ext {
 	gradleLombokVersion = '1.18.4'
