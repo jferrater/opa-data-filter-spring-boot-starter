@@ -1,0 +1,205 @@
+{
+  "result": {
+    "queries": [
+      [
+        {
+          "index": 0,
+          "terms": [
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "eq"
+                }
+              ]
+            },
+            {
+              "type": "string",
+              "value": "alice"
+            },
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "data"
+                },
+                {
+                  "type": "string",
+                  "value": "pets"
+                },
+                {
+                  "type": "var",
+                  "value": "$02"
+                },
+                {
+                  "type": "string",
+                  "value": "owner"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "terms": [
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "eq"
+                }
+              ]
+            },
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "data"
+                },
+                {
+                  "type": "string",
+                  "value": "pets"
+                },
+                {
+                  "type": "var",
+                  "value": "$02"
+                },
+                {
+                  "type": "string",
+                  "value": "name"
+                }
+              ]
+            },
+            {
+              "type": "string",
+              "value": "fluffy"
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "index": 0,
+          "terms": [
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "eq"
+                }
+              ]
+            },
+            {
+              "type": "string",
+              "value": "alice"
+            },
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "data"
+                },
+                {
+                  "type": "string",
+                  "value": "pets"
+                },
+                {
+                  "type": "var",
+                  "value": "$13"
+                },
+                {
+                  "type": "string",
+                  "value": "veterinarian"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "terms": [
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "eq"
+                }
+              ]
+            },
+            {
+              "type": "string",
+              "value": "SOMA"
+            },
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "data"
+                },
+                {
+                  "type": "string",
+                  "value": "pets"
+                },
+                {
+                  "type": "var",
+                  "value": "$13"
+                },
+                {
+                  "type": "string",
+                  "value": "clinic"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "terms": [
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "eq"
+                }
+              ]
+            },
+            {
+              "type": "ref",
+              "value": [
+                {
+                  "type": "var",
+                  "value": "data"
+                },
+                {
+                  "type": "string",
+                  "value": "pets"
+                },
+                {
+                  "type": "var",
+                  "value": "$13"
+                },
+                {
+                  "type": "string",
+                  "value": "name"
+                }
+              ]
+            },
+            {
+              "type": "string",
+              "value": "fluffy"
+            }
+          ]
+        }
+      ]
+    ]
+  }
+}

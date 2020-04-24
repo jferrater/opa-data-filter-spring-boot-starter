@@ -8,7 +8,7 @@ buildscript {
 }
 
 plugins {
-	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 	id 'maven'
@@ -36,17 +36,14 @@ jacoco {
 	reportsDir = file("${buildDir}/reports/jacoco")
 }
 
+
 repositories {
-	mavenLocal()
 	mavenCentral()
 }
 
-bootJar {
-	enabled = false
-}
 
-jar {
-	enabled = true
+ext {
+	gradleLombokVersion = '1.18.4'
 }
 
 ext {
@@ -56,6 +53,14 @@ ext {
 lombok {
 	version = "${gradleLombokVersion}"
 	sha256 = ""
+}
+
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
 }
 
 dependencies {
