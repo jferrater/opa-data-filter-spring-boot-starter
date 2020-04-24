@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author joffryferrater
+ *
  * Converts Open Policy Agent Abstract Syntax Tree predicate into SQL predicate.
  */
 public class PredicateConverter {

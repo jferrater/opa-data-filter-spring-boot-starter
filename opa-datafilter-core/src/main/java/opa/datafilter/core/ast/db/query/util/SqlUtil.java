@@ -5,6 +5,9 @@ import opa.datafilter.core.ast.db.query.elements.SqlPredicate;
 
 import java.util.List;
 
+/**
+ * @author joffryferrater
+ */
 public class SqlUtil {
 
     private SqlUtil() {

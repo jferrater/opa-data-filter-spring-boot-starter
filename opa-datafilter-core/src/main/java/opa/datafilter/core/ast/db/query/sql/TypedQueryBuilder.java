@@ -21,8 +21,8 @@ import static java.util.stream.Collectors.toList;
 import static org.springframework.data.jpa.repository.query.QueryUtils.toOrders;
 
 /**
- * @author joffryferrater 
- * @param <T>
+ * @author joffryferrater
+ * @param <T> The class type
  */
 public class TypedQueryBuilder<T> {
 

@@ -1,8 +1,8 @@
-package com.github.jferrater.opa.ast.db.query.it;
+package opa.datafilter.core.ast.db.query;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
-import com.github.jferrater.opa.ast.db.query.service.OpaClientService;
+import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
+import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
