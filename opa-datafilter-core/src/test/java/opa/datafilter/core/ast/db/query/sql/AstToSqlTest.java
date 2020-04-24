@@ -16,6 +16,9 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/**
+ * @author joffryferrater
+ */
 class AstToSqlTest extends TestBase {
 
     private AstToSql target;

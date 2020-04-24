@@ -7,6 +7,9 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/**
+ * @author joffryferrater
+ */
 class SqlStatementTest {
 
     @Test

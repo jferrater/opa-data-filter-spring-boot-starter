@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author joffryferrater
+ */
 @Configuration
 @ConfigurationProperties(prefix = "opa.partial-request")
 @Data

@@ -1,5 +1,6 @@
 package com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jferrater.opa.ast.db.query.core.TestBase;
 import com.github.jferrater.opa.ast.db.query.model.request.PartialRequest;
 import com.github.jferrater.opa.ast.db.query.model.response.OpaCompilerResponse;
@@ -18,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;

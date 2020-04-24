@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
+/**
+ * @author joffryferrater
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = {"opa.datafilter.core.ast.db.query.sql",
 "opa.datafilter.core.ast.db.query.config"})

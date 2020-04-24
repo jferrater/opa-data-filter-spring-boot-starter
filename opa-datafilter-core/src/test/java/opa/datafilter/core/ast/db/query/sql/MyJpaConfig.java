@@ -13,6 +13,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+/**
+ * @author joffryferrater
+ */
 @Configuration
 @EnableJpaRepositories(basePackages = {"opa.datafilter.core.ast.db.query.sql"})
 public class MyJpaConfig {

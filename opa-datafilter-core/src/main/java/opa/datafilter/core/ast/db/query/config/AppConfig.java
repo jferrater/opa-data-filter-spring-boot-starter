@@ -12,6 +12,9 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import java.time.Duration;
 
+/**
+ * @author joffryferrater
+ */
 @Configuration
 @Import(value = OpaConfig.class)
 public class AppConfig {

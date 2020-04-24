@@ -14,6 +14,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+/**
+ * @author joffryferrater
+ */
 public class OpaOpaCompilerResponseDeserializationTest extends TestBase {
 
     /*

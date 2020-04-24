@@ -14,6 +14,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author joffryferrater
+ */
 class DefaultPartialRequestTest {
 
     private static final String X_ORG_HEADER = "X-ORG";

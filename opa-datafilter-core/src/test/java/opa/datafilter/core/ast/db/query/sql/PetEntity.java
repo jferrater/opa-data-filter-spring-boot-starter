@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * @author joffryferrater
+ */
 @Entity
 @Table(name = "pets")
 @Data

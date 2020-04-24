@@ -18,6 +18,11 @@ import java.util.List;
 
 import static opa.datafilter.core.ast.db.query.sql.OpaConstants.*;
 
+/**
+ * Deserializes OPA Compile API {@link Predicate}response
+ *
+ * @author joffryferrater
+ */
 public class PredicateDeserializer extends JsonDeserializer<Predicate> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PredicateDeserializer.class);

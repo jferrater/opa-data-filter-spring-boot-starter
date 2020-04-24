@@ -24,6 +24,9 @@ import java.sql.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/**
+ * @author joffryferrater
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {TestConfiguration.class})
 public class DataFilterIT {
