@@ -1,3 +1,12 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
@@ -8,7 +17,10 @@ plugins {
 	id 'maven-publish'
 	id 'jacoco'
 	id "org.sonarqube" version "2.7"
+	id 'io.codearte.nexus-staging' version '0.11.0'
 }
+
+apply plugin: 'com.bmuschko.nexus'
 
 group = 'com.github.jferrater'
 archivesBaseName = ARTIFACT_NAME
@@ -94,4 +106,47 @@ publishing {
 
 wrapper {
 	gradleVersion = '6.3'
+}
+
+modifyPom {
+	project {
+		name ARTIFACT_NAME
+		description 'Spring Boot library for enforcing authorization on Spring Data JPA using the Open Policy Agent (OPA) partial evaluation feature through its compile API'
+		url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
+		inceptionYear '2020'
+
+		scm {
+			url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
+			connection 'scm:https://github.com/jferrater/opa-data-filter-spring-boot-starter.git'
+			developerConnection 'scm:https://github.com/jferrater/opa-data-filter-spring-boot-starter.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+			developer {
+				id 'jferrater'
+				name 'Joffry Ferrater'
+				email 'joffry.ferrater@gmail.com'
+			}
+		}
+	}
+}
+
+extraArchive {
+	sources = true
+	tests = true
+	javadoc = true
+}
+
+nexus {
+	sign = true
+	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 }
