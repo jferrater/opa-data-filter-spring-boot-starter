@@ -16,8 +16,11 @@ import java.time.Duration;
  * @author joffryferrater
  */
 @Configuration
-@Import(value = OpaConfig.class)
-public class AppConfig {
+@Import(value = {
+        OpaConfig.class,
+        PartialRequestConfig.class
+})
+public class OpaDataCoreConfig {
 
     @Bean
     @RequestScope
