@@ -43,6 +43,9 @@ jobs:
         - ./gradlew clean build
         - ./gradlew integrationTest
         - ./gradlew jacocoTestReport sonarqube -Dsonar.verbose=true
+        - cd opa-datafilter-core
+        - ./gradlew clean build
+        - ./gradlew jacocoTestReport sonarqube -Dsonar.verbose=true
       after_script:
         - docker ps -a
 

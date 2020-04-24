@@ -1,0 +1,35 @@
+version: '3.7'
+services:
+  maria-database:
+    image: mariadb:10-bionic
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MangaonTaNiny0!
+      MYSQL_DATABASE: integrationTest
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: MangaonTaNiny0!
+    volumes:
+      - "./sql/:/docker-entrypoint-initdb.d/"
+    ports:
+      - "3306:3306"
+
+  postgresql-database:
+    image: postgres:12.1
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: MangaonTaNiny0!
+      POSTGRES_DB: integrationTest
+    volumes:
+      - "./sql/:/docker-entrypoint-initdb.d/"
+    ports:
+      - "5432:5432"
+
+  opa-server:
+    build:
+      context: ./
+      dockerfile: Dockerfile_OPA
+    depends_on:
+      - maria-database
+    ports:
+      - "8181:8181"
