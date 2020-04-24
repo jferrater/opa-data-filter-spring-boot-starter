@@ -39,7 +39,6 @@ jar {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
 	api 'com.github.jferrater:opa-datafilter-core:0.4.3'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -56,9 +55,9 @@ test {
 
 sonarqube {
 	properties {
-		property 'sonar.projectName', 'opa-datafilter-core'
+		property 'sonar.projectName', 'opa-datafilter-jpa-spring-boot-starter'
 		property 'sonar.github.repository', 'jferrater/opa-data-filter-spring-boot-starter'
-		property 'sonar.projectKey', 'jferrater_opa-datafilter-core'
+		property 'sonar.projectKey', 'jferrater_opa-datafilter-jpa-spring-boot-starter'
 		property 'sonar.organization', 'jferrater'
 		property 'sonar.host.url', 'https://sonarcloud.io'
 		property 'sonar.projectVersion', version

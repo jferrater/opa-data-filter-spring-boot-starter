@@ -12,6 +12,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id "io.franzbecker.gradle-lombok" version "1.14"
     id 'java'
+    id 'java-library'
     id 'maven'
     id 'maven-publish'
     id 'jacoco'
@@ -59,7 +60,7 @@ jar {
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    api group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
