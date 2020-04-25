@@ -11,7 +11,7 @@ The blog posts below explain enough of the What and Why!
 <br>
 
 ### The Libraries
-opa-datafilter-jpa-spring-boot-starter and opa-datafilter-mongo-spring-boot-starter are Spring Boot libraries which can be used together with Spring Data JPA and Spring Data MongoDB, respectively, to secure data by filtering using OPA Partial Evaluation feature.
+opa-datafilter-jpa-spring-boot-starter and opa-datafilter-mongo-spring-boot-starter are Spring Boot libraries which can be used together with Spring Data JPA and Spring Data MongoDB, respectively, to enforce authorization on data by filtering using OPA Partial Evaluation feature.
 When a user wants to access a protected collection of resources, the libraries create a partial request object which contains about the user and the operation a user wants to perform. The partial request object is
 sent to the OPA [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api).
 OPA evaluates the partial request and returns a new and simplified policy that can be evaluated more efficiently than the original policy. These libraries convert
