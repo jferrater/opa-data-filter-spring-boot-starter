@@ -40,7 +40,7 @@ public class OpaMongoRepositoryFactory<T, ID> extends MongoRepositoryFactory {
 
     @Override
     protected Object getTargetRepository(RepositoryInformation information) {
-        MongoEntityInformation<T, ID> entityInformation = getEntityInformation((Class<T>)information.getDomainType(), information);
+        MongoEntityInformation<T, ID> entityInformation = getMongoEntityInformation((Class<T>)information.getDomainType(), information);
         return new OpaDataFilterMongoRepositoryImpl<>(entityInformation, mongoOperations, opaClientService);
     }
 
@@ -49,7 +49,7 @@ public class OpaMongoRepositoryFactory<T, ID> extends MongoRepositoryFactory {
         return OpaDataFilterMongoRepository.class;
     }
 
-    private MongoEntityInformation<T, ID> getEntityInformation(Class<T> domainClass, @Nullable RepositoryMetadata metadata) {
+    private MongoEntityInformation<T, ID> getMongoEntityInformation(Class<T> domainClass, @Nullable RepositoryMetadata metadata) {
         MongoPersistentEntity<?> entity = mappingContext.getRequiredPersistentEntity(domainClass);
         Assert.notNull(entity, "Entity must not be null!");
         Class<ID> classIdType = metadata != null ? (Class<ID>)metadata.getIdType() : null;
