@@ -1,6 +1,7 @@
-# opa-data-filter-spring-boot-starter 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-data-filter-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-data-filter-spring-boot-starter/0.4.2/jar)
-[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-data-filter-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-data-filter-spring-boot-starter)
+# Enforcing authorization at Spring Data using Open Policy Agent partial evaluation
+## opa-datafilter-jpa-spring-boot-starter 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/0.4.3/jar)
+[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-jpa-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-jpa-spring-boot-starter)
 
 ### Pre-requisites
 The blog posts below explain enough of the What and Why!
@@ -9,11 +10,11 @@ The blog posts below explain enough of the What and Why!
 - The [OPA Compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api)
 <br>
 
-### The Library
-opa-data-filter-spring-boot-starter is a Spring Boot library which can be used together with Spring Data JPA and Spring Data MongoDB to secure data by filtering using OPA Partial Evaluation feature.
-When a user wants to access a protected collection of resources, the library creates a partial request object which contains about the user and the operation a user wants to perform. The partial request object is
+### The Libraries
+opa-datafilter-jpa-spring-boot-starter and opa-datafilter-mongo-spring-boot-starter are Spring Boot libraries which can be used together with Spring Data JPA and Spring Data MongoDB, respectively, to secure data by filtering using OPA Partial Evaluation feature.
+When a user wants to access a protected collection of resources, the libraries create a partial request object which contains about the user and the operation a user wants to perform. The partial request object is
 sent to the OPA [compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api).
-OPA evaluates the partial request and returns a new and simplified policy that can be evaluated more efficiently than the original policy. This library converts
+OPA evaluates the partial request and returns a new and simplified policy that can be evaluated more efficiently than the original policy. These libraries convert
 the new policy, the OPA compile API response, into SQL or MongoDB queries. A filtered collection of data is returned to the user which a user is allowed to see.
 
 ![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
@@ -23,7 +24,7 @@ For Spring Data JPA, <br>
 gradle project:
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-implementation group:'com.github.jferrater', name: 'opa-data-filter-spring-boot-starter', version: '0.4.2'
+implementation group:'com.github.jferrater', name: 'opa-datafilter-jpa-spring-boot-starter', version: '0.4.3'
 ```
 or maven:
 ````xml
@@ -33,8 +34,8 @@ or maven:
 </dependency>
 <dependency>
     <groupId>com.github.jferrater</groupId>
-    <artifactId>opa-data-filter-spring-boot-starter</artifactId>
-    <version>0.4.2</version>
+    <artifactId>opa-datafilter-jpa-spring-boot-starter</artifactId>
+    <version>0.4.3</version>
 </dependency>
 ````
 
@@ -64,7 +65,7 @@ which will be used by Spring Data JPA to filter results. The filtered results ar
 ```java
 package com.example.opadatafilterdemo.repository;
 
-import com.github.jferrater.opa.data.filter.spring.boot.starter.repository.jpa.OpaDataFilterRepository;
+import com.github.jferrater.opadatafilterjpaspringbootstarter.repository.OpaDataFilterRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -96,6 +97,10 @@ public class PetProfileEntity {
 ````
 3. Finally, configure JPA. Note that `repositoryFactoryBeanClass = OpaRepositoryFactoryBean.class` is required in the `@EnableJpaRepositories`.
 ````java
+import com.github.jferrater.opadatafilterjpaspringbootstarter.repository.OpaRepositoryFactoryBean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 @Configuration
 @EnableJpaRepositories(
         value = "com.example.opadatafilterdemo.repository",
@@ -170,19 +175,6 @@ look like the following:
 	"unknowns": ["data.pets"]
 }
 ````
-## Development
-### Building the project
-``./gradlew clean build``
-
-### Running the integration test
-1. Install docker-compose (Note: the docker-compose version used for this build is 1.25.4. Some version may not be compatible with TestContainer framework)
-2. ``./gradlew integrationTest``
-
-### Tested on databases (refer to the integration tests):
-- MariaDB
-- Postgresql
-- MongoDB
-
 ### Contributors
 - [Joffry Ferrater](https://github.com/jferrater)
 - [Reihmon Estremos](https://github.com/mongkoy)
