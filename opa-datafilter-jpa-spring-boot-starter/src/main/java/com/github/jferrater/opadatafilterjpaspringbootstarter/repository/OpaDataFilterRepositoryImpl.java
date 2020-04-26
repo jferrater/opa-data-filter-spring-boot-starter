@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformationSuppo
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -28,7 +27,6 @@ public class OpaDataFilterRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpaDataFilterRepositoryImpl.class);
 
-    @Resource(name = "queryService")
     private final QueryService<T> queryService;
     private final EntityManager entityManager;
 

@@ -1,6 +1,6 @@
 # Enforcing authorization at Spring Data using Open Policy Agent partial evaluation
 ## opa-datafilter-jpa-spring-boot-starter 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/0.4.3/jar)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/0.4.4/jar)
 [![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-jpa-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-jpa-spring-boot-starter)
 
 ### Pre-requisites
@@ -24,7 +24,7 @@ For Spring Data JPA, <br>
 gradle project:
 ```groovy
 implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-implementation group:'com.github.jferrater', name: 'opa-datafilter-jpa-spring-boot-starter', version: '0.4.3'
+implementation group:'com.github.jferrater', name: 'opa-datafilter-jpa-spring-boot-starter', version: '0.4.4'
 ```
 or maven:
 ````xml
@@ -35,7 +35,7 @@ or maven:
 <dependency>
     <groupId>com.github.jferrater</groupId>
     <artifactId>opa-datafilter-jpa-spring-boot-starter</artifactId>
-    <version>0.4.3</version>
+    <version>0.4.4</version>
 </dependency>
 ````
 
