@@ -5,9 +5,9 @@ import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class MongoQueryService<T> {
 
     @Qualifier("opaClientService")

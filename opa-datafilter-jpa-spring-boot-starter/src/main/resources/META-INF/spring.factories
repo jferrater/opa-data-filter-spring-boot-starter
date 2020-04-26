@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.jferrater.opadatafilterjpaspringbootstarter.query.QueryService, \
   com.github.jferrater.opadatafilterjpaspringbootstarter.config.PersistenceConfig
