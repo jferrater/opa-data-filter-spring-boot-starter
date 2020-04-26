@@ -1,4 +1,4 @@
-package opa.datafilter.core.ast.db.query.mongodb;
+package com.github.jferrater.opadatafiltermongospringbootstarter.query;
 
 import opa.datafilter.core.ast.db.query.elements.SqlPredicate;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.io.IOException;
 import java.util.List;
 
-import static opa.datafilter.core.ast.db.query.TestBase.opaCompilerResponse;
+import static com.github.jferrater.opadatafiltermongospringbootstarter.TestBase.opaCompilerResponse;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;

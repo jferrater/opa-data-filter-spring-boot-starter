@@ -4,15 +4,11 @@ import opa.datafilter.core.ast.db.query.config.OpaConfig;
 import opa.datafilter.core.ast.db.query.exception.OpaClientException;
 import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
-import opa.datafilter.core.ast.db.query.mongodb.AstToMongoDBQuery;
 import opa.datafilter.core.ast.db.query.sql.AstToSql;
-import opa.datafilter.core.ast.db.query.sql.TypedQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,16 +17,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 /**
  * @author joffryferrater
  *
- * @param <T> The class type
  */
 @Service
-public class OpaClientService<T> {
+public class OpaClientService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpaClientService.class);
 
@@ -63,16 +56,6 @@ public class OpaClientService<T> {
     }
 
     /**
-     * Sends the default {@link PartialRequest} to the Open Policy Agent server and receives the response.
-     * The response is translated into  MongoDB query
-     *
-     * @return {@link Query} Returns the MongoDB query
-     */
-    public Query getMongoDBQuery() {
-        return getMongoDBQuery(defaultPartialRequest.getDefaultPartialRequest());
-    }
-
-    /**
      * Sends the {@link PartialRequest} to the Open Policy Agent server and receives the response.
      * The response is translated into SQL query statements in string format
      *
@@ -89,25 +72,24 @@ public class OpaClientService<T> {
     }
 
     /**
-     * Sends the {@link PartialRequest} to the Open Policy Agent server and receives the response.
-     * The response is translated into  MongoDB query
+     * Get the response from Open Policy Agent compile api
      *
-     * @param partialRequest {@link PartialRequest}
-     * @return {@link Query} Returns the MongoDB query
+     * @return {@link OpaCompilerResponse}
      */
-    public Query getMongoDBQuery(PartialRequest partialRequest) {
-        ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(partialRequest);
-        checkResponse(responseResponseEntity);
-        AstToMongoDBQuery astToMongoDBQuery = new AstToMongoDBQuery(responseResponseEntity.getBody());
-        return astToMongoDBQuery.createQuery();
+    public OpaCompilerResponse getOpaCompilerApiResponse() {
+        PartialRequest partialRequest = defaultPartialRequest.getDefaultPartialRequest();
+        return  getOpaCompilerApiResponse(partialRequest);
     }
 
-    public <S extends T> TypedQuery<S> getTypedQuery(Class<S> domainClass, Sort sort, EntityManager entityManager){
-        ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(defaultPartialRequest.getDefaultPartialRequest());
+    /**
+     * Get the response from Open Policy Agent compile api
+     * @param partialRequest {@link PartialRequest}
+     * @return {@link OpaCompilerResponse}
+     */
+    public OpaCompilerResponse getOpaCompilerApiResponse(PartialRequest partialRequest) {
+        ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(partialRequest);
         checkResponse(responseResponseEntity);
-        OpaCompilerResponse opaCompilerResponse = responseResponseEntity.getBody();
-        TypedQueryBuilder<S> typedQueryBuilder = new TypedQueryBuilder<>(opaCompilerResponse, entityManager);
-        return typedQueryBuilder.getTypedQuery(domainClass, sort);
+        return  responseResponseEntity.getBody();
     }
 
     private ResponseEntity<OpaCompilerResponse> getOpaCompilerResponse(PartialRequest partialRequest) {

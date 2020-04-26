@@ -43,7 +43,7 @@ class OpaGenericDataFilterDaoTest {
     @Autowired
     private MyRepository target;
     @MockBean
-    private OpaClientService<PetEntity> opaClientService;
+    private OpaClientService opaClientService;
 
     @DisplayName(
             "Given a classpath:application-test.yml profile"

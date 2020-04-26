@@ -19,7 +19,7 @@ public abstract class AbstractOpaJpaDao<T> {
     @PersistenceContext(unitName = "entityManagerFactory")
     EntityManager entityManager;
     @Autowired
-    OpaClientService<T> opaClientService;
+    OpaClientService opaClientService;
 
     private Class<T> clazz;
 

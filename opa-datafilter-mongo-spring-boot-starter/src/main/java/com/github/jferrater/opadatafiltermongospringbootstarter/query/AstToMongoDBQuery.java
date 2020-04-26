@@ -1,4 +1,4 @@
-package opa.datafilter.core.ast.db.query.mongodb;
+package com.github.jferrater.opadatafiltermongospringbootstarter.query;
 
 import opa.datafilter.core.ast.db.query.PredicateConverter;
 import opa.datafilter.core.ast.db.query.elements.SqlPredicate;

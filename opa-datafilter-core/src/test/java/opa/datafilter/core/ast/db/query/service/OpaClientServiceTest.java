@@ -5,10 +5,8 @@ import opa.datafilter.core.ast.db.query.config.OpaConfig;
 import opa.datafilter.core.ast.db.query.exception.OpaClientException;
 import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
-import opa.datafilter.core.ast.db.query.sql.PetEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +30,7 @@ class OpaClientServiceTest extends TestBase {
 
     private RestTemplate restTemplate;
     private OpaCompilerResponse opaCompilerResponse;
-    private OpaClientService<PetEntity> target;
+    private OpaClientService target;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -60,22 +58,6 @@ class OpaClientServiceTest extends TestBase {
     }
 
     @Test
-    void shouldGetMongoDbQueryFromOpaCompilerResponse() {
-        when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
-                .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.OK));
-        PartialRequest partialRequest = PartialRequest.builder()
-                .query("data.petclinic.authz.allow = true")
-                .unknowns(Set.of("data.pets")).build();
-
-
-        Query result = target.getMongoDBQuery(partialRequest);
-
-        assertThat(result, is(notNullValue()));
-        String resultInString = result.getQueryObject().toJson();
-        assertThat(resultInString, is("{\"$or\": [{\"pets.owner\": \"alice\", \"pets.name\": \"fluffy\"}, {\"pets.veterinarian\": \"alice\", \"pets.clinic\": \"SOMA\", \"pets.name\": \"fluffy\"}]}"));
-    }
-
-    @Test
     void shouldThrowOpaClientException() {
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
                 .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.BAD_REQUEST));
@@ -86,5 +68,19 @@ class OpaClientServiceTest extends TestBase {
         assertThrows(OpaClientException.class, () -> {
             target.getExecutableSqlStatements(partialRequest);
         });
+    }
+
+    @Test
+    void shouldGetOpaCompileApiResponse() {
+        when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
+                .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.OK));
+        PartialRequest partialRequest = PartialRequest.builder()
+                .query("data.petclinic.authz.allow = true")
+                .unknowns(Set.of("data.pets")).build();
+
+
+        OpaCompilerResponse result = target.getOpaCompilerApiResponse(partialRequest);
+
+        assertThat(result, is(notNullValue()));
     }
 }

@@ -1,4 +1,4 @@
-package opa.datafilter.core.ast.db.query.sql;
+package com.github.jferrater.opadatafilterjpaspringbootstarter.query;
 
 import opa.datafilter.core.ast.db.query.PredicateConverter;
 import opa.datafilter.core.ast.db.query.elements.SqlPredicate;

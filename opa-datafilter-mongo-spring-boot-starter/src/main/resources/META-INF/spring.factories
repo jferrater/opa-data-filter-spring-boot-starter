@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.jferrater.opadatafiltermongospringbootstarter.query.MongoQueryService, \
+  com.github.jferrater.opadatafiltermongospringbootstarter.config.MongoRepositoryConfig

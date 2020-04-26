@@ -51,7 +51,7 @@ jar {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	api 'com.github.jferrater:opa-datafilter-core:0.4.3'
+	api 'com.github.jferrater:opa-datafilter-core:0.4.4'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -111,7 +111,7 @@ wrapper {
 modifyPom {
 	project {
 		name ARTIFACT_NAME
-		description 'Spring Boot library for enforcing authorization on Spring Data JPA using the Open Policy Agent (OPA) partial evaluation feature through its compile API'
+		description 'Spring Boot library for enforcing authorization on data by filtering using Spring Data JPA with the Open Policy Agent (OPA) partial evaluation feature through its compile API'
 		url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
 		inceptionYear '2020'
 

@@ -1,0 +1,168 @@
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'java-library'
+	id "io.franzbecker.gradle-lombok" version "1.14"
+	id 'maven'
+	id 'maven-publish'
+	id 'jacoco'
+	id "org.sonarqube" version "2.7"
+	id 'io.codearte.nexus-staging' version '0.11.0'
+	id 'org.unbroken-dome.test-sets' version '2.2.1'
+}
+
+apply plugin: 'com.bmuschko.nexus'
+
+group = 'com.github.jferrater'
+archivesBaseName = ARTIFACT_NAME
+version = ARTIFACT_VERSION
+sourceCompatibility = '11'
+
+ext {
+	gradleLombokVersion = '1.18.4'
+}
+
+lombok {
+	version = "${gradleLombokVersion}"
+	sha256 = ""
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+bootJar {
+	enabled = false
+}
+
+jar {
+	enabled = true
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	api 'com.github.jferrater:opa-datafilter-core:0.4.4'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+	testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.12.5'
+	testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+}
+
+
+testSets {
+	integrationTest
+}
+
+test {
+	useJUnitPlatform()
+}
+
+integrationTest {
+	useJUnitPlatform()
+	integrationTest.outputs.upToDateWhen { false }
+	failFast = true
+	dependsOn 'cleanIntegrationTest'
+
+	testLogging {
+		events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+	}
+}
+
+sonarqube {
+	properties {
+		property 'sonar.projectName', 'opa-datafilter-mongo-spring-boot-starter'
+		property 'sonar.github.repository', 'jferrater/opa-data-filter-spring-boot-starter'
+		property 'sonar.projectKey', 'jferrater_opa-datafilter-mongo-spring-boot-starter'
+		property 'sonar.organization', 'jferrater'
+		property 'sonar.host.url', 'https://sonarcloud.io'
+		property 'sonar.projectVersion', version
+		property 'sonar.login', System.getenv('SONAR_TOKEN')
+		property 'sonar.java.coveragePlugin', 'jacoco'
+		property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/**config/*.java'
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			versionMapping {
+				usage('java-api') {
+					fromResolutionOf('runtimeClasspath')
+				}
+				usage('java-runtime') {
+					fromResolutionResult()
+				}
+			}
+			groupId = 'com.github.jferrater'
+			artifactId = ARTIFACT_NAME
+			version = ARTIFACT_VERSION
+			from components.java
+		}
+	}
+}
+
+wrapper {
+	gradleVersion = '6.3'
+}
+
+modifyPom {
+	project {
+		name ARTIFACT_NAME
+		description 'Spring Boot library for enforcing authorization on data by filtering using Spring Data Mongo with the Open Policy Agent (OPA) partial evaluation feature through its compile API'
+		url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
+		inceptionYear '2020'
+
+		scm {
+			url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
+			connection 'scm:https://github.com/jferrater/opa-data-filter-spring-boot-starter.git'
+			developerConnection 'scm:https://github.com/jferrater/opa-data-filter-spring-boot-starter.git'
+		}
+
+		licenses {
+			license {
+				name 'The Apache Software License, Version 2.0'
+				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+				distribution 'repo'
+			}
+		}
+
+		developers {
+			developer {
+				id 'jferrater'
+				name 'Joffry Ferrater'
+				email 'joffry.ferrater@gmail.com'
+			}
+		}
+	}
+}
+
+extraArchive {
+	sources = true
+	tests = true
+	javadoc = true
+}
+
+nexus {
+	sign = true
+	repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+	snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+}

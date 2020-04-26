@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  mongo-database:
+    image: mongo:4.2.5-bionic
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: KaonNa2
+      MONGO_INITDB_DATABASE: petprofiles
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro"

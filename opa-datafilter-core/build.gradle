@@ -61,8 +61,6 @@ jar {
 
 dependencies {
     api group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
     annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
@@ -70,6 +68,8 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     testImplementation 'org.mariadb.jdbc:mariadb-java-client:2.3.0'
     testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
     testImplementation group: 'org.testcontainers', name: 'mysql', version: '1.12.5'
