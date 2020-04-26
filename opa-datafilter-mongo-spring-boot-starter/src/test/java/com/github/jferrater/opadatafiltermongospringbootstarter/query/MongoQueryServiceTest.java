@@ -4,7 +4,6 @@ import com.github.jferrater.opadatafiltermongospringbootstarter.repository.docum
 import opa.datafilter.core.ast.db.query.config.OpaConfig;
 import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
-import opa.datafilter.core.ast.db.query.service.DefaultPartialRequest;
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,22 +27,20 @@ import static org.mockito.Mockito.when;
 class MongoQueryServiceTest {
 
     private RestTemplate restTemplate;
-    private DefaultPartialRequest defaultPartialRequest;
     private OpaCompilerResponse opaCompilerResponse;
-    private OpaClientService<PetDocument> opaClientService;
+    private OpaClientService opaClientService;
 
     private MongoQueryService<PetDocument> target;
 
     @BeforeEach
     void setUp() throws IOException {
         restTemplate = mock(RestTemplate.class);
-        defaultPartialRequest = mock(DefaultPartialRequest.class);
         opaCompilerResponse = opaCompilerResponse();
         OpaConfig opaConfig = new OpaConfig();
         opaConfig.setDataFilterEnabled(true);
         opaConfig.setUrl("http://localhost:8181/v1/compile");
         opaClientService = new OpaClientService(opaConfig, restTemplate);
-        target = new MongoQueryService<>(opaClientService, defaultPartialRequest);
+        target = new MongoQueryService<>(opaClientService);
     }
 
 
@@ -54,8 +51,6 @@ class MongoQueryServiceTest {
         PartialRequest partialRequest = PartialRequest.builder()
                 .query("data.petclinic.authz.allow = true")
                 .unknowns(Set.of("data.pets")).build();
-        when(defaultPartialRequest.getDefaultPartialRequest()).thenReturn(partialRequest);
-
 
         Query result = target.getMongoDBQuery(partialRequest);
 

@@ -5,7 +5,6 @@ import opa.datafilter.core.ast.db.query.config.OpaConfig;
 import opa.datafilter.core.ast.db.query.exception.OpaClientException;
 import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
-import opa.datafilter.core.ast.db.query.sql.PetEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
@@ -31,7 +30,7 @@ class OpaClientServiceTest extends TestBase {
 
     private RestTemplate restTemplate;
     private OpaCompilerResponse opaCompilerResponse;
-    private OpaClientService<PetEntity> target;
+    private OpaClientService target;
 
     @BeforeEach
     void setUp() throws IOException {

@@ -31,8 +31,8 @@ public class OpaDataCoreConfig {
 
     @Bean
     @Qualifier("opaClientService")
-    public <T> OpaClientService<T> opaClientService(OpaConfig opaConfig) {
-        return new OpaClientService<>(opaConfig);
+    public OpaClientService opaClientService(OpaConfig opaConfig) {
+        return new OpaClientService(opaConfig);
     }
 
     @Bean

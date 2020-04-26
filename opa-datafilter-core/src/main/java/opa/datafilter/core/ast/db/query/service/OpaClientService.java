@@ -21,10 +21,9 @@ import javax.annotation.Resource;
 /**
  * @author joffryferrater
  *
- * @param <T> The class type
  */
 @Service
-public class OpaClientService<T> {
+public class OpaClientService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpaClientService.class);
 

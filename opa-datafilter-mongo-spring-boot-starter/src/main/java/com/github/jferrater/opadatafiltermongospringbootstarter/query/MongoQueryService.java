@@ -2,25 +2,19 @@ package com.github.jferrater.opadatafiltermongospringbootstarter.query;
 
 import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
-import opa.datafilter.core.ast.db.query.service.DefaultPartialRequest;
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-
 @Service
 public class MongoQueryService<T> {
 
     @Qualifier("opaClientService")
-    private OpaClientService<T> opaClientService;
-    @Resource(name = "defaultPartialRequest")
-    private DefaultPartialRequest defaultPartialRequest;
+    private OpaClientService opaClientService;
 
-    public MongoQueryService(OpaClientService<T> opaClientService, DefaultPartialRequest defaultPartialRequest) {
+    public MongoQueryService(OpaClientService opaClientService) {
         this.opaClientService = opaClientService;
-        this.defaultPartialRequest = defaultPartialRequest;
     }
 
     /**
