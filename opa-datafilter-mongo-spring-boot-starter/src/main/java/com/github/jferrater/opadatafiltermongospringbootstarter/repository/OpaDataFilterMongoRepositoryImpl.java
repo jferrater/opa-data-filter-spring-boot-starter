@@ -1,5 +1,6 @@
 package com.github.jferrater.opadatafiltermongospringbootstarter.repository;
 
+import com.github.jferrater.opadatafiltermongospringbootstarter.query.MongoQueryService;
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class OpaDataFilterMongoRepositoryImpl<T, ID> extends SimpleMongoReposito
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpaDataFilterMongoRepositoryImpl.class);
 
-    private final OpaClientService<T> opaClientService;
+    private final MongoQueryService<T> mongoQueryService;
     private final @Nullable MongoOperations mongoOperations;
     private final MongoEntityInformation<T, ID> entityInformation;
 
@@ -33,19 +34,19 @@ public class OpaDataFilterMongoRepositoryImpl<T, ID> extends SimpleMongoReposito
      *
      * @param metadata        must not be {@literal null}.
      * @param mongoOperations must not be {@literal null}.
-     * @param opaClientService {@link OpaClientService}
+     * @param mongoQueryService {@link OpaClientService}
      */
-    public OpaDataFilterMongoRepositoryImpl(MongoEntityInformation<T, ID> metadata, MongoOperations mongoOperations, OpaClientService<T> opaClientService) {
+    public OpaDataFilterMongoRepositoryImpl(MongoEntityInformation<T, ID> metadata, MongoOperations mongoOperations, MongoQueryService<T> mongoQueryService) {
         super(metadata, mongoOperations);
         this.mongoOperations = mongoOperations;
-        this.opaClientService = opaClientService;
+        this.mongoQueryService = mongoQueryService;
         this.entityInformation = metadata;
     }
 
     @Override
     public List<T> findAll() {
         LOGGER.info("Filtering data with OPA, findAll()");
-        Query query = opaClientService.getMongoDBQuery();
+        Query query = mongoQueryService.getMongoDBQuery();
         if (query == null) {
             return Collections.emptyList();
         }

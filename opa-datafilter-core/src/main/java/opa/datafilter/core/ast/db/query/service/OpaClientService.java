@@ -4,13 +4,11 @@ import opa.datafilter.core.ast.db.query.config.OpaConfig;
 import opa.datafilter.core.ast.db.query.exception.OpaClientException;
 import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
-import opa.datafilter.core.ast.db.query.mongodb.AstToMongoDBQuery;
 import opa.datafilter.core.ast.db.query.sql.AstToSql;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -59,16 +57,6 @@ public class OpaClientService<T> {
     }
 
     /**
-     * Sends the default {@link PartialRequest} to the Open Policy Agent server and receives the response.
-     * The response is translated into  MongoDB query
-     *
-     * @return {@link Query} Returns the MongoDB query
-     */
-    public Query getMongoDBQuery() {
-        return getMongoDBQuery(defaultPartialRequest.getDefaultPartialRequest());
-    }
-
-    /**
      * Sends the {@link PartialRequest} to the Open Policy Agent server and receives the response.
      * The response is translated into SQL query statements in string format
      *
@@ -91,23 +79,18 @@ public class OpaClientService<T> {
      */
     public OpaCompilerResponse getOpaCompilerApiResponse() {
         PartialRequest partialRequest = defaultPartialRequest.getDefaultPartialRequest();
-        ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(partialRequest);
-        checkResponse(responseResponseEntity);
-        return  responseResponseEntity.getBody();
+        return  getOpaCompilerApiResponse(partialRequest);
     }
 
     /**
-     * Sends the {@link PartialRequest} to the Open Policy Agent server and receives the response.
-     * The response is translated into  MongoDB query
-     *
+     * Get the response from Open Policy Agent compile api
      * @param partialRequest {@link PartialRequest}
-     * @return {@link Query} Returns the MongoDB query
+     * @return {@link OpaCompilerResponse}
      */
-    public Query getMongoDBQuery(PartialRequest partialRequest) {
+    public OpaCompilerResponse getOpaCompilerApiResponse(PartialRequest partialRequest) {
         ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(partialRequest);
         checkResponse(responseResponseEntity);
-        AstToMongoDBQuery astToMongoDBQuery = new AstToMongoDBQuery(responseResponseEntity.getBody());
-        return astToMongoDBQuery.createQuery();
+        return  responseResponseEntity.getBody();
     }
 
     private ResponseEntity<OpaCompilerResponse> getOpaCompilerResponse(PartialRequest partialRequest) {

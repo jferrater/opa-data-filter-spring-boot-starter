@@ -1,5 +1,6 @@
 package com.github.jferrater.opadatafiltermongospringbootstarter.repository;
 
+import com.github.jferrater.opadatafiltermongospringbootstarter.query.MongoQueryService;
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -23,7 +24,7 @@ public class OpaMongoRepositoryFactoryBean<R extends MongoRepository<T, ID>, T, 
 
     private MongoOperations operations;
     @Resource(name = "opaClientService")
-    private OpaClientService<T> opaClientService;
+    private MongoQueryService<T> mongoQueryService;
 
     /**
      * Creates a new {@link MongoRepositoryFactoryBean} for the given repository interface.
@@ -41,6 +42,6 @@ public class OpaMongoRepositoryFactoryBean<R extends MongoRepository<T, ID>, T, 
 
     @Override
     protected RepositoryFactorySupport createRepositoryFactory() {
-        return new OpaMongoRepositoryFactory<>(operations, opaClientService);
+        return new OpaMongoRepositoryFactory<>(operations, mongoQueryService);
     }
 }

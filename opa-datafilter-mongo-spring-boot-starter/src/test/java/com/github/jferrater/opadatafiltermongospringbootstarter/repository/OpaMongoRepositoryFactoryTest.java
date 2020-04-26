@@ -1,7 +1,7 @@
 package com.github.jferrater.opadatafiltermongospringbootstarter.repository;
 
+import com.github.jferrater.opadatafiltermongospringbootstarter.query.MongoQueryService;
 import com.github.jferrater.opadatafiltermongospringbootstarter.repository.document.PetDocument;
-import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ public class OpaMongoRepositoryFactoryTest {
     @Mock
     MongoOperations operations;
     @Mock@SuppressWarnings("rawtypes")
-    OpaClientService opaClientService;
+    MongoQueryService mongoQueryService;
     @Mock @SuppressWarnings("rawtypes")
     MappingContext mappingContext;
     @Mock @SuppressWarnings("rawtypes")
@@ -48,7 +48,7 @@ public class OpaMongoRepositoryFactoryTest {
 
         when(mappingContext.getRequiredPersistentEntity(PetDocument.class)).thenReturn(entity);
 
-        OpaMongoRepositoryFactory factory = new OpaMongoRepositoryFactory(operations, opaClientService);
+        OpaMongoRepositoryFactory factory = new OpaMongoRepositoryFactory(operations, mongoQueryService);
         MongoEntityInformation<PetDocument, Serializable> result = factory.getEntityInformation(PetDocument.class);
         assertThat(result instanceof MappingMongoEntityInformation, is(true));
     }
@@ -58,7 +58,7 @@ public class OpaMongoRepositoryFactoryTest {
     void createRepositoryWithIdTypeLong() {
         when(mappingContext.getRequiredPersistentEntity(PetDocument.class)).thenReturn(entity);
 
-        OpaMongoRepositoryFactory factory = new OpaMongoRepositoryFactory(operations, opaClientService);
+        OpaMongoRepositoryFactory factory = new OpaMongoRepositoryFactory(operations, mongoQueryService);
 
         MyMongoRepository result = factory.getRepository(MyMongoRepository.class);
 
