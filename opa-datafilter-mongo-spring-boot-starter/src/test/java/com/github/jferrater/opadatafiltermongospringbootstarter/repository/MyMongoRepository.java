@@ -4,5 +4,5 @@ import com.github.jferrater.opadatafiltermongospringbootstarter.repository.docum
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MyMongoRepository extends OpaDataFilterMongoRepository<PetDocument, Long> {
+public interface MyMongoRepository extends OpaDataFilterMongoRepository<PetDocument, String> {
 }

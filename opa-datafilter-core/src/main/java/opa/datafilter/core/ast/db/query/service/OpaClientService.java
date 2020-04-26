@@ -6,12 +6,10 @@ import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
 import opa.datafilter.core.ast.db.query.mongodb.AstToMongoDBQuery;
 import opa.datafilter.core.ast.db.query.sql.AstToSql;
-import opa.datafilter.core.ast.db.query.sql.TypedQueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,8 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 /**
  * @author joffryferrater
@@ -89,6 +85,18 @@ public class OpaClientService<T> {
     }
 
     /**
+     * Get the response from Open Policy Agent compile api
+     *
+     * @return {@link OpaCompilerResponse}
+     */
+    public OpaCompilerResponse getOpaCompilerApiResponse() {
+        PartialRequest partialRequest = defaultPartialRequest.getDefaultPartialRequest();
+        ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(partialRequest);
+        checkResponse(responseResponseEntity);
+        return  responseResponseEntity.getBody();
+    }
+
+    /**
      * Sends the {@link PartialRequest} to the Open Policy Agent server and receives the response.
      * The response is translated into  MongoDB query
      *
@@ -100,14 +108,6 @@ public class OpaClientService<T> {
         checkResponse(responseResponseEntity);
         AstToMongoDBQuery astToMongoDBQuery = new AstToMongoDBQuery(responseResponseEntity.getBody());
         return astToMongoDBQuery.createQuery();
-    }
-
-    public <S extends T> TypedQuery<S> getTypedQuery(Class<S> domainClass, Sort sort, EntityManager entityManager){
-        ResponseEntity<OpaCompilerResponse> responseResponseEntity = getOpaCompilerResponse(defaultPartialRequest.getDefaultPartialRequest());
-        checkResponse(responseResponseEntity);
-        OpaCompilerResponse opaCompilerResponse = responseResponseEntity.getBody();
-        TypedQueryBuilder<S> typedQueryBuilder = new TypedQueryBuilder<>(opaCompilerResponse, entityManager);
-        return typedQueryBuilder.getTypedQuery(domainClass, sort);
     }
 
     private ResponseEntity<OpaCompilerResponse> getOpaCompilerResponse(PartialRequest partialRequest) {

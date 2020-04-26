@@ -1,6 +1,6 @@
 package com.github.jferrater.opadatafilterjpaspringbootstarter.repository;
 
-import opa.datafilter.core.ast.db.query.service.OpaClientService;
+import com.github.jferrater.opadatafilterjpaspringbootstarter.query.QueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformationSuppo
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -27,17 +28,18 @@ public class OpaDataFilterRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpaDataFilterRepositoryImpl.class);
 
-    private final OpaClientService<T> opaClientService;
+    @Resource(name = "queryService")
+    private final QueryService<T> queryService;
     private final EntityManager entityManager;
 
-    public OpaDataFilterRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager, OpaClientService<T> opaClientService) {
+    public OpaDataFilterRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager, QueryService<T> queryService) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
-        this.opaClientService = opaClientService;
+        this.queryService = queryService;
     }
 
-    public OpaDataFilterRepositoryImpl(Class<T> domainClass, EntityManager em, OpaClientService<T> opaClientService) {
-        this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em, opaClientService);
+    public OpaDataFilterRepositoryImpl(Class<T> domainClass, EntityManager em, QueryService<T> queryService) {
+        this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em, queryService);
         LOGGER.info("here second constructor");
     }
 
@@ -45,7 +47,7 @@ public class OpaDataFilterRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
     public List<T> findAll() {
         LOGGER.trace("Entering findAll()");
         LOGGER.trace("ClassName: {}", this.getDomainClass().getName());
-        TypedQuery<T> typedQuery = opaClientService.getTypedQuery(this.getDomainClass(), Sort.unsorted(), entityManager);
+        TypedQuery<T> typedQuery = queryService.getTypedQuery(this.getDomainClass(), Sort.unsorted(), entityManager);
         List<T> resultList = typedQuery.getResultList();
         LOGGER.trace("Result list size: {}", resultList.size());
         return resultList;

@@ -52,13 +52,12 @@ jar {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	api 'com.github.jferrater:opa-datafilter-core:0.4.3'
-
+	api 'com.github.jferrater:opa-datafilter-core:0.4.4'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+	testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.12.5'
 	testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 }
 

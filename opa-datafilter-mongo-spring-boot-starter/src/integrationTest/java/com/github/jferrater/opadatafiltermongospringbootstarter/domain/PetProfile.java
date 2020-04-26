@@ -1,4 +1,4 @@
-package com.github.jferrater.opadatafiltermongospringbootstarter.repository.document;
+package com.github.jferrater.opadatafiltermongospringbootstarter.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PetDocument {
+public class PetProfile {
 
     @MongoId
     private String id;
@@ -21,6 +21,5 @@ public class PetDocument {
     private String veterinarian;
     @Indexed
     private String owner;
-    @Indexed
     private String clinic;
 }

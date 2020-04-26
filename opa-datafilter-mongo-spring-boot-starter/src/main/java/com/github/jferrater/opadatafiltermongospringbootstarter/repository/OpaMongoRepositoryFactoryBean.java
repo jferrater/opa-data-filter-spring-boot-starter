@@ -1,6 +1,7 @@
 package com.github.jferrater.opadatafiltermongospringbootstarter.repository;
 
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.support.MongoRepositoryFactoryBean;
@@ -20,7 +21,7 @@ import java.io.Serializable;
 public class OpaMongoRepositoryFactoryBean<R extends MongoRepository<T, ID>, T, ID extends Serializable>
         extends MongoRepositoryFactoryBean<R, T, ID> {
 
-    private @Nullable MongoOperations operations;
+    private MongoOperations operations;
     @Resource(name = "opaClientService")
     private OpaClientService<T> opaClientService;
 

@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      database: petprofiles
+      uri: "mongodb://mongo:mongo@localhost:27017/petprofiles"

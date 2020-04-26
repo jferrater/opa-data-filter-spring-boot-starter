@@ -1,5 +1,8 @@
-package opa.datafilter.core.ast.db.query.sql;
+package com.github.jferrater.opadatafilterjpaspringbootstarter.query;
 
+import com.github.jferrater.opadatafilterjpaspringbootstarter.entity.PetEntity;
+import com.github.jferrater.opadatafilterjpaspringbootstarter.repository.MyJpaConfig;
+import com.github.jferrater.opadatafilterjpaspringbootstarter.repository.TestApplication;
 import opa.datafilter.core.ast.db.query.elements.SqlPredicate;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,7 +24,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.io.IOException;
 
-import static opa.datafilter.core.ast.db.query.TestBase.opaCompilerResponse;
+import static com.github.jferrater.opadatafilterjpaspringbootstarter.repository.TestBase.opaCompilerResponse;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;

@@ -30,7 +30,6 @@ public class OpaDataCoreConfig {
     }
 
     @Bean
-    @RequestScope
     @Qualifier("opaClientService")
     public <T> OpaClientService<T> opaClientService(OpaConfig opaConfig) {
         return new OpaClientService<>(opaConfig);
