@@ -107,7 +107,7 @@ sonarqube {
         property 'sonar.projectVersion', version
         property 'sonar.login', System.getenv('SONAR_TOKEN')
         property 'sonar.java.coveragePlugin', 'jacoco'
-        property 'sonar.exclusions', '**/integrationTest/**, **/model**/, src/main/java/**/**config/*.java'
+        property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/**config/*.java'
     }
 }
 

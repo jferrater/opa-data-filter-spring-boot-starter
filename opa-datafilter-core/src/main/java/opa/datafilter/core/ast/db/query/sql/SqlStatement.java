@@ -11,35 +11,11 @@ import java.util.List;
  */
 public class SqlStatement {
 
-    private SqlStatement() {
-    }
-
     private List<String> columns;
     private List<String> tables;
     private String predicatesInString;
 
-    public List<String> getColumns() {
-        return columns;
-    }
-
-    public void setColumns(List<String> columns) {
-        this.columns = columns;
-    }
-
-    public List<String> getTables() {
-        return tables;
-    }
-
-    public void setTables(List<String> tables) {
-        this.tables = tables;
-    }
-
-    public String getPredicatesInString() {
-        return predicatesInString;
-    }
-
-    public void setPredicatesInString(String predicatesInString) {
-        this.predicatesInString = predicatesInString;
+    private SqlStatement() {
     }
 
     public String getExecutableSqlStatements() {
