@@ -45,11 +45,18 @@ public class OpaDataFilterMongoRepositoryImpl<T, ID> extends SimpleMongoReposito
 
     @Override
     public List<T> findAll() {
-        LOGGER.info("Filtering data with OPA, findAll()");
+        LOGGER.trace("Filtering data with OPA, findAll()");
         Query query = mongoQueryService.getMongoDBQuery();
         if (query == null) {
             return Collections.emptyList();
         }
-        return mongoOperations.find(query, entityInformation.getJavaType(), entityInformation.getCollectionName());
+        String collectionName = entityInformation.getCollectionName();
+        LOGGER.trace("Collection name: {}", collectionName);
+        Class<T> javaType = entityInformation.getJavaType();
+        LOGGER.trace("Java type: {}", javaType.getName());
+        String queryJson = query.getQueryObject().toJson();
+        LOGGER.trace("Query: {}", queryJson);
+        LOGGER.trace("MongoOperations: {}", mongoOperations);
+        return mongoOperations.find(query, javaType, collectionName);
     }
 }

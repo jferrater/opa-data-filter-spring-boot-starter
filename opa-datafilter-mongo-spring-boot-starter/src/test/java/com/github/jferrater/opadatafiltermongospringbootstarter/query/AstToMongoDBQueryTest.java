@@ -45,7 +45,7 @@ class AstToMongoDBQueryTest {
         Criteria result = target.initialCriteria(sqlPredicate1);
         String resultInString = result.getCriteriaObject().toJson();
 
-        assertThat(resultInString, is("{\"pets.owner\": \"alice\"}"));
+        assertThat(resultInString, is("{\"owner\": \"alice\"}"));
     }
 
     @Test
@@ -55,7 +55,7 @@ class AstToMongoDBQueryTest {
         Criteria result = target.initialCriteria(sqlPredicate1);
         String resultInString = result.getCriteriaObject().toJson();
 
-        assertThat(resultInString, is("{\"pets.owner\": {\"$lt\": 3}}"));
+        assertThat(resultInString, is("{\"owner\": {\"$lt\": 3}}"));
     }
 
     @Test
@@ -65,7 +65,18 @@ class AstToMongoDBQueryTest {
         Criteria result = target.initialCriteria(sqlPredicate1);
         String resultInString = result.getCriteriaObject().toJson();
 
-        assertThat(resultInString, is("{\"pets.owner\": {\"$gt\": 4}}"));
+        assertThat(resultInString, is("{\"owner\": {\"$gt\": 4}}"));
+    }
+
+    @Test
+    void shouldNotChainToOrOperatorForSingleCriteria() {
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", "4");
+        Criteria criteria = target.initialCriteria(sqlPredicate1);
+
+        Criteria result = target.chainCriteriaByOrOperator(List.of(criteria));
+        String resultInString = result.getCriteriaObject().toJson();
+
+        assertThat(resultInString, is("{\"owner\": {\"$gt\": 4}}"));
     }
 
     @Test
@@ -75,7 +86,7 @@ class AstToMongoDBQueryTest {
         Criteria result = target.chainCriteriaByAndOperator(predicates);
         String resultInString = result.getCriteriaObject().toJson();
 
-        assertThat(resultInString, is("{\"pets.owner\": \"alice\", \"pets.name\": \"fluffy\"}"));
+        assertThat(resultInString, is("{\"owner\": \"alice\", \"name\": \"fluffy\"}"));
     }
 
     @Test
@@ -85,6 +96,6 @@ class AstToMongoDBQueryTest {
         assertThat(query, is(notNullValue()));
 
         String result = query.getQueryObject().toJson();
-        assertThat(result, is("{\"$or\": [{\"pets.owner\": \"alice\", \"pets.name\": \"fluffy\"}, {\"pets.veterinarian\": \"alice\", \"pets.clinic\": \"SOMA\", \"pets.name\": \"fluffy\"}]}"));
+        assertThat(result, is("{\"$or\": [{\"owner\": \"alice\", \"name\": \"fluffy\"}, {\"veterinarian\": \"alice\", \"clinic\": \"SOMA\", \"name\": \"fluffy\"}]}"));
     }
 }

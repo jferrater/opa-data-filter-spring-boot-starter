@@ -56,6 +56,6 @@ class MongoQueryServiceTest {
 
         assertThat(result, is(notNullValue()));
         String resultInString = result.getQueryObject().toJson();
-        assertThat(resultInString, is("{\"$or\": [{\"pets.owner\": \"alice\", \"pets.name\": \"fluffy\"}, {\"pets.veterinarian\": \"alice\", \"pets.clinic\": \"SOMA\", \"pets.name\": \"fluffy\"}]}"));
+        assertThat(resultInString, is("{\"$or\": [{\"owner\": \"alice\", \"name\": \"fluffy\"}, {\"veterinarian\": \"alice\", \"clinic\": \"SOMA\", \"name\": \"fluffy\"}]}"));
     }
 }
