@@ -37,12 +37,13 @@ public class AstToMongoDBQuery {
         return query(chainedCriterias);
     }
 
-    private Criteria chainCriteriaByOrOperator(List<Criteria> criteriaList) {
+    Criteria chainCriteriaByOrOperator(List<Criteria> criteriaList) {
         Criteria[] criteriaArray = criteriaList.toArray(Criteria[]::new);
+        if(criteriaArray.length == 1){
+            return criteriaArray[0];
+        }
         Criteria criteria = new Criteria();
         criteria.orOperator(criteriaArray);
-        String toJson = criteria.getCriteriaObject().toJson();
-        LOGGER.info("Query document in json format:\n{}", toJson);
         return criteria;
     }
 
@@ -70,14 +71,21 @@ public class AstToMongoDBQuery {
     }
 
     Criteria initialCriteria(SqlPredicate sqlPredicate) {
-        Criteria criteria = where(sqlPredicate.getLeftExpression());
+        String attributeName = getAttributeName(sqlPredicate);
+        Criteria criteria = where(attributeName);
         criteria = createComparisonCriteria(sqlPredicate, criteria);
         return criteria;
     }
 
     Criteria andCriteria(SqlPredicate sqlPredicate, Criteria whereCriteria) {
-        Criteria criteria = whereCriteria.and(sqlPredicate.getLeftExpression());
+        String attributeName = getAttributeName(sqlPredicate);
+        Criteria criteria = whereCriteria.and(attributeName);
         return createComparisonCriteria(sqlPredicate, criteria);
+    }
+
+    private String getAttributeName(SqlPredicate sqlPredicate) {
+        String leftExpression = sqlPredicate.getLeftExpression();
+        return leftExpression.split("\\.")[1];
     }
 
     private Criteria createComparisonCriteria(SqlPredicate sqlPredicate, Criteria criteria) {

@@ -50,6 +50,14 @@ public class OpaDataFilterMongoRepositoryImpl<T, ID> extends SimpleMongoReposito
         if (query == null) {
             return Collections.emptyList();
         }
-        return mongoOperations.find(query, entityInformation.getJavaType(), entityInformation.getCollectionName());
+        LOGGER.info("mongo operationas find");
+        String collectionName = entityInformation.getCollectionName();
+        LOGGER.info("Collection name: {}", collectionName);
+        Class<T> javaType = entityInformation.getJavaType();
+        LOGGER.info("Java type: {}", javaType.getName());
+        String queryJson = query.getQueryObject().toJson();
+        LOGGER.info("Query: {}", queryJson);
+        LOGGER.info("MongoOperations: {}", mongoOperations);
+        return mongoOperations.find(query, javaType, collectionName);
     }
 }
