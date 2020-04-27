@@ -1,7 +1,13 @@
 # Enforcing authorization at Spring Data using Open Policy Agent partial evaluation
-## opa-datafilter-jpa-spring-boot-starter 
+[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter)
+
+### opa-datafilter-jpa-spring-boot-starter 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/0.4.4/jar)
-[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-jpa-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-jpa-spring-boot-starter)
+[![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-jpa-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-jpa-spring-boot-starter)
+
+### opa-datafilter-mongo-spring-boot-starter
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-mongo-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-mongo-spring-boot-starter/0.4.4/jar)
+[![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-mongo-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-mongo-spring-boot-starter)
 
 ### Pre-requisites
 The blog posts below explain enough of the What and Why!
@@ -19,97 +25,12 @@ the new policy, the OPA compile API response, into SQL or MongoDB queries. A fil
 
 ![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
 
-## Installation
-For Spring Data JPA, <br>
-gradle project:
-```groovy
-implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-implementation group:'com.github.jferrater', name: 'opa-datafilter-jpa-spring-boot-starter', version: '0.4.4'
-```
-or maven:
-````xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-</dependency>
-<dependency>
-    <groupId>com.github.jferrater</groupId>
-    <artifactId>opa-datafilter-jpa-spring-boot-starter</artifactId>
-    <version>0.4.4</version>
-</dependency>
-````
+## Installation and Usage
+See each individual folder for installation and usage instructions.
+- [opa-datafilter-jpa-spring-boot-starter](opa-datafilter-jpa-spring-boot-starter/README.md)
+- [opa-datafilter-mongo-spring-boot-starter](opa-datafilter-mongo-spring-boot-starter/README.md)
 
-## Usage
-1. Add the following minimum configuration to the application.yml or application.properties of the Spring Boot project. Replace the values as necessary. See `Configurations` section for more details.
-````yaml
-opa:
-  authorization:
-    url: "http://localhost:8181/v1/compile"
-  partial-request:
-    query: "data.petclinic.authz.allow = true"
-    unknowns:
-      - "data.pets"
 
-# Spring Data JPA specific configurations
-spring:
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/integrationTest
-    username: admin
-    password: MangaonTaNiny0!
-````
-2. Create a sub interface of `OpaDataFilterRepository`. This repository is a custom Spring Data JPA repository which overrides the `findAll()`
-method to enforce authorization. The method sends a partial request to the OPA server. The response from OPA is converted into TypedQuery
-which will be used by Spring Data JPA to filter results. The filtered results are the data the user is allowed to see.
-
-```java
-package com.example.opadatafilterdemo.repository;
-
-import com.github.jferrater.opadatafilterjpaspringbootstarter.repository.OpaDataFilterRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface PetRepository extends OpaDataFilterRepository<PetProfileEntity, Long> {
-
-}
-```
-#### The managed entity class
-````java
-package com.example.opadatafilterdemo.repository;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "pets")
-public class PetProfileEntity {
-
-    @Id
-    private Long id;
-    private String name;
-    private String owner;
-    private String veterinarian;
-    private String clinic;
-
-    // getters and setters 
-}
-````
-3. Finally, configure JPA. Note that `repositoryFactoryBeanClass = OpaRepositoryFactoryBean.class` is required in the `@EnableJpaRepositories`.
-````java
-import com.github.jferrater.opadatafilterjpaspringbootstarter.repository.OpaRepositoryFactoryBean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-@Configuration
-@EnableJpaRepositories(
-        value = "com.example.opadatafilterdemo.repository",
-        repositoryFactoryBeanClass = OpaRepositoryFactoryBean.class
-)
-public class JpaEnvConfig {
-
-}
-````
 ## Configurations
 | Properties                                            | Type                | Default Value                    | Description                                                                                                                                                                                                                                                  | Required |
 |-------------------------------------------------------|---------------------|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
@@ -117,14 +38,17 @@ public class JpaEnvConfig {
 | opa.authorization.data-filter-enabled                 | Boolean             | true                             | Enable OPA data filter authorization                                                                                                                                                                                                                         | No       |
 | opa.partial-request.log-partial-request               | Boolean             | false                            | Log the partial request json which was sent to OPA on std out for debugging                                                                                                                                                                                  | No       |
 | opa.partial-request.query                             | String              |                                  | The query to partially evaluate and compile                                                                                                                                                                                                                  | Yes      |
-| opa.partial-request.unknowns                          | Set<String>         |                                  | The terms to treat as unknown during partial evaluation                                                                                                                                                                                                      | No       |
+| opa.partial-request.unknowns                          | Set<String>         |                                  | The terms to treat as unknown during partial evaluation                                                                                                                                                                                                      | Yes       |
 | opa.partial-request.user-attribute-to-http-header-map | Map<String, String> |                                  | The mapping of user attribute to Http Header. These mappings will be added as subject attributes<br>in the input of the partial request. The key will be set as the attribute name and the value <br>of the Http header will be set as the value of the key. | No       |
-## Example Spring Boot Application
-See example Spring Boot project that uses this library --> [opa-data-filter-demo](https://github.com/jferrater/opa-data-filter-demo)
 
- Integration with MongoDB instructions and sample project will be added soon!
+
+## Example Spring Boot Applications
+See example Spring Boot microservice applications that use these libraries:
+ - [opa-datafilter-jpa-demo](https://github.com/jferrater/opa-data-filter-jpa-demo)
+ - [opa-datafilter-mongo-demo](https://github.com/jferrater/opa-data-filter-mongo-demo)
 
 ## The Partial Request
+
 ### Default Partial Request
  When the `findAll` method is invoked from `OpaDataFilterRepository` interface, a partial request object is sent
  to the [OPA compile API](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api) endpoint. The default partial request is the following:
@@ -136,7 +60,7 @@ See example Spring Boot project that uses this library --> [opa-data-filter-demo
 		"method": "GET",
 		"subject": {
 			"user": "alice",
-			"jwt": ""
+			"jwt": "<jwt token>"
 		}
 	},
 	"unknowns": ["data.pets"]
@@ -147,6 +71,7 @@ where: <br>
 - `input` - by default http servlet path and method are added as `path` and `method` respectively. The `subject` (the current user) by default has `user` property
 which is derived from Authorization Basic header if it exists and `jwt` property from the Authorization Bearer header if it exists.
 - `unknowns` - the value of `opa.partial-request.unknowns` from the configuration property if configured. This is optional.
+
 ### Adding Attributes to the Default Partial Request
 It is possible to add attributes to the `subject` property of the default partial request. This can be done by mapping the attribute to the Http header using
 a configuration `opa.partial-request.user-attribute-to-http-header-map`. For example:
@@ -175,8 +100,10 @@ look like the following:
 	"unknowns": ["data.pets"]
 }
 ````
+
 ### Contributors
 - [Joffry Ferrater](https://github.com/jferrater)
 - [Reihmon Estremos](https://github.com/mongkoy)
 - [Jolly Jae Ompod](https://github.com/ompodjol)
 - [Alvin Difuntorum](https://github.com/alvinpd)
+
