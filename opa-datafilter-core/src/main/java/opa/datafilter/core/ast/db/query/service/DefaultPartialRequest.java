@@ -63,7 +63,7 @@ public class DefaultPartialRequest {
     private void logPartialRequestJsonString(PartialRequest partialRequest) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String asString = objectMapper.writeValueAsString(partialRequest);
+            String asString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(partialRequest);
             LOGGER.info("Partial request in json:\n{}", asString);
         } catch (JsonProcessingException e) {
             LOGGER.warn("Error serializing partial request object, {}", e.getMessage(), e);
