@@ -3,6 +3,9 @@ package com.github.jferrater.opadatafilterjpaspringbootstarter.repository;
 import com.github.jferrater.opadatafilterjpaspringbootstarter.query.QueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
@@ -56,5 +59,17 @@ public class OpaDataFilterRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
         List<T> resultList = typedQuery.getResultList();
         LOGGER.trace("Result list size: {}", resultList.size());
         return resultList;
+    }
+
+    @Override
+    public Page<T> findAll(Pageable pageable) {
+        boolean isUnpaged = pageable.isUnpaged();
+        if (isUnpaged) {
+            return new PageImpl<>(findAll());
+        }
+        Sort sort = pageable.isPaged() ? pageable.getSort() : Sort.unsorted();
+        TypedQuery<T> query = queryService.getTypedQuery(this.getDomainClass(), sort, entityManager);
+        PageImpl<T> page = new PageImpl<>(query.getResultList());
+        return readPage(query, this.getDomainClass(), pageable, null);
     }
 }
