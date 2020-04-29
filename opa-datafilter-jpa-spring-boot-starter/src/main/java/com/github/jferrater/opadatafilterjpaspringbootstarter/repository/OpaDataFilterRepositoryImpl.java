@@ -69,7 +69,6 @@ public class OpaDataFilterRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
         }
         Sort sort = pageable.isPaged() ? pageable.getSort() : Sort.unsorted();
         TypedQuery<T> query = queryService.getTypedQuery(this.getDomainClass(), sort, entityManager);
-        PageImpl<T> page = new PageImpl<>(query.getResultList());
         return readPage(query, this.getDomainClass(), pageable, null);
     }
 }
