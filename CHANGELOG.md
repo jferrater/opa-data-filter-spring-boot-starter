@@ -6,11 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - JPA: findAll(Sort sort) implementation of OpaDataFilterRepository
-MongoDB: findAll(Sort sort) implementation of OpaDataFilterMongoRepository
+- MongoDB: findAll(Sort sort) implementation of OpaDataFilterMongoRepository
 - Core: Pretty json print log of Partial Request
 
 ## [0.4.4] - 2020-04-21
 ### Added
-- individual release of opa-datafilter-core, opa-datafilter-jpa-spring-boot-starter, opa-datafilter-mongo-spring-boot-starter
+- individual releases of opa-datafilter-core, opa-datafilter-jpa-spring-boot-starter and opa-datafilter-mongo-spring-boot-starter
 - JPA findAll() implementation of OpaDataFilterRepository
 - MongoDb findAll() implementation of OpaDataFilterMongoRepository
