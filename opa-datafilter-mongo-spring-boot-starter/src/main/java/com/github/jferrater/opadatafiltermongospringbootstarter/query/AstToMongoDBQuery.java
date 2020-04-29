@@ -2,6 +2,7 @@ package com.github.jferrater.opadatafiltermongospringbootstarter.query;
 
 import opa.datafilter.core.ast.db.query.PredicateConverter;
 import opa.datafilter.core.ast.db.query.elements.SqlPredicate;
+import opa.datafilter.core.ast.db.query.exception.PartialEvauationException;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
 import opa.datafilter.core.ast.db.query.model.response.Predicate;
 import org.slf4j.Logger;
@@ -39,12 +40,15 @@ public class AstToMongoDBQuery {
 
     Criteria chainCriteriaByOrOperator(List<Criteria> criteriaList) {
         Criteria[] criteriaArray = criteriaList.toArray(Criteria[]::new);
-        if(criteriaArray.length == 1){
+        if (criteriaArray.length == 0) {
+            throw new PartialEvauationException("The Open Policy Agent partial evaluation has returned an empty result");
+        } else if (criteriaArray.length == 1) {
             return criteriaArray[0];
+        } else {
+            Criteria criteria = new Criteria();
+            criteria.orOperator(criteriaArray);
+            return criteria;
         }
-        Criteria criteria = new Criteria();
-        criteria.orOperator(criteriaArray);
-        return criteria;
     }
 
     Criteria chainCriteriaByAndOperator(List<Predicate> predicates) {
@@ -52,18 +56,18 @@ public class AstToMongoDBQuery {
                 .map(predicate -> new PredicateConverter(predicate).astToSqlPredicate())
                 .collect(toList());
         Criteria result = new Criteria();
-        if(sqlPredicates.isEmpty()) {
+        if (sqlPredicates.isEmpty()) {
             return result;
         }
         SqlPredicate firstIndexSqlPredicate = sqlPredicates.get(0);
         Criteria whereCriteria = initialCriteria(firstIndexSqlPredicate);
         int size = sqlPredicates.size();
         //If there is only one predicate return the 'where' criteria
-        if(size == 1) {
+        if (size == 1) {
             return whereCriteria;
         }
         //Add the succeeding criteria to 'and' operation
-        for(int x = 1; x < size; x++) {
+        for (int x = 1; x < size; x++) {
             SqlPredicate sqlPredicate = sqlPredicates.get(x);
             result = andCriteria(sqlPredicate, whereCriteria);
         }
