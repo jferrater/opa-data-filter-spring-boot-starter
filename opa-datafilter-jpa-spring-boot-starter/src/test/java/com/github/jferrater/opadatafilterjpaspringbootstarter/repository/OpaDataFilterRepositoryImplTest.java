@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.CrudMethodMetadata;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
@@ -16,6 +18,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +29,8 @@ class OpaDataFilterRepositoryImplTest {
     QueryService queryService;
     @Mock
     EntityManager entityManager;
-    @Mock TypedQuery<PetEntity> query;
+    @Mock
+    TypedQuery<PetEntity> query;
     @Mock
     JpaEntityInformation<PetEntity, Integer> information;
     @Mock
@@ -38,6 +42,7 @@ class OpaDataFilterRepositoryImplTest {
     void setUp() {
         when(entityManager.getDelegate()).thenReturn(entityManager);
         when(information.getJavaType()).thenReturn(PetEntity.class);
+
         target = new OpaDataFilterRepositoryImpl<>(information, entityManager, queryService);
         target.setRepositoryMethodMetadata(metadata);
     }
@@ -70,5 +75,22 @@ class OpaDataFilterRepositoryImplTest {
 
         assertThat(result.size(), is(2));
         assertThat(result.get(0).getName(), is("asol"));
+    }
+
+    @Test
+    public void retrieveObjectsForPageableOutOfRange() {
+        PetEntity petEntity1 = new PetEntity();
+        petEntity1.setName("browny");
+        petEntity1.setOwner("dodong");
+        PetEntity petEntity2 = new PetEntity();
+        petEntity2.setName("asol");
+        petEntity2.setOwner("gerry");
+        when(queryService.getTypedQuery(PetEntity.class, Sort.sort(PetEntity.class), entityManager)).thenReturn(query);
+        when(query.getResultList()).thenReturn(List.of(petEntity2, petEntity1));
+
+        Page<PetEntity> all = target.findAll(PageRequest.of(2, 10));
+
+        assertThat(all, is(notNullValue()));
+        assertThat(all.getSize(), is(10));
     }
 }
