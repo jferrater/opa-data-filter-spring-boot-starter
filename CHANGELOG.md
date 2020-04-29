@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - JPA: findAll(Sort sort) implementation of OpaDataFilterRepository
+MongoDB: findAll(Sort sort) implementation of OpaDataFilterMongoRepository
 - Core: Pretty json print log of Partial Request
 
 ## [0.4.4] - 2020-04-21

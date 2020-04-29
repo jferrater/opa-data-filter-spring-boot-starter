@@ -4,6 +4,7 @@ import com.github.jferrater.opadatafiltermongospringbootstarter.query.MongoQuery
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.query.MongoEntityInformation;
@@ -58,5 +59,15 @@ public class OpaDataFilterMongoRepositoryImpl<T, ID> extends SimpleMongoReposito
         LOGGER.trace("Query: {}", queryJson);
         LOGGER.trace("MongoOperations: {}", mongoOperations);
         return mongoOperations.find(query, javaType, collectionName);
+    }
+
+    @Override
+    public List<T> findAll(Sort sort) {
+        LOGGER.trace("Filtering data with OPA, findAll(sort={})", sort);
+        Query query = mongoQueryService.getMongoDBQuery();
+        if (query == null) {
+            return Collections.emptyList();
+        }
+        return mongoOperations.find(query.with(sort), entityInformation.getJavaType(), entityInformation.getCollectionName());
     }
 }
