@@ -1,6 +1,7 @@
 package com.github.jferrater.opadatafiltermongospringbootstarter.query;
 
 import opa.datafilter.core.ast.db.query.elements.SqlPredicate;
+import opa.datafilter.core.ast.db.query.exception.PartialEvauationException;
 import opa.datafilter.core.ast.db.query.model.response.OpaCompilerResponse;
 import opa.datafilter.core.ast.db.query.model.response.Predicate;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,12 +12,14 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import static com.github.jferrater.opadatafiltermongospringbootstarter.TestBase.opaCompilerResponse;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author joffryferrater
@@ -77,6 +80,11 @@ class AstToMongoDBQueryTest {
         String resultInString = result.getCriteriaObject().toJson();
 
         assertThat(resultInString, is("{\"owner\": {\"$gt\": 4}}"));
+    }
+
+    @Test
+    void shouldThrowPartialEvaluationException() {
+        assertThrows(PartialEvauationException.class, () -> target.chainCriteriaByOrOperator(Collections.emptyList()));
     }
 
     @Test

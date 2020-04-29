@@ -38,14 +38,21 @@ public class OpaDataFilterRepositoryImpl<T, ID> extends SimpleJpaRepository<T, I
 
     public OpaDataFilterRepositoryImpl(Class<T> domainClass, EntityManager em, QueryService<T> queryService) {
         this(JpaEntityInformationSupport.getEntityInformation(domainClass, em), em, queryService);
-        LOGGER.info("here second constructor");
     }
 
     @Override
     public List<T> findAll() {
         LOGGER.trace("Entering findAll()");
-        LOGGER.trace("ClassName: {}", this.getDomainClass().getName());
         TypedQuery<T> typedQuery = queryService.getTypedQuery(this.getDomainClass(), Sort.unsorted(), entityManager);
+        List<T> resultList = typedQuery.getResultList();
+        LOGGER.trace("Result list size: {}", resultList.size());
+        return resultList;
+    }
+
+    @Override
+    public List<T> findAll(Sort sort) {
+        LOGGER.trace("Entering findAll(sort={})", sort);
+        TypedQuery<T> typedQuery = queryService.getTypedQuery(this.getDomainClass(), sort, entityManager);
         List<T> resultList = typedQuery.getResultList();
         LOGGER.trace("Result list size: {}", resultList.size());
         return resultList;
