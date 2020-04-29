@@ -15,8 +15,6 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -32,15 +30,7 @@ class OpaDataFilterRepositoryImplTest {
     @Mock
     EntityManager entityManager;
     @Mock
-    CriteriaBuilder builder;
-    @Mock
-    CriteriaQuery<PetEntity> criteriaQuery;
-    @Mock
-    CriteriaQuery<Long> countCriteriaQuery;
-    @Mock
     TypedQuery<PetEntity> query;
-    @Mock
-    TypedQuery<Long> countQuery;
     @Mock
     JpaEntityInformation<PetEntity, Integer> information;
     @Mock
