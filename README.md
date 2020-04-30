@@ -67,10 +67,10 @@ See example Spring Boot microservice applications that use these libraries:
 }
 ````
 where: <br>
-- `query` - is the value of `opa.partial-request.query` from the configuration property
+- `query` - is the value of `opa.partial-request.query` from the configuration property.
 - `input` - by default http servlet path and method are added as `path` and `method` respectively. The `subject` (the current user) by default has `user` property
 which is derived from Authorization Basic header if it exists and `jwt` property from the Authorization Bearer header if it exists.
-- `unknowns` - the value of `opa.partial-request.unknowns` from the configuration property if configured. This is optional.
+- `unknowns` - the value of `opa.partial-request.unknowns` from the configuration property.
 
 ### Adding Attributes to the Default Partial Request
 It is possible to add attributes to the `subject` property of the default partial request. This can be done by mapping the attribute to the Http header using
