@@ -62,6 +62,16 @@ class AstToMongoDBQueryTest {
     }
 
     @Test
+    void shouldConvertSqlPredicateLessThanOrEqualToOperatorToMongoDbCriteria() {
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", "5");
+
+        Criteria result = target.initialCriteria(sqlPredicate1);
+        String resultInString = result.getCriteriaObject().toJson();
+
+        assertThat(resultInString, is("{\"owner\": {\"$lte\": 5}}"));
+    }
+
+    @Test
     void shouldConvertSqlPredicateGreaterThanOperatorToMongoDbCriteria() {
         SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", "4");
 
@@ -69,6 +79,16 @@ class AstToMongoDBQueryTest {
         String resultInString = result.getCriteriaObject().toJson();
 
         assertThat(resultInString, is("{\"owner\": {\"$gt\": 4}}"));
+    }
+
+    @Test
+    void shouldConvertSqlPredicateGreaterThanOrEqualToOperatorToMongoDbCriteria() {
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", "4");
+
+        Criteria result = target.initialCriteria(sqlPredicate1);
+        String resultInString = result.getCriteriaObject().toJson();
+
+        assertThat(resultInString, is("{\"owner\": {\"$gte\": 4}}"));
     }
 
     @Test

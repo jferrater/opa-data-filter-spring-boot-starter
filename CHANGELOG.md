@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Core: Pretty json print log of Partial Request
 - JPA: findAll(Pageable pageable) implementation of OpaDatafilterRepository
 - MongoDB: findAll(Pageable pageable) implementation of OpaDataFilterMongoRepository
+- Added opa gte and lte operator mapping to database query
 
 ## [0.4.4] - 2020-04-21
 ### Added
