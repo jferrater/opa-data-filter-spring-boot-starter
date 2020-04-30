@@ -97,10 +97,10 @@ public class TypedQueryBuilder<T> {
                 predicate = criteriaBuilder.equal(root.get(attributeName), rightExpression);
                 break;
             case "<":
-                predicate = criteriaBuilder.lessThan(root.get(attributeName), Integer.valueOf(rightExpression));
+                predicate = criteriaBuilder.lessThan(root.get(attributeName), Long.valueOf(rightExpression));
                 break;
             case ">":
-                predicate = criteriaBuilder.greaterThan(root.get(attributeName), Integer.valueOf(rightExpression));
+                predicate = criteriaBuilder.greaterThan(root.get(attributeName), Long.valueOf(rightExpression));
                 break;
             default:
                 LOGGER.warn("Criteria equivalent of SQL operator '{}' is not yet supported", operator);

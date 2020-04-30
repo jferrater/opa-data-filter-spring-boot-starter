@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static opa.datafilter.core.ast.db.query.sql.OpaConstants.*;
+import static opa.datafilter.core.ast.db.query.model.OpaConstants.*;
 
 /**
  * Deserializes OPA Compile API {@link Predicate}response
@@ -65,7 +65,7 @@ public class PredicateDeserializer extends JsonDeserializer<Predicate> {
         JsonNode nodeValue = valueNode.get(VALUE);
         switch (valueType) {
             case NUMBER:
-                value.setValues(nodeValue.asInt());
+                value.setValues(nodeValue.asLong());
                 break;
             case BOOLEAN:
                 value.setValues(nodeValue.asBoolean());
@@ -82,8 +82,8 @@ public class PredicateDeserializer extends JsonDeserializer<Predicate> {
     }
 
     private void setValueForTerm(JsonNode jsonNode, Term term) {
-        if (jsonNode.isInt()) {
-            term.setValue(jsonNode.asInt());
+        if (jsonNode.isLong()) {
+            term.setValue(jsonNode.asLong());
         } else if (jsonNode.isTextual()) {
             term.setValue(jsonNode.asText());
         } else {

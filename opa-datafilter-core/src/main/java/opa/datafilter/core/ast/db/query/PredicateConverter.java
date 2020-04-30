@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static opa.datafilter.core.ast.db.query.model.OpaConstants.*;
+
 /**
  * @author joffryferrater
  *
@@ -49,7 +51,7 @@ public class PredicateConverter {
         return sqlPredicate;
     }
 
-    private String getExpression(Object termValue) {
+    String getExpression(Object termValue) {
         String expression = "";
         if (termValue instanceof ArrayList) {
             List<Value> valueList = (List<Value>) termValue;
@@ -60,16 +62,18 @@ public class PredicateConverter {
             expression = (String) termValue;
         } else if (termValue instanceof Integer) {
             expression = String.valueOf(termValue);
+        } else if(termValue instanceof Long) {
+            expression = String.valueOf(termValue);
         } else {
             LOGGER.warn("Unknown value type");
         }
         return expression;
     }
 
-    private String getOperator(Term term) {
+    String getOperator(Term term) {
         Object termValue = term.getValue();
         List<Value> valueList;
-        Value valueObject = null;
+        Value valueObject;
         if (termValue instanceof ArrayList) {
             valueList = (List<Value>) termValue;
             valueObject = valueList.get(0);
@@ -80,17 +84,23 @@ public class PredicateConverter {
         return getOperatorFromValue(value);
     }
 
-    private String getOperatorFromValue(String value) {
+    String getOperatorFromValue(String value) {
         String operator = null;
         switch (value) {
-            case "eq":
+            case EQ:
                 operator = "=";
                 break;
-            case "gt":
+            case GT:
                 operator = ">";
                 break;
-            case "lt":
+            case GTE:
+                operator = ">=";
+                break;
+            case LT:
                 operator = "<";
+                break;
+            case LTE:
+                operator = "<=";
                 break;
             default:
                 LOGGER.warn("Operator '{}' is not yet supported", value);
