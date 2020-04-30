@@ -4,6 +4,9 @@ import com.github.jferrater.opadatafiltermongospringbootstarter.query.MongoQuery
 import opa.datafilter.core.ast.db.query.service.OpaClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
@@ -11,6 +14,7 @@ import org.springframework.data.mongodb.repository.query.MongoEntityInformation;
 import org.springframework.data.mongodb.repository.support.SimpleMongoRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +46,7 @@ public class OpaDataFilterMongoRepositoryImpl<T, ID> extends SimpleMongoReposito
         this.mongoOperations = mongoOperations;
         this.mongoQueryService = mongoQueryService;
         this.entityInformation = metadata;
+        Assert.notNull(mongoOperations, "MongoOperations must not be null!");
     }
 
     @Override
@@ -69,5 +74,16 @@ public class OpaDataFilterMongoRepositoryImpl<T, ID> extends SimpleMongoReposito
             return Collections.emptyList();
         }
         return mongoOperations.find(query.with(sort), entityInformation.getJavaType(), entityInformation.getCollectionName());
+    }
+
+    @Override
+    public Page<T> findAll(Pageable pageable) {
+        LOGGER.trace("Filtering data with OPA, findAll(pageable={})", pageable);
+        Assert.notNull(pageable, "Pageable must not be null!");
+        Query query = mongoQueryService.getMongoDBQuery();
+        Long count = mongoOperations.count(query, entityInformation.getCollectionName());
+        List<T> list = mongoOperations.find(query.with(pageable), entityInformation.getJavaType(), entityInformation.getCollectionName());
+        LOGGER.trace("Returning with new PageImpl<>(list={}, pageable={}, count={}", list, pageable, count);
+        return new PageImpl<>(list, pageable, count);
     }
 }
