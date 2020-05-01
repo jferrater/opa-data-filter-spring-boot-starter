@@ -36,14 +36,14 @@ public class PredicateConverter {
         Object termValue1 = terms.get(1).getValue();
         Object termValue2 = terms.get(2).getValue();
         if(termValue1 instanceof ArrayList) {
-            String left = getExpression(termValue1);
+            String left = (String)getExpression(termValue1);
             sqlPredicate.setLeftExpression(left);
-            String right = getExpression(termValue2);
+            Object right = getExpression(termValue2);
             sqlPredicate.setRightExpression(right);
         } else {
-            String left = getExpression(termValue2);
+            String left = (String)getExpression(termValue2);
             sqlPredicate.setLeftExpression(left);
-            String right = getExpression(termValue1);
+            Object right = getExpression(termValue1);
             sqlPredicate.setRightExpression(right);
         }
         String toString = sqlPredicate.toString();
@@ -51,15 +51,15 @@ public class PredicateConverter {
         return sqlPredicate;
     }
 
-    String getExpression(Object termValue) {
-        String expression = "";
+    Object getExpression(Object termValue) {
+        Object expression = "";
         if (termValue instanceof ArrayList) {
             List<Value> valueList = (List<Value>) termValue;
             Value firstValue = valueList.get(1);
             Value secondValue = valueList.get(3);
             expression = firstValue.getValues() + "." + secondValue.getValues();
         } else if (termValue instanceof String) {
-            expression = (String) termValue;
+            expression = termValue;
         } else if (termValue instanceof Integer) {
             expression = String.valueOf(termValue);
         } else if(termValue instanceof Long) {
