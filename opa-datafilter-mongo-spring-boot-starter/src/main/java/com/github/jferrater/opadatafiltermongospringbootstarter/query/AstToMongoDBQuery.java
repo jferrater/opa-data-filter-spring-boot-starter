@@ -102,8 +102,14 @@ public class AstToMongoDBQuery {
             case "<":
                 criteria = criteria.lt(Integer.valueOf(rightExpression));
                 break;
+            case "<=":
+                criteria = criteria.lte(Integer.valueOf(rightExpression));
+                break;
             case ">":
                 criteria = criteria.gt(Integer.valueOf(rightExpression));
+                break;
+            case ">=":
+                criteria = criteria.gte(Integer.valueOf(rightExpression));
                 break;
             default:
                 LOGGER.warn("Mongo DB criteria equivalent of SQL operator '{}' is not yet supported", operator);

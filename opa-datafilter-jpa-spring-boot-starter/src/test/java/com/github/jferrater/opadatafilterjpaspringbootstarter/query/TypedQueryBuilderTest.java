@@ -68,13 +68,53 @@ class TypedQueryBuilderTest {
     }
 
     @Test
-    void shouldCreatePredicate() {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<PetEntity> criteriaQuery = criteriaBuilder.createQuery(PetEntity.class);
-        Root<PetEntity> root = criteriaQuery.from(PetEntity.class);
+    void shouldCreatePredicateEqualOperator() {
+        Root<PetEntity> root = getPetEntityRoot();
         SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "=", "alice");
 
         Predicate result = target.createPredicate(sqlPredicate1, root);
         assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTOperator() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<", "6");
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTEOperator() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", "6");
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTOperator() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", "405");
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTEOperator() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", "3");
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    private Root<PetEntity> getPetEntityRoot() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<PetEntity> criteriaQuery = criteriaBuilder.createQuery(PetEntity.class);
+        return criteriaQuery.from(PetEntity.class);
     }
 }
