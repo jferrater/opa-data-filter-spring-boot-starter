@@ -36,36 +36,28 @@ public class PredicateConverter {
         Object termValue1 = terms.get(1).getValue();
         Object termValue2 = terms.get(2).getValue();
         if(termValue1 instanceof ArrayList) {
-            String left = (String)getExpression(termValue1);
+            String left = getLeftExpression(termValue1);
             sqlPredicate.setLeftExpression(left);
-            Object right = getExpression(termValue2);
-            sqlPredicate.setRightExpression(right);
+            sqlPredicate.setRightExpression(termValue2);
         } else {
-            String left = (String)getExpression(termValue2);
+            String left = getLeftExpression(termValue2);
             sqlPredicate.setLeftExpression(left);
-            Object right = getExpression(termValue1);
-            sqlPredicate.setRightExpression(right);
+            sqlPredicate.setRightExpression(termValue1);
         }
         String toString = sqlPredicate.toString();
         LOGGER.info("SQL predicate: {}", toString);
         return sqlPredicate;
     }
 
-    Object getExpression(Object termValue) {
-        Object expression = "";
+    String getLeftExpression(Object termValue) {
+        String expression = "";
         if (termValue instanceof ArrayList) {
             List<Value> valueList = (List<Value>) termValue;
             Value firstValue = valueList.get(1);
             Value secondValue = valueList.get(3);
             expression = firstValue.getValues() + "." + secondValue.getValues();
-        } else if (termValue instanceof String) {
-            expression = termValue;
-        } else if (termValue instanceof Integer) {
-            expression = String.valueOf(termValue);
-        } else if(termValue instanceof Long) {
-            expression = String.valueOf(termValue);
         } else {
-            LOGGER.warn("Unknown value type");
+            expression = (String) termValue;
         }
         return expression;
     }
