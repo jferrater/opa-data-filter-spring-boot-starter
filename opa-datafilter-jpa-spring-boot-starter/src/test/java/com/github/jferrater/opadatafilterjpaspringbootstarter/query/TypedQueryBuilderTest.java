@@ -68,7 +68,7 @@ class TypedQueryBuilderTest {
     }
 
     @Test
-    void shouldCreatePredicateEqualOperator() {
+    void shouldCreatePredicateEqualOperatorStringType() {
         Root<PetEntity> root = getPetEntityRoot();
         SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "=", "alice");
 
@@ -77,36 +77,144 @@ class TypedQueryBuilderTest {
     }
 
     @Test
-    void shouldCreatePredicateLTOperator() {
+    void shouldCreatePredicateEqualOperatorBooleanType() {
         Root<PetEntity> root = getPetEntityRoot();
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<", "6");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "=", true);
 
         Predicate result = target.createPredicate(sqlPredicate1, root);
         assertThat(result, is(notNullValue()));
     }
 
     @Test
-    void shouldCreatePredicateLTEOperator() {
+    void shouldCreatePredicateEqualOperatorIntegerType() {
         Root<PetEntity> root = getPetEntityRoot();
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", "6");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "=", 5);
 
         Predicate result = target.createPredicate(sqlPredicate1, root);
         assertThat(result, is(notNullValue()));
     }
 
     @Test
-    void shouldCreatePredicateGTOperator() {
+    void shouldCreatePredicateEqualOperatorLongType() {
         Root<PetEntity> root = getPetEntityRoot();
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", "405");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "=", 5L);
 
         Predicate result = target.createPredicate(sqlPredicate1, root);
         assertThat(result, is(notNullValue()));
     }
 
     @Test
-    void shouldCreatePredicateGTEOperator() {
+    void shouldCreatePredicateEqualOperatorDoubleType() {
         Root<PetEntity> root = getPetEntityRoot();
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", "3");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "=", 3.145);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTOperatorWithIntegerType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<", 6);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTOperatorWithLongType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<", 6L);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTOperatorWithDoubleType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<", 4.12);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTEOperatorWithIntegerType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", 6);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTEOperatorWithLongType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", 2L);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateLTEOperatorWithDoubleType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", 3.1354695);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTOperatorWithIntegerType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", 405);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTOperatorWithLongType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", 405L);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTOperatorWithDoubleType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", 4.34);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTEOperatorIntegerType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", 3);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTEOperatorWithLongType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", 3L);
+
+        Predicate result = target.createPredicate(sqlPredicate1, root);
+        assertThat(result, is(notNullValue()));
+    }
+
+    @Test
+    void shouldCreatePredicateGTEOperatorWithDoubleType() {
+        Root<PetEntity> root = getPetEntityRoot();
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", 21.4535);
 
         Predicate result = target.createPredicate(sqlPredicate1, root);
         assertThat(result, is(notNullValue()));
