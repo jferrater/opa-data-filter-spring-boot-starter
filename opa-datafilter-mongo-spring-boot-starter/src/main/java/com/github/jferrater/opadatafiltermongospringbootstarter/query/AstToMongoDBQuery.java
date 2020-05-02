@@ -94,22 +94,22 @@ public class AstToMongoDBQuery {
 
     private Criteria createComparisonCriteria(SqlPredicate sqlPredicate, Criteria criteria) {
         String operator = sqlPredicate.getOperator();
-        String rightExpression = sqlPredicate.getRightExpression();
+        Object rightExpression = sqlPredicate.getRightExpression();
         switch (operator) {
             case "=":
                 criteria = criteria.is(rightExpression);
                 break;
             case "<":
-                criteria = criteria.lt(Integer.valueOf(rightExpression));
+                criteria = criteria.lt(rightExpression);
                 break;
             case "<=":
-                criteria = criteria.lte(Integer.valueOf(rightExpression));
+                criteria = criteria.lte(rightExpression);
                 break;
             case ">":
-                criteria = criteria.gt(Integer.valueOf(rightExpression));
+                criteria = criteria.gt(rightExpression);
                 break;
             case ">=":
-                criteria = criteria.gte(Integer.valueOf(rightExpression));
+                criteria = criteria.gte(rightExpression);
                 break;
             default:
                 LOGGER.warn("Mongo DB criteria equivalent of SQL operator '{}' is not yet supported", operator);
