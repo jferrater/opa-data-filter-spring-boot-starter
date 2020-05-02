@@ -36,30 +36,26 @@ public class PredicateConverter {
         Object termValue1 = terms.get(1).getValue();
         Object termValue2 = terms.get(2).getValue();
         if(termValue1 instanceof ArrayList) {
-            String left = getLeftExpression(termValue1);
+            String left = getLeftExpressionFromArray(termValue1);
             sqlPredicate.setLeftExpression(left);
             sqlPredicate.setRightExpression(termValue2);
-        } else {
-            String left = getLeftExpression(termValue2);
+        } else if(termValue2 instanceof ArrayList){
+            String left = getLeftExpressionFromArray(termValue2);
             sqlPredicate.setLeftExpression(left);
             sqlPredicate.setRightExpression(termValue1);
+        } else {
+            LOGGER.warn("Unable to identify the left and right expressions of the predicate");
         }
         String toString = sqlPredicate.toString();
         LOGGER.info("SQL predicate: {}", toString);
         return sqlPredicate;
     }
 
-    String getLeftExpression(Object termValue) {
-        String expression = "";
-        if (termValue instanceof ArrayList) {
-            List<Value> valueList = (List<Value>) termValue;
-            Value firstValue = valueList.get(1);
-            Value secondValue = valueList.get(3);
-            expression = firstValue.getValues() + "." + secondValue.getValues();
-        } else {
-            expression = (String) termValue;
-        }
-        return expression;
+    String getLeftExpressionFromArray(Object termValue) {
+        List<Value> valueList = (List<Value>) termValue;
+        Value firstValue = valueList.get(1);
+        Value secondValue = valueList.get(3);
+        return firstValue.getValues() + "." + secondValue.getValues();
     }
 
     String getOperator(Term term) {
