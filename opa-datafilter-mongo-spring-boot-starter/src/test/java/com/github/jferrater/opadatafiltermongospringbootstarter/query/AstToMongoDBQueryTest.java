@@ -53,7 +53,7 @@ class AstToMongoDBQueryTest {
 
     @Test
     void shouldConvertSqlPredicateLessThanOperatorToMongoDbCriteria() {
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<", "3");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<", 3);
 
         Criteria result = target.initialCriteria(sqlPredicate1);
         String resultInString = result.getCriteriaObject().toJson();
@@ -63,27 +63,27 @@ class AstToMongoDBQueryTest {
 
     @Test
     void shouldConvertSqlPredicateLessThanOrEqualToOperatorToMongoDbCriteria() {
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", "5");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", "<=", 5.14);
 
         Criteria result = target.initialCriteria(sqlPredicate1);
         String resultInString = result.getCriteriaObject().toJson();
 
-        assertThat(resultInString, is("{\"owner\": {\"$lte\": 5}}"));
+        assertThat(resultInString, is("{\"owner\": {\"$lte\": 5.14}}"));
     }
 
     @Test
     void shouldConvertSqlPredicateGreaterThanOperatorToMongoDbCriteria() {
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", "4");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", 4L);
 
         Criteria result = target.initialCriteria(sqlPredicate1);
         String resultInString = result.getCriteriaObject().toJson();
 
-        assertThat(resultInString, is("{\"owner\": {\"$gt\": 4}}"));
+        assertThat(resultInString, is("{\"owner\": {\"$gt\": {\"$numberLong\": \"4\"}}}"));
     }
 
     @Test
     void shouldConvertSqlPredicateGreaterThanOrEqualToOperatorToMongoDbCriteria() {
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", "4");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">=", 4);
 
         Criteria result = target.initialCriteria(sqlPredicate1);
         String resultInString = result.getCriteriaObject().toJson();
@@ -93,13 +93,13 @@ class AstToMongoDBQueryTest {
 
     @Test
     void shouldNotChainToOrOperatorForSingleCriteria() {
-        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", "4");
+        SqlPredicate sqlPredicate1 = new SqlPredicate("pets.owner", ">", 4.4263463);
         Criteria criteria = target.initialCriteria(sqlPredicate1);
 
         Criteria result = target.chainCriteriaByOrOperator(List.of(criteria));
         String resultInString = result.getCriteriaObject().toJson();
 
-        assertThat(resultInString, is("{\"owner\": {\"$gt\": 4}}"));
+        assertThat(resultInString, is("{\"owner\": {\"$gt\": 4.4263463}}"));
     }
 
     @Test
