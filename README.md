@@ -1,4 +1,4 @@
-# Data Filtering with Open Policy Agent and Spring Data MongoDb and JPA
+# Data Filtering on Spring Data with Open Policy Agent
 [![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter)
 
 ### opa-datafilter-jpa-spring-boot-starter 
