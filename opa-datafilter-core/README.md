@@ -1,5 +1,5 @@
 ## opa-datafilter-core
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-core/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-core/0.4.4/jar)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-core/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-core/0.4.6/jar)
 [![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter) [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-core&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-core)
 
 A Spring Boot library for translating Open Policy Agent (OPA) compile API response into JPA and Mongo queries.

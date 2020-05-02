@@ -7,12 +7,12 @@ public class SqlPredicate {
 
     private String leftExpression;
     private String operator;
-    private String rightExpression;
+    private Object rightExpression;
 
     public SqlPredicate() {
     }
 
-    public SqlPredicate(String leftExpression, String operator, String rightExpression) {
+    public SqlPredicate(String leftExpression, String operator, Object rightExpression) {
         this();
         this.leftExpression = leftExpression;
         this.operator = operator;
@@ -27,11 +27,11 @@ public class SqlPredicate {
         this.leftExpression = leftExpression;
     }
 
-    public String getRightExpression() {
+    public Object getRightExpression() {
         return rightExpression;
     }
 
-    public void setRightExpression(String rightExpression) {
+    public void setRightExpression(Object rightExpression) {
         this.rightExpression = rightExpression;
     }
 

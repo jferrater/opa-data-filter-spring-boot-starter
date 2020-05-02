@@ -36,38 +36,26 @@ public class PredicateConverter {
         Object termValue1 = terms.get(1).getValue();
         Object termValue2 = terms.get(2).getValue();
         if(termValue1 instanceof ArrayList) {
-            String left = getExpression(termValue1);
+            String left = getLeftExpressionFromArray(termValue1);
             sqlPredicate.setLeftExpression(left);
-            String right = getExpression(termValue2);
-            sqlPredicate.setRightExpression(right);
+            sqlPredicate.setRightExpression(termValue2);
+        } else if(termValue2 instanceof ArrayList){
+            String left = getLeftExpressionFromArray(termValue2);
+            sqlPredicate.setLeftExpression(left);
+            sqlPredicate.setRightExpression(termValue1);
         } else {
-            String left = getExpression(termValue2);
-            sqlPredicate.setLeftExpression(left);
-            String right = getExpression(termValue1);
-            sqlPredicate.setRightExpression(right);
+            LOGGER.warn("Unable to identify the left and right expressions of the predicate");
         }
         String toString = sqlPredicate.toString();
         LOGGER.info("SQL predicate: {}", toString);
         return sqlPredicate;
     }
 
-    String getExpression(Object termValue) {
-        String expression = "";
-        if (termValue instanceof ArrayList) {
-            List<Value> valueList = (List<Value>) termValue;
-            Value firstValue = valueList.get(1);
-            Value secondValue = valueList.get(3);
-            expression = firstValue.getValues() + "." + secondValue.getValues();
-        } else if (termValue instanceof String) {
-            expression = (String) termValue;
-        } else if (termValue instanceof Integer) {
-            expression = String.valueOf(termValue);
-        } else if(termValue instanceof Long) {
-            expression = String.valueOf(termValue);
-        } else {
-            LOGGER.warn("Unknown value type");
-        }
-        return expression;
+    String getLeftExpressionFromArray(Object termValue) {
+        List<Value> valueList = (List<Value>) termValue;
+        Value firstValue = valueList.get(1);
+        Value secondValue = valueList.get(3);
+        return firstValue.getValues() + "." + secondValue.getValues();
     }
 
     String getOperator(Term term) {
