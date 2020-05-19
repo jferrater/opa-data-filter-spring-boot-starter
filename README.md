@@ -23,6 +23,12 @@ sent to the OPA [compile API](https://www.openpolicyagent.org/docs/latest/rest-a
 OPA evaluates the partial request and returns a new and simplified policy that can be evaluated more efficiently than the original policy. These libraries convert
 the new policy, the OPA compile API response, into SQL or MongoDB queries. A filtered collection of data is returned to the user which a user is allowed to see.
 
+### Supported Spring Data `findAll` methods
+The libraries override Spring Data methods:
+- findAll()
+- findAll(Sort sort)
+- findAll(Pageable pageable)
+<br>
 ![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
 
 ## Installation and Usage
