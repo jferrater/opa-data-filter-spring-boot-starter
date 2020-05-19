@@ -1,0 +1,4 @@
+server:
+  port: 8727
+  servlet:
+    context-path: /opa-query-service/v1

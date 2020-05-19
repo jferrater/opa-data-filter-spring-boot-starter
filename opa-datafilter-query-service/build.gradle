@@ -2,6 +2,11 @@ plugins {
 	id 'org.springframework.boot' version '2.2.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'maven'
+	id 'maven-publish'
+	id 'jacoco'
+	id "org.sonarqube" version "2.7"
+	id "io.franzbecker.gradle-lombok" version "1.14"
 }
 
 group = 'com.github.jferrater'
@@ -15,7 +20,17 @@ configurations {
 	}
 }
 
+ext {
+	gradleLombokVersion = '1.18.4'
+}
+
+lombok {
+	version = "${gradleLombokVersion}"
+	sha256 = ""
+}
+
 repositories {
+	mavenLocal()
 	mavenCentral()
 }
 
@@ -29,4 +44,48 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+
+sonarqube {
+	properties {
+		property 'sonar.projectName', 'opa-datafilter-query-service'
+		property 'sonar.github.repository', 'jferrater/opa-data-filter-spring-boot-starter'
+		property 'sonar.projectKey', 'jferrater_opa-datafilter-query-service'
+		property 'sonar.organization', 'jferrater'
+		property 'sonar.host.url', 'https://sonarcloud.io'
+		property 'sonar.projectVersion', version
+		property 'sonar.login', System.getenv('SONAR_TOKEN')
+		property 'sonar.java.coveragePlugin', 'jacoco'
+		property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/**config/*.java'
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			versionMapping {
+				usage('java-api') {
+					fromResolutionOf('runtimeClasspath')
+				}
+				usage('java-runtime') {
+					fromResolutionResult()
+				}
+			}
+			groupId = 'com.github.jferrater'
+			artifactId = ARTIFACT_NAME
+			version = ARTIFACT_VERSION
+			from components.java
+		}
+	}
+}
+
+wrapper {
+	gradleVersion = '6.3'
 }
