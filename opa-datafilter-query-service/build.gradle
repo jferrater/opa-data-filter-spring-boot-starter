@@ -2,15 +2,13 @@ plugins {
 	id 'org.springframework.boot' version '2.2.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
-	id 'maven'
-	id 'maven-publish'
 	id 'jacoco'
 	id "org.sonarqube" version "2.7"
 	id "io.franzbecker.gradle-lombok" version "1.14"
 }
 
 group = 'com.github.jferrater'
-version = '0.0.1-SNAPSHOT'
+version = ARTIFACT_VERSION
 sourceCompatibility = '11'
 
 configurations {
@@ -69,25 +67,6 @@ sonarqube {
 jacocoTestReport {
 	reports {
 		xml.enabled true
-	}
-}
-
-publishing {
-	publications {
-		maven(MavenPublication) {
-			versionMapping {
-				usage('java-api') {
-					fromResolutionOf('runtimeClasspath')
-				}
-				usage('java-runtime') {
-					fromResolutionResult()
-				}
-			}
-			groupId = 'com.github.jferrater'
-			artifactId = ARTIFACT_NAME
-			version = ARTIFACT_VERSION
-			from components.java
-		}
 	}
 }
 

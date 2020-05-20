@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author joffryferrater
@@ -20,7 +19,8 @@ import java.util.Map;
 public class QueryResponse {
 
     @JsonProperty("result")
-    private Map<String, Object> result;
+    private Object result;
     @JsonProperty("errors")
     private List<ApiError> errors = new ArrayList<>();
+
 }
