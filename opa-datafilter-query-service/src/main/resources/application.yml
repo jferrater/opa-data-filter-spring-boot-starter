@@ -1,0 +1,7 @@
+server:
+  port: 8727
+  servlet:
+    context-path: /opa-query-service/v1
+opa:
+  authorization:
+    url: http://localhost:8181/v1/compile

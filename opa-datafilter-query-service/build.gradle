@@ -1,0 +1,75 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.7.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'jacoco'
+	id "org.sonarqube" version "2.7"
+	id "io.franzbecker.gradle-lombok" version "1.14"
+}
+
+group = 'com.github.jferrater'
+version = ARTIFACT_VERSION
+sourceCompatibility = '11'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+ext {
+	gradleLombokVersion = '1.18.4'
+}
+
+lombok {
+	version = "${gradleLombokVersion}"
+	sha256 = ""
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'com.github.jferrater:opa-datafilter-mongo-spring-boot-starter:0.4.5'
+	implementation 'org.modelmapper:modelmapper:2.3.7'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+
+sonarqube {
+	properties {
+		property 'sonar.projectName', 'opa-datafilter-query-service'
+		property 'sonar.github.repository', 'jferrater/opa-data-filter-spring-boot-starter'
+		property 'sonar.projectKey', 'jferrater_opa-datafilter-query-service'
+		property 'sonar.organization', 'jferrater'
+		property 'sonar.host.url', 'https://sonarcloud.io'
+		property 'sonar.projectVersion', version
+		property 'sonar.login', System.getenv('SONAR_TOKEN')
+		property 'sonar.java.coveragePlugin', 'jacoco'
+		property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/**config/*.java'
+	}
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
+
+wrapper {
+	gradleVersion = '6.3'
+}
