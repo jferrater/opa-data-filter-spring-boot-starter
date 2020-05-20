@@ -50,9 +50,9 @@ jobs:
         - cd ../opa-datafilter-mongo-spring-boot-starter
         - ./gradlew clean build
         - ./gradlew jacocoTestReport sonarqube -Dsonar.verbose=true
-	- cd ../opa-datafilter-query-service
-	- ./gradlew clean build
-	- ./gradlew jacocoTestReport sonarqube -Dsonar-verbose=true
+        - cd ../opa-datafilter-query-service
+        - ./gradlew clean build
+        - ./gradlew jacocoTestReport sonarqube -Dsonar-verbose=true
 
       after_script:
         - docker ps -a
