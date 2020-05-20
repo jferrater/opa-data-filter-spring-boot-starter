@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.2.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
-	id 'jacoco'
 	id "org.sonarqube" version "2.7"
 	id "io.franzbecker.gradle-lombok" version "1.14"
 }
@@ -60,7 +59,6 @@ sonarqube {
 		property 'sonar.host.url', 'https://sonarcloud.io'
 		property 'sonar.projectVersion', version
 		property 'sonar.login', System.getenv('SONAR_TOKEN')
-		property 'sonar.java.coveragePlugin', 'jacoco'
 		property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/**config/*.java'
 	}
 }
