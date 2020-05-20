@@ -63,12 +63,6 @@ sonarqube {
 	}
 }
 
-jacocoTestReport {
-	reports {
-		xml.enabled true
-	}
-}
-
 wrapper {
 	gradleVersion = '6.3'
 }
