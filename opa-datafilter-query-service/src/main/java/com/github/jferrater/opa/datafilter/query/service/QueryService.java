@@ -1,5 +1,7 @@
 package com.github.jferrater.opa.datafilter.query.service;
 
+import com.github.jferrater.opa.datafilter.query.service.model.PartialRequest;
+import com.github.jferrater.opa.datafilter.query.service.model.QueryResponse;
 import com.github.jferrater.opadatafiltermongospringbootstarter.query.MongoQueryService;
 import opa.datafilter.core.ast.db.query.exception.OpaClientException;
 import opa.datafilter.core.ast.db.query.service.OpaClientService;

@@ -1,5 +1,7 @@
 package com.github.jferrater.opa.datafilter.query.service;
 
+import com.github.jferrater.opa.datafilter.query.service.model.ApiError;
+import com.github.jferrater.opa.datafilter.query.service.model.QueryResponse;
 import opa.datafilter.core.ast.db.query.exception.OpaClientException;
 import opa.datafilter.core.ast.db.query.exception.PartialEvauationException;
 import org.springframework.core.convert.ConversionFailedException;

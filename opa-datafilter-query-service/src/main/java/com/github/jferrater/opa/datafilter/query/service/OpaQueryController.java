@@ -1,5 +1,7 @@
 package com.github.jferrater.opa.datafilter.query.service;
 
+import com.github.jferrater.opa.datafilter.query.service.model.PartialRequest;
+import com.github.jferrater.opa.datafilter.query.service.model.QueryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author joffryferrater
@@ -53,12 +54,7 @@ public class OpaQueryController {
         } else if("mongodb".equals(type)) {
             QueryResponse queryResponse = queryService.getMongoDbQuery(partialRequest);
             return new ResponseEntity<>(queryResponse, HttpStatus.OK);
-        } else {
-            QueryResponse queryResponse = new QueryResponse();
-            ApiError apiError = new ApiError(400, "Invalid 'type' request param value. " +
-                    "Valid request param values: sql , mongodb");
-            queryResponse.setErrors(List.of(apiError));
-            return new ResponseEntity<>(queryResponse, HttpStatus.BAD_REQUEST);
         }
+        return ResponseEntity.badRequest().build();
     }
 }

@@ -1,4 +1,4 @@
-package com.github.jferrater.opa.datafilter.query.service;
+package com.github.jferrater.opa.datafilter.query.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
