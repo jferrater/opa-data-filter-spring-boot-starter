@@ -1,7 +1,8 @@
-package com.github.jferrater.opa.datafilter.query.service;
+package com.github.jferrater.opa.datafilter.query.service.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema
 public class QueryResponse {
 
     @JsonProperty("result")

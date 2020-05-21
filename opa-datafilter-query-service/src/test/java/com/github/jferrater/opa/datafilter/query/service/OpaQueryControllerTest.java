@@ -23,6 +23,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * @author joffryferrater
+ */
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
@@ -42,7 +45,7 @@ class OpaQueryControllerTest {
     @Test
     void shouldQueryResponseWithSqlQuey() throws Exception {
         PartialRequest partialRequest = new PartialRequest();
-        when(modelMapper.map(any(com.github.jferrater.opa.datafilter.query.service.PartialRequest.class), eq(PartialRequest.class))).thenReturn(partialRequest);
+        when(modelMapper.map(any(com.github.jferrater.opa.datafilter.query.service.model.PartialRequest.class), eq(PartialRequest.class))).thenReturn(partialRequest);
         when(opaClientService.getExecutableSqlStatements(any(PartialRequest.class))).thenReturn(EXPECTED_SQL_QUERY);
 
         mockMvc.perform(post("/query?type=sql")
@@ -55,7 +58,7 @@ class OpaQueryControllerTest {
     @Test
     void shouldQueryResponseWithMongoDbQuey() throws Exception {
         PartialRequest partialRequest = new PartialRequest();
-        when(modelMapper.map(any(com.github.jferrater.opa.datafilter.query.service.PartialRequest.class), eq(PartialRequest.class))).thenReturn(partialRequest);
+        when(modelMapper.map(any(com.github.jferrater.opa.datafilter.query.service.model.PartialRequest.class), eq(PartialRequest.class))).thenReturn(partialRequest);
         BasicQuery query = new BasicQuery("{ age : { $lt : 50 }, balance : { $gt : 1000.00 }}");
         when(mongoQueryService.getMongoDBQuery(any(PartialRequest.class))).thenReturn(query);
 

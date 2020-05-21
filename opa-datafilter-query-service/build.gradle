@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'com.github.jferrater:opa-datafilter-mongo-spring-boot-starter:0.4.5'
 	implementation 'org.modelmapper:modelmapper:2.3.7'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.1.49'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -60,7 +61,7 @@ sonarqube {
 		property 'sonar.projectVersion', version
 		property 'sonar.login', System.getenv('SONAR_TOKEN')
 		property 'sonar.java.coveragePlugin', 'jacoco'
-		property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/**config/*.java'
+		property 'sonar.exclusions', '**/integrationTest/**, src/main/java/**/**/config/*.java, src/main/java/**/**/model/*.java'
 	}
 }
 
