@@ -36,6 +36,8 @@ See each individual folder for installation and usage instructions.
 - [opa-datafilter-jpa-spring-boot-starter](opa-datafilter-jpa-spring-boot-starter/README.md)
 - [opa-datafilter-mongo-spring-boot-starter](opa-datafilter-mongo-spring-boot-starter/README.md)
 
+## Query Verification
+To verify how the SQL or MongoDB query looks like, use the [opa-datafilter-mongo-spring-boot-starter](opa-datafilter-query-service) or the the docker image, [opa-query-service](https://hub.docker.com/r/jmferrater/opa-query-service). The service provides an API for translating OPA partial request object into a SQL or MongoDB query.
 
 ## Configurations
 | Properties                                            | Type                | Default Value                    | Description                                                                                                                                                                                                                                                  | Required |
