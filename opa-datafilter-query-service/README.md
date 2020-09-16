@@ -3,6 +3,9 @@
 <br>
 A service that provides API which translates Open Policy Agent (OPA) [Partial Request](https://www.openpolicyagent.org/docs/latest/rest-api/#compile-api) into a SQL or MongoDB query.
 
+### Pre-requisite
+- Open Policy Agent Server v0.22.0
+
 ### Quick Start
 1. `git clone https://github.com/jferrater/opa-data-filter-spring-boot-starter.git`
 2. `cd opa-datafilter-query-service`

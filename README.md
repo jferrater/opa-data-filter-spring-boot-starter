@@ -25,6 +25,9 @@ the new policy, the OPA compile API response, into SQL or MongoDB queries. A fil
 
 ![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
 
+### Open Policy Agent Supported Version
+With the 
+
 ### Supported Spring Data `findAll` methods
 The libraries override Spring Data methods:
 - findAll()
