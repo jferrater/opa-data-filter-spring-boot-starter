@@ -167,6 +167,11 @@ modifyPom {
                 name 'Joffry Ferrater'
                 email 'joffry.ferrater@gmail.com'
             }
+            developer {
+                id 'mongkoy'
+                name 'Reihmon Estremos'
+                email 'koydaut@gmail.com'
+            }
         }
     }
 }
