@@ -58,6 +58,22 @@ class OpaClientServiceTest extends TestBase {
     }
 
     @Test
+    void shouldGetTheSqlStatementsFromPartialRequestV025() throws Exception{
+        OpaCompilerResponse  opaCompilerResponseV025 = opaV23CompilerResponse();
+        when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
+                .thenReturn(new ResponseEntity<>(opaCompilerResponseV025, HttpStatus.OK));
+        PartialRequest partialRequest = PartialRequest.builder()
+                .query("data.petclinic.authz.allow = true")
+                .unknowns(Set.of("data.pets")).build();
+
+
+        String result = target.getExecutableSqlStatements(partialRequest);
+
+        assertThat(result, is(notNullValue()));
+        assertThat(result, is("SELECT * FROM pets WHERE (pets.owner = 'alice' AND pets.name = 'fluffy') OR (pets.veterinarian = 'alice' AND pets.clinic = 'SOMA' AND pets.name = 'fluffy');"));
+    }
+
+    @Test
     void shouldThrowOpaClientException() {
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
                 .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.BAD_REQUEST));
