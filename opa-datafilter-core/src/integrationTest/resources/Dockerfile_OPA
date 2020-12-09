@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 RUN apt-get update && apt-get install -y curl
-COPY opa_linux_amd64_v0.22.0 opa
+COPY opa_linux_amd64_v0.25.2 opa
 RUN chmod 755 ./opa
 
 COPY petclinic.rego .
