@@ -14,8 +14,18 @@ public class TestBase {
 
 
     public static OpaCompilerResponse opaCompilerResponse() throws IOException {
-        String opaCompilerResponseInString = Files.readString(Paths.get("src/test/resources/opa-compiler-response.json"));
+        String opaCompilerResponseInString = getFileFromResourcesAsString("src/test/resources/opa-compiler-response.json");
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(opaCompilerResponseInString, OpaCompilerResponse.class);
+    }
+
+    public static OpaCompilerResponse opaV23CompilerResponse() throws IOException {
+        String opaCompilerResponseInString = getFileFromResourcesAsString("src/test/resources/opa-compiler-response-v025.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(opaCompilerResponseInString, OpaCompilerResponse.class);
+    }
+
+    private static String getFileFromResourcesAsString(String filePath) throws IOException {
+        return Files.readString(Paths.get(filePath));
     }
 }

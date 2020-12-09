@@ -49,4 +49,23 @@ class PredicateConverterTest extends TestBase {
         assertThat(target.getOperatorFromValue(GT), is(">"));
         assertThat(target.getOperatorFromValue(GTE), is(">="));
     }
+
+    @Test
+    void shouldTestCompatibilityWithOPAversion023() throws Exception {
+        OpaCompilerResponse opaCompilerResponseV023 = opaV23CompilerResponse();
+        List<List<Predicate>> queriesV023 = opaCompilerResponseV023.getResult().getQueries();
+        Predicate predicateV023 = queriesV023.iterator().next().get(0);
+
+        target = new PredicateConverter(predicateV023);
+        SqlPredicate result = target.astToSqlPredicate();
+
+        assertThat(result.getOperator(), is("="));
+        assertThat(result.getLeftExpression(), is("pets.owner"));
+        assertThat(result.getRightExpression(), is("alice"));
+        assertThat(target.getOperatorFromValue(EQ), is("="));
+        assertThat(target.getOperatorFromValue(LT), is("<"));
+        assertThat(target.getOperatorFromValue(LTE), is("<="));
+        assertThat(target.getOperatorFromValue(GT), is(">"));
+        assertThat(target.getOperatorFromValue(GTE), is(">="));
+    }
 }

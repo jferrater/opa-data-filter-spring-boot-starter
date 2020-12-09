@@ -33,18 +33,24 @@ public class PredicateDeserializer extends JsonDeserializer<Predicate> {
         JsonNode jsonNode = objectCodec.readTree(jsonParser);
         JsonNode termsNode = jsonNode.get(TERMS);
         List<Term> terms = new ArrayList<>();
-        for (JsonNode termNode : termsNode) {
-            Term term = new Term();
-            String type = termNode.get(TYPE).asText();
-            term.setType(type);
-            JsonNode valueNodes = termNode.get(VALUE);
-            if (valueNodes.isArray()) {
-                List<Value> valueList = addValuesToList(valueNodes);
-                term.setValue(valueList);
-            } else {
-                setValueForTerm(valueNodes, term);
+        if(termsNode.isArray()) {
+            for (JsonNode termNode : termsNode) {
+                Term term = new Term();
+                String type = termNode.get(TYPE).asText();
+                term.setType(type);
+                JsonNode valueNodes = termNode.get(VALUE);
+                if (valueNodes.isArray()) {
+                    List<Value> valueList = addValuesToList(valueNodes);
+                    term.setValue(valueList);
+                } else {
+                    setValueForTerm(valueNodes, term);
+                }
+                terms.add(term);
             }
-            terms.add(term);
+        } else {
+            // Compatibility fix for OPA v.0.23 and above.
+            // If it is not an array then it is not a predicate statement
+            LOGGER.info("Skipping index {}. Not a predicate", jsonNode.get("index").asInt());
         }
         return buildPredicate(jsonNode, terms);
     }
