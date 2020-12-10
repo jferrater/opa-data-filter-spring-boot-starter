@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2020-12-10
+- Fixed the incompatibility issue from OPA version 0.23 and above
+
 ## [0.4.5] - 2020-05-02
 - JPA: findAll(Sort sort) implementation of OpaDataFilterRepository
 - MongoDB: findAll(Sort sort) implementation of OpaDataFilterMongoRepository

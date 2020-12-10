@@ -51,7 +51,7 @@ jar {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	api 'com.github.jferrater:opa-datafilter-core:0.4.6'
+	api 'com.github.jferrater:opa-datafilter-core:0.5.1'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -134,6 +134,11 @@ modifyPom {
 				id 'jferrater'
 				name 'Joffry Ferrater'
 				email 'joffry.ferrater@gmail.com'
+			}
+			developer {
+				id 'mongkoy'
+				name 'Reihmon Estremos'
+				email 'koydaut@gmail.com'
 			}
 		}
 	}

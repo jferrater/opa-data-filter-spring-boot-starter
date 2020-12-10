@@ -30,6 +30,9 @@ public class PredicateConverter {
     public SqlPredicate astToSqlPredicate() {
         SqlPredicate sqlPredicate = new SqlPredicate();
         List<Term> terms = predicate.getTerms();
+        if(terms.isEmpty()) {
+            return null;
+        }
         Term operator = terms.get(0);
         String operatorString = getOperator(operator);
         sqlPredicate.setOperator(operatorString);

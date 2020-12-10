@@ -2,11 +2,11 @@
 [![Build Status](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-spring-boot-starter)
 
 ### opa-datafilter-jpa-spring-boot-starter 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/0.4.5/jar)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-jpa-spring-boot-starter/0.5.1/jar)
 [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-jpa-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-jpa-spring-boot-starter)
 
 ### opa-datafilter-mongo-spring-boot-starter
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-mongo-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-mongo-spring-boot-starter/0.4.5/jar)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.jferrater/opa-datafilter-mongo-spring-boot-starter/badge.svg)](https://search.maven.org/artifact/com.github.jferrater/opa-datafilter-mongo-spring-boot-starter/0.5.1/jar)
 [![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=jferrater_opa-datafilter-mongo-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=jferrater_opa-datafilter-mongo-spring-boot-starter)
 
 ### Pre-requisites
@@ -26,7 +26,7 @@ the new policy, the OPA compile API response, into SQL or MongoDB queries. A fil
 ![Spring Boot App with OPA Data Filter](https://github.com/jferrater/opa-data-filter-spring-boot-starter/blob/master/diagram.png)
 
 ### Open Policy Agent Supported Version
- - Supports OPA v0.22.0 and below
+ - Tested in OPA v0.25.0 and below
 
 ### Supported Spring Data `findAll` methods
 The libraries override Spring Data methods:

@@ -13,14 +13,4 @@ A service that provides API which translates Open Policy Agent (OPA) [Partial Re
 3. `./gradlew bootRun`
 4. API documentation at http://localhost:8727/opa-query-service/v1/swagger-ui.html
 
-or by Docker:
-
-1. Run docker command:
- ````shell script
-docker run -dit -p 8727:8727 \
-           -e OPA_AUTHORIZATION_URL=http://localhost:8181/v1/compile \
-           --name opa-query-service jmferrater/opa-query-service
-````
-2. API documentation at http://localhost:8727/opa-query-service/v1/swagger-ui.html
-
 

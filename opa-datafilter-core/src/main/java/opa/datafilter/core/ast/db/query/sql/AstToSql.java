@@ -10,6 +10,7 @@ import opa.datafilter.core.ast.db.query.util.SqlUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
@@ -53,8 +54,9 @@ public class AstToSql {
 
     String andOperationConstraints(List<Predicate> predicates) {
         List<SqlPredicate> sqlPredicates = predicates.stream()
-                .map(predicate -> new PredicateConverter(predicate).astToSqlPredicate()).
-                        collect(toList());
+                .map(predicate -> new PredicateConverter(predicate).astToSqlPredicate())
+                .filter(Objects::nonNull)
+                .collect(toList());
         return SqlUtil.concatByAndOperation(sqlPredicates);
     }
 }
