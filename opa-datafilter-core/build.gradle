@@ -52,11 +52,11 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    testImplementation 'org.mariadb.jdbc:mariadb-java-client:2.3.0'
-    testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
-    testImplementation group: 'org.testcontainers', name: 'mysql', version: '1.12.5'
-    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.12.5'
-    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.197'
+    testImplementation 'org.mariadb.jdbc:mariadb-java-client:3.3.1'
+    testImplementation group: 'org.postgresql', name: 'postgresql', version: '42.7.1'
+    testImplementation group: 'org.testcontainers', name: 'mysql', version: '1.19.3'
+    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.19.3'
+    testImplementation group: 'com.h2database', name: 'h2', version: '2.2.224'
     testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
 }
 
