@@ -6,9 +6,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.List;
 
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
-
-import lombok.*;
 
 /**
  * @author Reihmon Estremos
@@ -20,10 +19,6 @@ import lombok.*;
     "input",
     "unknowns"
 })
-@Builder
-@Data
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
 public class PartialRequest {
 
     private static final String METHOD = "method";
@@ -32,13 +27,65 @@ public class PartialRequest {
     @JsonProperty("query")
     private String query;
     @JsonProperty("input")
-    @Singular("input")
     private Map<String, Object> input;
     @JsonProperty("unknowns")
-    @Singular
     private Set<String> unknowns;
 
+    public PartialRequest() {
+    }
+
+    public PartialRequest(String query, Map<String, Object> input, Set<String> unknowns) {
+        this();
+        this.query = query;
+        this.input = input;
+        this.unknowns = unknowns;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public Map<String, Object> getInput() {
+        return input;
+    }
+
+    public void setInput(Map<String, Object> input) {
+        this.input = input;
+    }
+
+    public Set<String> getUnknowns() {
+        return unknowns;
+    }
+
+    public void setUnknowns(Set<String> unknowns) {
+        this.unknowns = unknowns;
+    }
+
     public static class PartialRequestBuilder {
+
+        private String query;
+        private Map<String, Object> input = new HashMap<>();
+        private Set<String> unknowns;
+
+
+        public PartialRequestBuilder query(String query) {
+            this.query = query;
+            return this;
+        }
+
+        public PartialRequestBuilder input(String key, Object object) {
+            this.input.put(key, object);
+            return this;
+        }
+
+        public PartialRequestBuilder unknowns(Set<String> unknowns) {
+            this.unknowns = unknowns;
+            return this;
+        }
 
         /**
          * Set the query for OPA to partially evaluate and compile
@@ -47,7 +94,8 @@ public class PartialRequest {
          * @return {@link PartialRequestBuilder}
          */
         public PartialRequestBuilder httpMethod(String method) {
-            return this.input(METHOD, method);
+            this.input.put(METHOD, method);
+            return this;
         }
 
         /**
@@ -58,7 +106,16 @@ public class PartialRequest {
          * @return {@link PartialRequestBuilder}
          */
         public PartialRequestBuilder httpPath(List<String> paths) {
-            return this.input(PATH, paths);
+            this.input.put(PATH, paths);
+            return this;
+        }
+
+        public PartialRequest build() {
+            PartialRequest partialRequest = new PartialRequest();
+            partialRequest.setQuery(this.query);
+            partialRequest.setInput(this.input);
+            partialRequest.setUnknowns(this.unknowns);
+            return partialRequest;
         }
     }
 }

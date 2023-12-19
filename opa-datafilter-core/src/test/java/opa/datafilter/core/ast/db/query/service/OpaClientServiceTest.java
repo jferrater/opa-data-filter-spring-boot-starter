@@ -46,7 +46,7 @@ class OpaClientServiceTest extends TestBase {
     void shouldGetTheSqlStatementsFromPartialRequest() {
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
                 .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.OK));
-        PartialRequest partialRequest = PartialRequest.builder()
+        PartialRequest partialRequest = new PartialRequest.PartialRequestBuilder()
                 .query("data.petclinic.authz.allow = true")
                 .unknowns(Set.of("data.pets")).build();
                 
@@ -62,7 +62,7 @@ class OpaClientServiceTest extends TestBase {
         OpaCompilerResponse  opaCompilerResponseV025 = opaV23CompilerResponse();
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
                 .thenReturn(new ResponseEntity<>(opaCompilerResponseV025, HttpStatus.OK));
-        PartialRequest partialRequest = PartialRequest.builder()
+        PartialRequest partialRequest = new PartialRequest.PartialRequestBuilder()
                 .query("data.petclinic.authz.allow = true")
                 .unknowns(Set.of("data.pets")).build();
 
@@ -77,7 +77,7 @@ class OpaClientServiceTest extends TestBase {
     void shouldThrowOpaClientException() {
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
                 .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.BAD_REQUEST));
-        PartialRequest partialRequest = PartialRequest.builder()
+        PartialRequest partialRequest = new PartialRequest.PartialRequestBuilder()
                 .query("data.petclinic.authz.allow = true")
                 .unknowns(Set.of("data.pets")).build();
 
@@ -90,7 +90,7 @@ class OpaClientServiceTest extends TestBase {
     void shouldGetOpaCompileApiResponse() {
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), eq(OpaCompilerResponse.class)))
                 .thenReturn(new ResponseEntity<>(opaCompilerResponse, HttpStatus.OK));
-        PartialRequest partialRequest = PartialRequest.builder()
+        PartialRequest partialRequest = new PartialRequest.PartialRequestBuilder()
                 .query("data.petclinic.authz.allow = true")
                 .unknowns(Set.of("data.pets")).build();
 

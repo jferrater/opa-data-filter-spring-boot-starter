@@ -2,37 +2,28 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-    }
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.2.6.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id "io.franzbecker.gradle-lombok" version "1.14"
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'maven-publish'
     id 'java'
     id 'java-library'
-    id 'maven'
-    id 'maven-publish'
     id 'jacoco'
     id "org.sonarqube" version "2.7"
-    id 'org.unbroken-dome.test-sets' version '2.2.1'
-    id 'io.codearte.nexus-staging' version '0.11.0'
+    id 'org.unbroken-dome.test-sets' version '4.1.0'
 }
 
-apply plugin: 'com.bmuschko.nexus'
-
 jacoco {
-    toolVersion = '0.8.2'
-    reportsDir = file("${buildDir}/reports/jacoco")
+    toolVersion = '0.8.9'
 }
 
 
 group = 'com.github.jferrater'
 archivesBaseName = ARTIFACT_NAME
 version = ARTIFACT_VERSION
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
@@ -40,15 +31,6 @@ repositories {
 
 ext {
     gradleLombokVersion = '1.18.4'
-}
-
-ext {
-    gradleLombokVersion = '1.18.4'
-}
-
-lombok {
-    version = "${gradleLombokVersion}"
-    sha256 = ""
 }
 
 bootJar {
@@ -61,7 +43,7 @@ jar {
 
 dependencies {
     api group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-
+    implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -84,6 +66,9 @@ testSets {
 
 test {
     useJUnitPlatform()
+    options {
+    }
+    finalizedBy jacocoTestReport // report is always generated after tests run
 }
 
 integrationTest {
@@ -112,14 +97,17 @@ sonarqube {
 }
 
 jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
     reports {
-        xml.enabled true
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             versionMapping {
                 usage('java-api') {
                     fromResolutionOf('runtimeClasspath')
@@ -134,56 +122,4 @@ publishing {
             from components.java
         }
     }
-}
-
-wrapper {
-    gradleVersion = '6.0.1'
-}
-
-modifyPom {
-    project {
-        name ARTIFACT_NAME
-        description 'A Spring Boot library for translating Open Policy Agent (OPA) compile API response into JPA and Mongo queries'
-        url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
-        inceptionYear '2020'
-
-        scm {
-            url 'https://github.com/jferrater/opa-data-filter-spring-boot-starter'
-            connection 'scm:https://github.com/jferrater/opa-data-filter-spring-boot-starter.git'
-            developerConnection 'scm:https://github.com/jferrater/opa-data-filter-spring-boot-starter.git'
-        }
-
-        licenses {
-            license {
-                name 'The Apache Software License, Version 2.0'
-                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                distribution 'repo'
-            }
-        }
-
-        developers {
-            developer {
-                id 'jferrater'
-                name 'Joffry Ferrater'
-                email 'joffry.ferrater@gmail.com'
-            }
-            developer {
-                id 'mongkoy'
-                name 'Reihmon Estremos'
-                email 'koydaut@gmail.com'
-            }
-        }
-    }
-}
-
-extraArchive {
-    sources = true
-    tests = true
-    javadoc = true
-}
-
-nexus {
-    sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 }

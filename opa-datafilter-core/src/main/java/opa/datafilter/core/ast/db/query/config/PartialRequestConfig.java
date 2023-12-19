@@ -1,7 +1,5 @@
 package opa.datafilter.core.ast.db.query.config;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,8 +11,6 @@ import java.util.Set;
  */
 @Configuration
 @ConfigurationProperties(prefix = "opa.partial-request")
-@Data
-@NoArgsConstructor
 public class PartialRequestConfig {
 
     /**
@@ -34,4 +30,39 @@ public class PartialRequestConfig {
      * Log the partial request on std out for debugging
      */
     private boolean logPartialRequest = false;
+
+    public PartialRequestConfig() {
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public Map<String, String> getUserAttributeToHttpHeaderMap() {
+        return userAttributeToHttpHeaderMap;
+    }
+
+    public void setUserAttributeToHttpHeaderMap(Map<String, String> userAttributeToHttpHeaderMap) {
+        this.userAttributeToHttpHeaderMap = userAttributeToHttpHeaderMap;
+    }
+
+    public Set<String> getUnknowns() {
+        return unknowns;
+    }
+
+    public void setUnknowns(Set<String> unknowns) {
+        this.unknowns = unknowns;
+    }
+
+    public boolean isLogPartialRequest() {
+        return logPartialRequest;
+    }
+
+    public void setLogPartialRequest(boolean logPartialRequest) {
+        this.logPartialRequest = logPartialRequest;
+    }
 }

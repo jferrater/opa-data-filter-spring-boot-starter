@@ -1,6 +1,8 @@
 package opa.datafilter.core.ast.db.query;
 
 import opa.datafilter.core.ast.db.query.model.request.PartialRequest;
+import opa.datafilter.core.ast.db.query.model.request.PartialRequest.PartialRequestBuilder;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -17,7 +19,7 @@ class PartialRequestBuilderTest {
 
     @Test
     void shouldBuildPartialRequest() {
-        PartialRequest result = PartialRequest.builder()
+        PartialRequest result = new PartialRequestBuilder()
                 .query("data.petclinic.authz.allow = true")
                 .httpMethod("GET")
                 .httpPath(List.of("pets", "fluffy"))

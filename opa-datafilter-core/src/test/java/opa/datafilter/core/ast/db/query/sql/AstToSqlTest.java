@@ -33,7 +33,7 @@ class AstToSqlTest extends TestBase {
 
     @BeforeEach
     void setUp() {
-        partialRequest = PartialRequest.builder()
+        partialRequest = new PartialRequest.PartialRequestBuilder()
                 .unknowns(Set.of("data.pets")).build();
         target = new AstToSql(opaCompilerResponse);
     }
