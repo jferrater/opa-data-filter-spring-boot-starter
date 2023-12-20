@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
+import jakarta.annotation.Resource;
+import jakarta.persistence.EntityManager;
 
 /**
  * The repository factory bean

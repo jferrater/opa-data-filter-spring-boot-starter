@@ -26,11 +26,8 @@ version = ARTIFACT_VERSION
 sourceCompatibility = '17'
 
 repositories {
+    mavenLocal()
     mavenCentral()
-}
-
-ext {
-    gradleLombokVersion = '1.18.4'
 }
 
 bootJar {
@@ -43,7 +40,7 @@ jar {
 
 dependencies {
     api group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+    api group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

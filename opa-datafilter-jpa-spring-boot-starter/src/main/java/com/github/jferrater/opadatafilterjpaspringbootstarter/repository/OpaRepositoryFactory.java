@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.support.JpaRepositoryImplementati
 import org.springframework.data.repository.core.RepositoryInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 /**
  * The custom repository factory

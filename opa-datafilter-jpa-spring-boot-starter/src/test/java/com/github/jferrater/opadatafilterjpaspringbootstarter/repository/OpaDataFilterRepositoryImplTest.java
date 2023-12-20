@@ -13,8 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.CrudMethodMetadata;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;

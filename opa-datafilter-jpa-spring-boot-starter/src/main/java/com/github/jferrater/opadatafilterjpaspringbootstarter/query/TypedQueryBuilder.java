@@ -1,5 +1,6 @@
 package com.github.jferrater.opadatafilterjpaspringbootstarter.query;
 
+import jakarta.persistence.criteria.*;
 import opa.datafilter.core.ast.db.query.PredicateConverter;
 import opa.datafilter.core.ast.db.query.elements.SqlPredicate;
 import opa.datafilter.core.ast.db.query.exception.PartialEvauationException;
@@ -9,12 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.Assert;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -36,7 +34,7 @@ public class TypedQueryBuilder<T> {
         this.entityManager = entityManager;
     }
 
-    public <S extends T>TypedQuery<S> getTypedQuery(Class<S> domainClass, Sort sort){
+    public <S extends T>TypedQuery<S> getTypedQuery(Class<S> domainClass, Sort sort) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<S> criteriaQuery = criteriaBuilder.createQuery(domainClass);
 
@@ -65,7 +63,7 @@ public class TypedQueryBuilder<T> {
         List<List<opa.datafilter.core.ast.db.query.model.response.Predicate>> opaPredicates = opaCompilerResponse.getResult().getQueries();
         Predicate[] predicates = opaPredicates.stream()
                 .map(opaPredicateObjList -> andPredicates(opaPredicateObjList, root))
-                .collect(toList()).toArray(Predicate[]::new);
+                .toList().toArray(Predicate[]::new);
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         return criteriaBuilder.or(predicates);
     }
@@ -94,7 +92,7 @@ public class TypedQueryBuilder<T> {
         Predicate predicate = null;
         switch (operator) {
             case "=":
-                predicate = criteriaBuilder.equal(root.get(attributeName), rightExpression);
+                predicate = equalPredicateFromExpression(attributeName, rightExpression, root);
                 break;
             case "<":
                 predicate = getLTPredicateFromExpression(attributeName, rightExpression, root);
@@ -114,15 +112,34 @@ public class TypedQueryBuilder<T> {
         return predicate;
     }
 
+    <U extends T> Predicate equalPredicateFromExpression(String attributeName, Object rightExpression, Root<U> root) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        Predicate predicate = null;
+        if(rightExpression.getClass().isAssignableFrom(Long.class)) {
+            predicate = criteriaBuilder.lessThan(root.get(attributeName).as(Long.class), (Long) rightExpression);
+        } else if(rightExpression.getClass().isAssignableFrom(Integer.class)) {
+            predicate = criteriaBuilder.lessThan(root.get(attributeName).as(Integer.class), (Integer) rightExpression);
+        } else if(rightExpression.getClass().isAssignableFrom(Double.class)) {
+            predicate = criteriaBuilder.lessThan(root.get(attributeName).as(Double.class), (Double) rightExpression);
+        } else if(rightExpression.getClass().isAssignableFrom(Boolean.class)) {
+            predicate = criteriaBuilder.equal(root.get(attributeName).as(Boolean.class), (Boolean) rightExpression);
+        } else if (rightExpression.getClass().isAssignableFrom(String.class)) {
+            predicate = criteriaBuilder.equal(root.get(attributeName).as(String.class), (String) rightExpression);
+        } else {
+            LOGGER.warn("Unknown data type: {}", rightExpression);
+        }
+        return predicate;
+    }
+
     <U extends T> Predicate getLTPredicateFromExpression(String attributeName, Object rightExpression, Root<U> root) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         Predicate predicate = null;
         if(rightExpression.getClass().isAssignableFrom(Long.class)) {
-            predicate = criteriaBuilder.lessThan(root.get(attributeName), (Long) rightExpression);
+            predicate = criteriaBuilder.lessThan(root.get(attributeName).as(Long.class), (Long) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Integer.class)) {
-            predicate = criteriaBuilder.lessThan(root.get(attributeName), (Integer) rightExpression);
+            predicate = criteriaBuilder.lessThan(root.get(attributeName).as(Integer.class), (Integer) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Double.class)) {
-            predicate = criteriaBuilder.lessThan(root.get(attributeName), (Double) rightExpression);
+            predicate = criteriaBuilder.lessThan(root.get(attributeName).as(Double.class), (Double) rightExpression);
         } else {
             LOGGER.warn("Unknown data type: {}", rightExpression);
         }
@@ -133,11 +150,11 @@ public class TypedQueryBuilder<T> {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         Predicate predicate = null;
         if(rightExpression.getClass().isAssignableFrom(Long.class)) {
-            predicate = criteriaBuilder.lessThanOrEqualTo(root.get(attributeName), (Long) rightExpression);
+            predicate = criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as(Long.class), (Long) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Integer.class)) {
-            predicate = criteriaBuilder.lessThanOrEqualTo(root.get(attributeName), (Integer) rightExpression);
+            predicate = criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as(Integer.class), (Integer) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Double.class)) {
-            predicate = criteriaBuilder.lessThanOrEqualTo(root.get(attributeName), (Double) rightExpression);
+            predicate = criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as(Double.class), (Double) rightExpression);
         } else {
             LOGGER.warn("Unknown data type: {}", rightExpression);
         }
@@ -148,11 +165,11 @@ public class TypedQueryBuilder<T> {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         Predicate predicate = null;
         if(rightExpression.getClass().isAssignableFrom(Long.class)) {
-            predicate = criteriaBuilder.greaterThan(root.get(attributeName), (Long) rightExpression);
+            predicate = criteriaBuilder.greaterThan(root.get(attributeName).as(Long.class), (Long) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Integer.class)) {
-            predicate = criteriaBuilder.greaterThan(root.get(attributeName), (Integer) rightExpression);
+            predicate = criteriaBuilder.greaterThan(root.get(attributeName).as(Integer.class), (Integer) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Double.class)) {
-            predicate = criteriaBuilder.greaterThan(root.get(attributeName), (Double) rightExpression);
+            predicate = criteriaBuilder.greaterThan(root.get(attributeName).as(Double.class), (Double) rightExpression);
         } else {
             LOGGER.warn("Unknown data type: {}", rightExpression);
         }
@@ -163,11 +180,11 @@ public class TypedQueryBuilder<T> {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         Predicate predicate = null;
         if(rightExpression.getClass().isAssignableFrom(Long.class)) {
-            predicate = criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName), (Long) rightExpression);
+            predicate = criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as(Long.class), (Long) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Integer.class)) {
-            predicate = criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName), (Integer) rightExpression);
+            predicate = criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as(Integer.class), (Integer) rightExpression);
         } else if(rightExpression.getClass().isAssignableFrom(Double.class)) {
-            predicate = criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName), (Double) rightExpression);
+            predicate = criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as(Double.class), (Double) rightExpression);
         } else {
             LOGGER.warn("Unknown data type: {}", rightExpression);
         }
